@@ -1,0 +1,24 @@
+.follow{
+	background: #f4f0ff;
+	padding: 10px;
+	max-width: 580px;
+	height: 600px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+.follow_name_block{
+	border: 1px solid #ccc;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+.follow_result{
+	height: 530px;
+	border: 1px solid #ccc;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	margin-top: 15px;
+	overflow-y: scroll;
+}

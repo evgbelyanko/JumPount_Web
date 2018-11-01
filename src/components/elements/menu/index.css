@@ -1,0 +1,7 @@
+.wrap_btn_group{
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	border: 1px solid #fff;
+	cursor: pointer;
+}

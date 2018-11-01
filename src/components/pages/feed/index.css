@@ -1,0 +1,30 @@
+.feed_window{
+	background: #fff;
+}
+.feed_window .pv_autor{
+	background: #fff;
+}
+
+.feed_window .pv_info{
+	height: 25px;
+}
+
+/* DESKTOP */
+
+.feed{
+	width: 600px;
+	margin-top: 15px;
+}
+.feed_window{
+	margin-bottom: 15px;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #ccc;
+	border-bottom: 0;
+}
+.feed_window .pv_picture_layer img{
+	border-radius: 0;
+}
+.feed_window .pv_picture_bottom{
+	border-radius: 0;
+}

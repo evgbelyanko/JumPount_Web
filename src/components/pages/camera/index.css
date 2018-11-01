@@ -1,0 +1,45 @@
+.camera{
+	width: 100%;
+}
+.camera_back{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 150px;
+}
+.camera_icon{
+	width: 144px;
+	height: 144px;
+	text-align: center;
+	font-size: 96px;
+	border-radius: 50%;
+}
+.camera_text{
+	font-weight: bold;
+}
+.camera_btn{
+	padding: 5px 10px;
+	margin-top: 20px;
+	font-weight: bold;
+}
+@keyframes camera_icon {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgb(27, 30, 36, 0.4);
+    box-shadow: 0 0 0 0 rgb(27, 30, 36, 0.4);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 50px rgba(204,169,44, 0);
+      box-shadow: 0 0 0 50px rgba(204,169,44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
+}
+
+/* DESKTOP */
+
+.camera_btn{
+	cursor: pointer;
+}

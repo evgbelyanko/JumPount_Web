@@ -1,0 +1,58 @@
+.map{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+}
+#gmap{
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	display: block;
+}
+.map_logo_layer{
+	margin-left: 5px;
+	margin-right: 5px;
+	z-index: 1000001;
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	width: 70px;
+	height: 30px;
+}
+div[style^="text-align: right;position: fixed;z-index:9999999;bottom: 0; width: 100%;cursor: pointer;line-height: 0;display:block !important;"]{
+	display:none;
+}
+a[style^="position: static; overflow: visible; float: none; display: inline;"]{
+	display:none;
+}
+.gmnoprint{
+	display:none;
+}
+.map_cluster{
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.page_camera {
+	height: 70px;
+	width: 70px;
+	border-radius: 50%;
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
+	background: #1d2127;
+	z-index: 999;
+	cursor: pointer;
+}
+
+.page_camera span {
+	text-align: center;
+	font-size: 2.5em;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -25px 0 0 -18px;
+	color: #fff;
+}

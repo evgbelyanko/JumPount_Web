@@ -1,0 +1,163 @@
+@charset "UTF-8";
+a {
+	cursor: none;
+}
+
+/* START FEED */
+.feed{
+	width: 100%;
+}
+.feed_window{
+	margin-bottom: 15px;
+}
+/* END FEED */
+
+/* START GOOGLE MAP */
+.map_panel {
+	height: 40%;
+	width: 100%;
+}
+.map_item_info{
+	overflow: hidden;
+}
+/* END GOOGLE MAP */
+
+/* START PHOTO VIEW */
+.window{
+	flex-direction: column;
+	width: 100%;
+}
+.pv_picture{
+	width: 100%;
+}
+.window_part{
+	border-top: 1px solid #ccc;
+}
+.pv_comments {
+	overflow-y: scroll;
+	margin-bottom: 40px;
+}
+.pv_input {
+	position: fixed;
+	z-index: 200;
+}
+.pv_like_on{
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	color: #fff;
+	background-color: #1b1e24;
+	border: 1px solid #1b1e24;
+	padding: 3px;
+}
+.pv_like_off{
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	color: #000;
+	background-color: #fff;
+	border: 1px solid #1b1e24;
+	padding: 3px;
+}
+.pv_likes_count{
+	position: absolute;
+	right: 70px;
+}
+.pv_comments_count{
+	position: absolute;
+	right: 10px;
+}
+.pv_desc_form{
+	width: 80%;
+}
+.pv_desc_form input{
+	width: 100%;
+}
+.pv_desc_form textarea{
+	width: 99%;
+}
+.pv_comments_empty{
+	margin-bottom: 50px;
+}
+/* END PHOTO VIEW */
+
+/* START SEARCH */
+.search_block{
+	border-bottom: 1px solid #ccc;
+}
+.search_result{
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+.search_gallery_item{
+	margin: 1.5px;
+}
+/* END SEARCH */
+
+/* START PROFILE */
+.profile{
+	width: 100%;
+}
+.profile_info{
+	border-bottom: 1px solid #ccc;
+}
+.profile_refresh{
+	position: absolute;
+	top: 60px;
+	right: 26px;
+	cursor: pointer;
+}
+.profile_info_head{
+	width: 100%;
+	padding: 10px 10px 0px;
+}
+.profile_info_head_avatar{
+	height: 90px;
+	width: 90px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px 1px #ccc;
+	flex-shrink: 0;
+}
+.profile_gallery_item_image {
+	cursor: pointer;
+	margin: 1.5px;
+}
+.profile_info_custom {
+	width: 100%;
+}
+.profile_content{
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+/* END PROFILE */
+
+/* START SETTING */
+.setting{
+	width: 100%;
+}
+.setting_form_group{
+	display: flex;
+	flex-direction: column;
+	margin-top: 15px;
+	background: #FFF;
+	padding: 10px;
+}
+/* END SETTING */
+
+/* START FOLLOW */
+.follow{
+	width: 100%;
+}
+.follow_name_block{
+	border-bottom: 1px solid #ccc;
+}
+.follow_result{
+	min-height: 443px;
+	background: #FFF;
+	padding: 10px;
+	margin-top: 10px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+/* END FOLLOW */
+
