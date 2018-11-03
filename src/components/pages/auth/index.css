@@ -20,7 +20,7 @@
 .auth_icon{
 	width: 200px;
 	height: 200px;
-	background: url(/logo_150.png) center center no-repeat;
+	background: url(/img/logo_150.png) center center no-repeat;
 }
 .auth_name{
 	margin-top: 15px;

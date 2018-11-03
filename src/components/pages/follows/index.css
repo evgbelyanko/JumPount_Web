@@ -1,3 +1,6 @@
+@import url('./desktop.css') (min-width: 768px);
+@import url('./mobile.css') (max-width: 768px);
+
 .follow{
 	background: #f4f0ff;
 	padding: 10px;
@@ -21,4 +24,40 @@
 	border-radius: 4px;
 	margin-top: 15px;
 	overflow-y: scroll;
+}
+.follow_name_block{
+	display: flex;
+	width: 100%;
+	background: #FFF;
+	padding: 15px 0 15px 0;
+}
+.follow_name_block_row{
+	display: flex;
+}
+.follow_icon{
+	margin: 0 10px 0 10px;
+	font-size: 20.5px;
+	line-height: 16px;
+}
+.follow_icon_error{
+	font-size: 96px;
+}
+.follow_page_name{
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 18px;
+}
+.follow_result{
+	background: #fff;
+}
+.follow_error{
+	position: fixed;
+	width: 100%;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

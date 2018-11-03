@@ -1,3 +1,6 @@
+@import url('./desktop.css') (min-width: 768px);
+@import url('./mobile.css') (max-width: 768px);
+
 .profile_info{
 	position: relative;
 	background: #fff;
@@ -91,61 +94,4 @@
 	justify-content: center;
 	align-items: center;
 	margin: 25px 50px 50px 50px;
-}
-
-/* DESKTOP */
-
-.profile{
-	max-width: 900px;
-	width: 100%;
-	margin-top: 15px;
-}
-.profile_info{
-	border: 1px solid #ccc;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-}
-.profile_refresh{
-	position: absolute;
-	top: 21px;
-	right: 70px;
-	cursor: pointer;
-}
-.profile_info_head{
-	padding: 10px;
-}
-.profile_info_head_avatar{
-	height: 150px;
-	width: 150px;
-	border-radius: 8px;
-	flex-shrink: 0;
-}
-.profile_info_head_addons{
-	width: 100%;
-	margin-left: 15px;
-}
-.profile_info_custom_btn_publications{
-	cursor: crosshair;
-}
-.profile_info_custom_btn{
-	cursor: pointer;
-}
-.profile_gallery_item_image {
-	margin: 10px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	cursor: pointer;
-}
-.profile_content{
-	border: 1px solid #ccc;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-}
-.profile_gallery_item_image img{
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
 }

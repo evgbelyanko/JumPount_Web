@@ -1,0 +1,34 @@
+.map_panel{
+	height: 100%;
+	top: 50px;
+}
+.map_item_info{
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.map_href_item{
+	cursor: pointer;
+}
+.map_href_item:last-child{
+	margin-bottom: 70px;
+}
+@media only screen and  (min-width: 768px) {
+	.map_panel{
+		width: 300px;
+	}
+}
+@media only screen and  (min-width: 868px) {
+	.map_panel{
+		width: 320px;
+	}
+}
+@media only screen and  (min-width: 964px) {
+	.map_panel{
+		width: 340px;
+	}
+}
+@media only screen and  (min-width: 1024px) {
+	.map_panel{
+		width: 360px;
+	}
+}

@@ -58,7 +58,7 @@ class Profile extends React.Component {
 	}
 
 	render() {
-		if(!this.state.isLoaded) return false;
+		if(!this.state.isLoaded) return <img src="/img/preload.gif" className="preload_page" alt=""/>;
 
 		const { 
 			profileInfo,

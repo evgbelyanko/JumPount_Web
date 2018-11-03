@@ -2,47 +2,53 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+
 import './index.css'
 
 class Header extends React.Component {
 
 	render() {
+		if(!this.props.page.active) return false;
+
+		const {
+			name,
+			device
+		} = this.props.page.active;
 		const setActiveClassName = 'navigation_active';
-		const activePage = this.props.page.active;
 
 		return (
 			<ul className="navigation">
 				<li>
-					<img src="/logo_35.png" className="navigation_logo" alt="" />
+					<img src="/img/logo_35.png" className="navigation_logo" alt="" />
 				</li>
 				<li>
-					<Link to="/feed" className={activePage === 'feed' ? setActiveClassName : null}>
+					<Link to="/feed" className={name === 'feed' ? setActiveClassName : null}>
 						<span className="fa fa-list navigation_icon" />
-						<span className="navigation_text">Новости</span>
+						{ device === 'desktop' ? <span className="navigation_text">Новости</span> : null }
 					</Link>
 				</li>
 				<li>
-					<Link to="/map" className={activePage === 'map' ? setActiveClassName : null}>
+					<Link to="/map" className={name === 'map' ? setActiveClassName : null}>
 						<span className="fa fa-globe navigation_icon" />
-						<span className="navigation_text">Карта</span>
+						{ device === 'desktop' ? <span className="navigation_text">Карта</span> : null }
 					</Link>
 				</li>
 	{/*			<li>
-					<Link to="/camera" className="navigation_camera">
+					<Link to="/camera" className={name === 'camera' ? setActiveClassName : null}>
 						<span className="fa fa-camera-retro navigation_icon" />
-						<span className="navigation_text">Камера</span>
+						{ device === 'desktop' ? <span className="navigation_text">Камера</span> : null }
 					</Link>
 				</li>*/}
 				<li>
-					<Link to="/search" className={activePage === 'search' ? setActiveClassName : null}>
+					<Link to="/search" className={name === 'search' ? setActiveClassName : null}>
 						<span className="fa fa-search navigation_icon" />
-						<span className="navigation_text">Поиск</span>
+						{ device === 'desktop' ? <span className="navigation_text">Поиск</span> : null }
 					</Link>
 				</li>
 				<li>
-					<Link to="/profile" className={activePage === 'profile' ? setActiveClassName : null}>
+					<Link to="/profile" className={name === 'profile' ? setActiveClassName : null}>
 						<span className="fa fa-user navigation_icon" />
-						<span className="navigation_text">Профиль</span>
+						{ device === 'desktop' ? <span className="navigation_text">Профиль</span> : null }
 					</Link>
 				</li>
 			</ul>

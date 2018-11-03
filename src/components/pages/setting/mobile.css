@@ -1,0 +1,10 @@
+.setting{
+	width: 100%;
+}
+.setting_form_group{
+	display: flex;
+	flex-direction: column;
+	margin-top: 15px;
+	background: #FFF;
+	padding: 10px;
+}

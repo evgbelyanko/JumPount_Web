@@ -1,30 +1,27 @@
-.feed_window{
-	background: #fff;
-}
-.feed_window .pv_autor{
+@import url('./desktop.css') (min-width: 768px);
+@import url('./mobile.css') (max-width: 768px);
+
+.feed_post {
 	background: #fff;
 }
 
-.feed_window .pv_info{
+.feed_post > .pv_info {
 	height: 25px;
 }
 
-/* DESKTOP */
-
-.feed{
-	width: 600px;
-	margin-top: 15px;
-}
-.feed_window{
-	margin-bottom: 15px;
+.feed_post > .feed_picture {
+	position: relative;
+	background: hsl(0, 0%, 12%);
+	display: -ms-flexbox;
 	display: flex;
+	-ms-flex-direction: column;
 	flex-direction: column;
-	border: 1px solid #ccc;
-	border-bottom: 0;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-ms-flex-align: center;
+	align-items: center;
 }
-.feed_window .pv_picture_layer img{
-	border-radius: 0;
-}
-.feed_window .pv_picture_bottom{
-	border-radius: 0;
+
+.feed_post > .feed_picture img {
+	width: 100%;
 }

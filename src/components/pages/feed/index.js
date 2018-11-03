@@ -41,12 +41,8 @@ class Feed extends React.Component {
 		this.props.setActivePage();
 	}
 
-	preloader() {
-		return <img src="preload.gif" alt=""/>;
-	}
-
 	render() {
-		if(!this.state.isLoaded) return false;
+		if(!this.state.isLoaded) return <img src="/img/preload.gif" className="preload_page" alt=""/>;
 		
 		const {
 			menu,
@@ -63,33 +59,33 @@ class Feed extends React.Component {
 
 	loadListPosts() {
 		const listPosts = this.state.listPosts.map((post, key) =>
-			<div className="feed_window" key={key}>
-				<div className="pv_autor">
-					<UserBlock 
-					userId={post.user_id}
-					userName={post.user_name}
-					userAvatar={post.avatar_50}
-					userDesc={post.photo_timestamp}
-					ellipsis="true"
-					ellipsisOpen={() => this.openMenu()}
-					ellipsisClose={() => this.closeMenu()} />
-				</div>
-				<div className="pv_picture_layer_mobile"></div>
-				<div className="pv_picture_layer">
+			<div className="feed_post" key={key}>
+
+				<UserBlock 
+				userId={post.user_id}
+				userName={post.user_name}
+				userAvatar={post.avatar_50}
+				userDesc={post.photo_timestamp}
+				ellipsis="true"
+				ellipsisOpen={() => this.openMenu()}
+				ellipsisClose={() => this.closeMenu()} />
+
+				<div className="feed_picture">
 					<ImageLoader
 					src={post.photo_600} 
-					className="pv_picture"
-					preloader={this.preloader} />
+					preloader={() => (<img src="/img/preload.gif" alt=""/>)} />
 					<PostBottom
 						title={post.photo_title}
 						desc={post.photo_desc}
 					/>
 				</div>
+
 				<PostInfo
 					photoLikes={post.photo_likes}
 					photoComments={post.photo_comments}
 					likeId={post.like_id}
 				/>
+
 			</div>
 		);
 

@@ -1,0 +1,28 @@
+.profile{
+	width: 100%;
+}
+.profile_info{
+	border-bottom: 1px solid #ccc;
+}
+.profile_info_head{
+	width: 100%;
+	padding: 10px 10px 0px;
+}
+.profile_info_head_avatar{
+	height: 90px;
+	width: 90px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px 1px #ccc;
+	flex-shrink: 0;
+}
+.profile_gallery_item_image {
+	cursor: pointer;
+	margin: 1.5px;
+}
+.profile_info_custom {
+	width: 100%;
+}
+.profile_content{
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}

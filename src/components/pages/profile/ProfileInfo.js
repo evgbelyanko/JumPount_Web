@@ -34,7 +34,6 @@ export default class ProfileInfo extends React.Component {
 							{country_name ? this.blockCountry(country_name) : null}
 							{user_website ? this.blockWebsite(user_website) : null}
 							<div className="fa fa-ellipsis-h user_action_post" style={{fontSize: 24}} onClick={() => this.openMenu()}></div>
-							<div className="fa fa-refresh profile_refresh" style={{fontSize: 19}}></div>
 						</div>
 						<div className="profile_info_custom">
 							<div id="publications" className="profile_info_custom_btn_publications">

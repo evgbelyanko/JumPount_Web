@@ -1,3 +1,6 @@
+@import url('./desktop.css') (min-width: 768px);
+@import url('./mobile.css') (max-width: 768px);
+
 .camera{
 	width: 100%;
 }
@@ -36,10 +39,4 @@
       -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
       box-shadow: 0 0 0 0 rgba(204,169,44, 0);
   }
-}
-
-/* DESKTOP */
-
-.camera_btn{
-	cursor: pointer;
 }

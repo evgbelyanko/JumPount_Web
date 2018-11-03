@@ -1,4 +1,3 @@
-import Config from '../../config'
 import { SET_CURRENT_USER } from '../types'
 
 
@@ -38,7 +37,7 @@ export const authVkontakte = (sessionData) => dispatch => {
 	
 	dispatch(authRequest());
 
-	fetch(Config.API + `/auth/vkontakte`, {
+	fetch(`/auth/vkontakte`, {
 		method: 'post', 
 		credentials: 'include',
 		headers: {

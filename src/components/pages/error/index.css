@@ -1,0 +1,31 @@
+.error{
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 15px;
+}
+.error_back{
+	height: 100%;
+	width: 100%;
+	background: #1d2127;
+}
+.error_icon{
+	color: #fff; 
+	font-size: 96px;
+}
+.error_text{
+	color: #fff;
+}
+.error_btn {
+	padding: 5px 20px;
+	margin-top: 65px;
+	font-weight: bold;
+}
+.error_btn_text{
+	margin-left: 10px;
+}

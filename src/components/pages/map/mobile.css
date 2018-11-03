@@ -1,0 +1,7 @@
+.map_panel {
+	height: 40%;
+	width: 100%;
+}
+.map_item_info{
+	overflow: hidden;
+}

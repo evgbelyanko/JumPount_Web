@@ -50,10 +50,6 @@ class PhotoView extends React.Component {
 		})
 	}
 
-	preloader() {
-		return <img src="/preload.gif" alt=""/>;
-	}
-
 	render() {
 		if(!this.state.isLoaded) return false;
 		
@@ -109,8 +105,7 @@ class PhotoView extends React.Component {
 							<ImageLoader
 							src={photo_600} 
 							className="pv_picture"
-							preloader={this.preloader} />
-							{/*<img src={photo_600} className="pv_picture" />*/}
+							preloader={() => (<img src="/img/preload.gif" alt=""/>)} />
 							<PostBottom
 							title={photo_title}
 							desc={photo_desc} />

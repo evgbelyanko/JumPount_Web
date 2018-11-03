@@ -1,56 +1,74 @@
-.user_block{
-	position: relative;
-	padding: 10px;
-	display: flex;
-	align-items: center;
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	user-select: none;
-}
-.user_link{
-	display: flex;
-	align-items: center;
-}
-.user_img{
-	margin-right: 10px;
+.wrap_back{
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0,0,0,.7);
 	cursor: pointer;
+	color: #969696;
 }
-.user_img img{
-	width: 50px;
-	height: 50px;
-	-moz-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	border-radius: 50%;
-	flex-shrink: 0;
+.wrap_back:hover{
+	color: #fff;
 }
-.user_info{
-	width: 250px;
+.wrap_window{
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
 }
-.user_nickname{
-	font-weight: 600;
-	line-height: 20px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	width: calc(100% - 30px);
-}
-.user_desc{
-	line-height: 20px;
-}
-.user_action_post{
+.wrap_close{
 	position: absolute;
-	top: 18px;
-	right: 25px;
-	cursor: pointer;
-}
-.wrap_window .user_action_post{
 	right: 15px;
+	font-size: 36px;
+	font-weight: bold;
 }
-.search_gallery .user_action_post{
-	right: 15px;
+.wrap_btn_group{
+	background: #fff;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
-@media (min-width: 350px) and (max-width: 768px) {
-	.user_action_post{
-		right: 25px;
-	}
+.wrap_btn{
+	line-height: 48px;
+	text-align: center;
+	border-bottom: 1px solid #ccc;
+}
+.wrap_btn:last-child{
+	border: 0;
+}
+.wrap_action_icon{
+	position: relative;
+	top: 2.5px;
+	font-size: 24px;
+	font-weight: bold;
+}
+.wrap_btn_left{
+	float: left;
+	line-height: 48px;
+	margin-left: 50px;
+}
+.wrap_btn_right{
+	float: right;
+	line-height: 48px;
+	margin-right: 50px;
+}
+.wrap_btn_follow_on {
+	color: #000;
+	line-height: 48px;
+	text-align: center;
+}
+.wrap_btn_follow_on:before {
+	content: 'Отписаться от пользователя';
+}
+.wrap_btn_follow_off {
+	color: #000;
+	line-height: 48px;
+	text-align: center;
+}
+.wrap_btn_follow_off:before {
+	content: 'Подписаться на пользователя';
 }

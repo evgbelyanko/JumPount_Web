@@ -1,9 +1,12 @@
+@import url('./desktop.css') (min-width: 768px);
+@import url('./mobile.css') (max-width: 768px);
+
 .map{
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100%;
 }
 #gmap{
 	height: 100%;
