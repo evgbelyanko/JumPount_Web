@@ -11,27 +11,28 @@ export default class ProfilePosts extends React.Component {
 	}
 
 	render() {
-		const postList = this.props.profilePosts.map((post, key) => {
-			return (
-				<div className="profile_gallery_item" key={key}>
-					<div className="profile_gallery_item_image">
-						<img 
-						src={post.photo_250} 
-						className="picture_shadow" 
-						onClick={() => this.openPhotoView(post.photo_id)} 
-						alt=""/>
-					</div>
-				</div>
-			);
-		});
 	    return (
-			<div className="profile_content">
-				<div className="profile_gallery">
-					{postList}
-				</div>
+			<div className="profile_gallery">
+				{this.postList()}
 				{this.state.postPhotoViewId ? this.createPhotoView() : null}
 			</div>
 	    );
+	}
+
+	postList() {
+		const postList = this.props.profilePosts.map((post, key) => {
+			return ( 
+				<div className="profile_gallery_post" key={key}>
+					<img 
+					src={post.photo_250} 
+					className="picture_shadow" 
+					onClick={() => this.openPhotoView(post.photo_id)} 
+					alt=""/>
+				</div>
+			)
+		})
+
+		return postList;
 	}
 
 	createPhotoView() {

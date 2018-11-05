@@ -17,7 +17,7 @@ const MapWithAMarkerClusterer = compose(
 	withProps({
 		googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAeSOHuULn3P2EafsXS4t5163z5ouAML9Y&v=3.exp&libraries=geometry,drawing,places",
 		loadingElement: <div style={{ height: `100%` }} />,
-		containerElement: <div className="map" />,
+		containerElement: <div id="map" />,
 		mapElement: <div style={{ height: `100%` }} />,
 	}),
 	withStateHandlers(() => ({
@@ -25,9 +25,13 @@ const MapWithAMarkerClusterer = compose(
 		postPhotoViewId: null,
 		markersIds: []
 	}), {
-		openPanel: ({ visiblePanel,recreate }) => (markerClusterer) => ({
+		openPanelClusterer: ({ visiblePanel }) => (markerClusterer) => ({
 			visiblePanel: true,
-			markersIds: markerClusterer.getMarkers().map(marker => (marker.title.toString()))
+			markersIds: markerClusterer.getMarkers().map(marker => (+marker.title))
+		}),
+		openPanelMarker: ({ visiblePanel }) => (marker) => ({
+			visiblePanel: true,
+			markersIds: [marker]
 		}),
 		closePanel: ({ visiblePanel }) => () => ({
 			visiblePanel: false
@@ -52,35 +56,39 @@ const MapWithAMarkerClusterer = compose(
 	onCenterChanged={props.closePanel} >
 	
 		<MarkerClusterer
-		onClick={props.openPanel}
+		onClick={props.openPanelClusterer}
 		averageCenter
 		enableRetinaIcons
 		gridSize={50}
 		defaultZoomOnClick={false}
 		zoomOnClick={false} >
-
 			{props.markers.map(marker => (
 				<Marker
 				key={marker.photo_id}
 				title={marker.photo_id.toString()}
 				position={{ lat: marker.photo_latitude, lng: marker.photo_longitude }}
-				onClick={() => console.log(marker.photo_id)} />
+				onClick={() => props.openPanelMarker(marker.photo_id)} /> //marker.photo_id
 			))}
 		</MarkerClusterer>
 
+		<div className="map_logo" />
+
+		<Link to="/camera" className="map_page_camera">
+			<span className="fa fa-camera" />
+		</Link>
+
 		{props.postPhotoViewId ? (
-				<PhotoView 
-				onClose={props.closePhotoView} 
-				postPhotoViewId={props.postPhotoViewId} /> 
-			) : null }
+			<PhotoView 
+			onClose={props.closePhotoView} 
+			postPhotoViewId={props.postPhotoViewId} /> 
+		) : null }
 
 		{props.visiblePanel ? (
-				<Panel 
-				markersIds={props.markersIds} 
-				visible={props.visiblePanel} 
-				closePanel={props.closePanel}
-				openPhotoView={props.openPhotoView} /> 
-			) : null }
+			<Panel 
+			markersIds={props.markersIds} 
+			openPhotoView={props.openPhotoView} 
+			history={props.history} /> 
+		) : null }
 
 	</GoogleMap>
 );
@@ -117,17 +125,8 @@ class Gmap extends React.PureComponent {
 
 	render() {
 		if(!this.state.isLoaded) return <img src="/img/preload.gif" className="preload_page" alt=""/>;
-		
-		const { markers } = this.state;
 
-		return (
-			<div>
-				<MapWithAMarkerClusterer markers={markers}/>
-				<Link to="/camera" className="page_camera">
-					<span className="fa fa-camera" />
-				</Link>
-			</div>
-		)
+		return <MapWithAMarkerClusterer markers={this.state.markers} history={this.props.history} />;
 	}
 
 }

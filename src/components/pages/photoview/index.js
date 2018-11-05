@@ -1,17 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Menu from '../../elements/menu'
 import { Redirect } from 'react-router'
-import PostComments from './PostComments'
-import Window from '../../elements/window'
 import { history } from './../../../store'
 import ImageLoader from 'react-imageloader'
+
+import Menu from '../../elements/menu'
+import PostComments from './PostComments'
+import Window from '../../elements/window'
 import PostInfo from '../../elements/postInfo'
 import UserBlock from '../../elements/userBlock'
-import PostBottom from '../../elements/postBottom'
+import PictureBottom from '../../elements/pictureBottom'
+
 import { logout } from '../../../actions/auth/logout'
 import { setActivePage } from '../../../actions/photoView'
+
 import './index.css'
 
 class PhotoView extends React.Component {
@@ -27,11 +30,16 @@ class PhotoView extends React.Component {
 	}
 
 	componentDidMount() {
-		if(this.props.postPhotoViewId)
-			window.onpopstate = () => { this.props.onClose() }
+		const {
+			page,
+			onClose,
+			postPhotoViewId
+		} = this.props;
+		
+		if(postPhotoViewId) window.onpopstate = () => { onClose() }
 
-		const photoId = this.props.postPhotoViewId ? this.props.postPhotoViewId : this.props.match.params.id;
-		history.push('/photoview/'+photoId);
+		const photoId = postPhotoViewId ? postPhotoViewId : this.props.match.params.id;
+		if(page.device === 'desktop') history.push(`/photoview/${photoId}`);
 
 		fetch(`/photoview/post?id=${photoId}`, {
 			credentials: 'include'
@@ -48,11 +56,17 @@ class PhotoView extends React.Component {
 				postComments: data.postComments
 			});
 		})
+
+		this.props.setActivePage();
 	}
 
 	render() {
 		if(!this.state.isLoaded) return false;
-		
+
+		return this.props.page.device === 'desktop' ? this.desktopVersion() : this.mobileVersion();
+	}
+
+	content() {
 		const {
 			user_id,
 			user_name,
@@ -67,60 +81,69 @@ class PhotoView extends React.Component {
 		} = this.state.postInfo;
 
 		return (
+			<div className="photoView">
+				{this.state.redirect ? <Redirect push to={`/user/${user_id}`} /> : null}
+				<div className="photoView_picture">
+					<ImageLoader
+					src={photo_600}
+					preloader={() => (<img src="/img/preload.gif" alt=""/>)} />
+					<PictureBottom
+					title={photo_title}
+					desc={photo_desc} />
+				</div>
+				<div className="photoView_autor">
+					<UserBlock 
+					userId={user_id}
+					userName={user_name}
+					userAvatar={avatar_50}
+					userDesc={photo_timestamp}
+					ellipsis="true"
+					ellipsisOpen={() => this.openMenu()}
+					ellipsisClose={() => this.closeMenu()} />
+				</div>
+				<div className="photoView_postInfo">
+					<PostInfo
+					photoLikes={photo_likes}
+					photoComments={photo_comments}
+					likeId={like_id} />
+				</div>
+				<PostComments 
+				postComments={this.state.postComments} />
+				<div className="photoView_input">
+					<textarea placeholder="Напишите сообщение..." />
+					<button className="fa fa-send" />
+				</div>
+			</div>
+		)
+	}
+
+	desktopVersion() {
+		return (
 			<div>
-				{this.state.redirect ? <Redirect push to={'/profile/'+user_id} /> : null}
 				<Window 
 				width={900} 
 				onClose={() => this.closePhotoView()}
 				zIndex={800}>
-					<div className="window">
-						<div id="" className="window_right">
-							<div className="pv_autor">
-								<UserBlock 
-								userId={user_id}
-								userName={user_name}
-								userAvatar={avatar_50}
-								userDesc={photo_timestamp}
-								ellipsis="true"
-								ellipsisOpen={() => this.openMenu()}
-								ellipsisClose={() => this.closeMenu()} />
-							</div>
-							<div className="pv_picture_layer_mobile" />
-							<div className="window_part"> 
-								<PostInfo
-								photoLikes={photo_likes}
-								photoComments={photo_comments}
-								likeId={like_id} />
-								<PostComments 
-								postComments={this.state.postComments} />
-								<div className="pv_input">
-									<textarea className="pv_new_comment" placeholder="Напишите сообщение..." />
-									<div className="pv_send_comment">
-										<span className="fa fa-send" />
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="pv_picture_layer">
-							<ImageLoader
-							src={photo_600} 
-							className="pv_picture"
-							preloader={() => (<img src="/img/preload.gif" alt=""/>)} />
-							<PostBottom
-							title={photo_title}
-							desc={photo_desc} />
-						</div>
-					</div>
+					{this.content()}
 				</Window>
 				{this.state.menu ? this.createMenu() : null}
 			</div>
-		);
+		)
+	}
+
+	mobileVersion() {
+		return this.content()
 	}
 
 	closePhotoView() {
-		if(this.props.postPhotoViewId){
+		const {
+			onClose,
+			postPhotoViewId
+		} = this.props;
+
+		if(postPhotoViewId){
 			history.goBack();
-			this.props.onClose();
+			onClose();
 		} else {
 			this.setState({ redirect: true })
 		}

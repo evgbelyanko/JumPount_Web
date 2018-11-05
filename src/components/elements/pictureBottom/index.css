@@ -1,0 +1,78 @@
+.pictureBottom {
+	bottom: 0;
+	width: 100%;
+	color: #fff;
+	overflow: hidden;
+	position: absolute;
+	word-wrap: break-word;
+	text-overflow: ellipsis;
+	border-radius: 0 0 0 4px;
+	background: hsla(0, 0%, 12%, 0.7);
+}
+
+.pictureBottom_icon_desc, .pictureBottom_icon_up, .pictureBottom_icon_down, .pictureBottom_icon_edit, .pictureBottom_icon_check {
+	position: absolute;
+	right: 15px;
+	color: #fff;
+	font-size: 20px;
+	z-index: 101;
+}
+
+.pictureBottom_icon_up {
+	bottom: 5px;
+}
+
+.pictureBottom_icon_down {
+	bottom: 110px;
+}
+
+.pictureBottom_icon_edit, .pictureBottom_icon_check {
+	bottom: 20px;
+	visibility: hidden;
+}
+
+.pictureBottom > .pictureBottom_title {
+	position: relative;
+	top: 10px;
+	margin: 0 55px 0 15px;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+}
+.pictureBottom > .pictureBottom_desc {
+	top: 17px;
+	overflow: hidden;
+	position: relative;
+	float: left;
+	line-height: 1.3;
+	margin: 0 55px 0 15px;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	visibility: hidden;
+}
+
+.pictureBottom > .pictureBottom_form {
+	position: absolute;
+	visibility: hidden;
+	padding: 10px 40px 0px 15px;
+	width: 85%;
+}
+
+.pictureBottom > .pictureBottom_form input {
+	height: 24px;
+	width: calc(100% + 4px);
+	margin-bottom: 10px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	outline: 0;
+}
+
+.pictureBottom > .pictureBottom_form textarea{
+	width: 100%;
+	height: 90px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	outline: 0;
+	resize: none;
+}

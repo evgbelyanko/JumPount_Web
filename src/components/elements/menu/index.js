@@ -31,11 +31,11 @@ class Menu extends React.Component {
 }
 
 Menu.propTypes = {
-    auth: PropTypes.object.isRequired
+	page: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth
+	page: state.page,
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,5 +1,5 @@
 .follow{
-	width: 100%;
+	max-width: 600px;
 }
 .follow_name_block{
 	border-bottom: 1px solid #ccc;

@@ -1,56 +1,42 @@
-.window{
+.photoView {
+	display: flex;
 	flex-direction: column;
 	width: 100%;
+	max-width: 600px;
 }
-.pv_picture{
+
+.photoView > .photoView_picture img {
 	width: 100%;
 }
-.window_part{
-	border-top: 1px solid #ccc;
+
+.photoView > .photoView_autor {
+	order: 1;
 }
-.pv_comments {
-	overflow-y: scroll;
-	margin-bottom: 40px;
+
+.photoView > .photoView_picture {
+	order: 2;
 }
-.pv_input {
+
+.photoView > .photoView_postInfo {
+	order: 3;
+}
+
+.photoView > .photoView_comments {
+	order: 4;
+	margin-bottom: 100px;
+}
+
+.photoView > .photoView_input {
+	order: 5;
 	position: fixed;
-	z-index: 200;
-}
-.pv_like_on{
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	color: #fff;
-	background-color: #1b1e24;
-	border: 1px solid #1b1e24;
-	padding: 3px;
-}
-.pv_like_off{
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	color: #000;
-	background-color: #fff;
-	border: 1px solid #1b1e24;
-	padding: 3px;
-}
-.pv_likes_count{
-	position: absolute;
-	right: 70px;
-}
-.pv_comments_count{
-	position: absolute;
-	right: 10px;
-}
-.pv_desc_form{
-	width: 80%;
-}
-.pv_desc_form input{
+	bottom: 0;
 	width: 100%;
+	height: 40px;
+	z-index: 999;
 }
-.pv_desc_form textarea{
-	width: 99%;
-}
-.pv_comments_empty{
-	margin-bottom: 50px;
+
+.photoView > .photoView_input > textarea {
+	bottom: 0;
+	width: 100%;
+	position: absolute;
 }

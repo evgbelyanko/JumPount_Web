@@ -1,17 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { history } from './../../../store'
+
+import Menu from '../../elements/menu'
 import Window from '../../elements/window'
 import UserBlock from '../../elements/userBlock'
-import Menu from '../../elements/menu'
-import './index.css'
+
 import { logout } from '../../../actions/auth/logout'
 import { setActivePage } from '../../../actions/follows'
 
+import './index.css'
+
 class Follows extends React.Component {
 
-	constructor(props) {
-		super(props)
+	constructor() {
+		super()
 
 		this.state = {
 			isLoaded: false,
@@ -23,9 +27,19 @@ class Follows extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch(`/follows/users?
-			page=${this.props.pageFollows}&
-			userid=${this.props.userId}`, {
+		const userId = this.props.userId ? this.props.userId : this.props.match.params.userId;
+		const pageFollows = this.props.pageFollows ? this.props.pageFollows : this.props.match.params.pageFollows;
+
+		const {
+			page,
+			onClose
+		} = this.props;
+
+		if(pageFollows && userId) window.onpopstate = () => { onClose() }
+		if(page.device === 'desktop') history.push(`/${pageFollows}/${userId}`);
+
+
+		fetch(`/follows/users?page=${pageFollows}&userid=${userId}`, {
 			credentials: 'include'
 		})
 		.then(res => res.json())
@@ -40,38 +54,60 @@ class Follows extends React.Component {
 				listUsers: data.listUsers
 			})
 		})
+
+		this.props.setActivePage();
+	}
+
+	componentWillUpdate() {
+		history.replace(`/user${this.defUserId()}`);
 	}
 
 	render() {
 		if(!this.state.isLoaded) return false;
 
-		const {
-			menu,
-			ownerUsername
-		} = this.state;
+		return this.props.page.device === 'desktop' ? this.desktopVersion() : this.mobileVersion();
+	}
 
+	content() {
+		return (
+			<div>
+				<div className="follow_name_block">
+					<div className="follow_name_block_row">
+						<span className="fa fa-user follow_icon"></span>
+						<div className="follow_page_name">{this.state.ownerUsername}</div>
+					</div>
+				</div>
+				<div id="follow_output" className="follow_result">
+					{ this.listUsers() }
+				</div>
+			</div>
+		)
+	}
+
+	desktopVersion() {
 		return (
 			<div>
 				<Window 
 				width={600} 
-				onClose={() => this.props.onClose()}
-				>
+				onClose={() => this.props.onClose()} >
 					<div className="follow">
-						<div className="follow_name_block">
-							<div className="follow_name_block_row">
-					    		<span className="fa fa-user follow_icon"></span>
-					    		<div className="follow_page_name">{ownerUsername}</div>
-							</div>
-						</div>
-						<div id="follow_output" className="follow_result">
-							{ this.listUsers() }
-						</div>
+						{this.content()}
 					</div>
 				</Window>
-				{menu ? this.createMenu() : null}
+				{this.state.menu ? this.createMenu() : null}
 			</div>
-		);
+		)
 	}
+
+	mobileVersion() {
+		return (
+			<div className="follow">
+				{this.content()}
+				{this.state.menu ? this.createMenu() : null}
+			</div>
+		)
+	}
+
 
 	listUsers() {
 		const listUsers = this.state.listUsers.map((user, key) => 
@@ -90,7 +126,7 @@ class Follows extends React.Component {
 
 	createMenu() {
 		return (
-			<Menu onClose={() => this.closeGroupButton()} />
+			<Menu onClose={() => this.closeMenu()} />
 		);
 	}
 	openMenu() { this.setState({ menu: true }) }

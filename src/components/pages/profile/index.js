@@ -25,14 +25,7 @@ class Profile extends React.Component {
 
 	defUserId() {
 		const userIdURL = this.props.match.params.userId;
-		let userId = null;
-
-		if(userIdURL){
-			userId = userIdURL;
-		} else {
-			userId = localStorage.userId;
-			history.replace('/profile/' + userId);
-		}
+		const userId = userIdURL ? userIdURL : localStorage.userId;
 
 		return userId;
 	}
@@ -54,6 +47,7 @@ class Profile extends React.Component {
 			})
 		})
 
+		history.replace(`/user/${this.defUserId()}`);
 		this.props.setActivePage();
 	}
 

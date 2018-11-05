@@ -10,16 +10,12 @@
 }
 
 .feed_post > .feed_picture {
-	position: relative;
-	background: hsl(0, 0%, 12%);
-	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-direction: column;
-	flex-direction: column;
-	-ms-flex-pack: center;
-	justify-content: center;
-	-ms-flex-align: center;
+	position: relative;
 	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	background: hsl(0, 0%, 12%);
 }
 
 .feed_post > .feed_picture img {

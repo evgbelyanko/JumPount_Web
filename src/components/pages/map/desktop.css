@@ -2,14 +2,14 @@
 	height: 100%;
 	top: 50px;
 }
-.map_item_info{
+.map_post_info{
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.map_href_item{
+.map_post{
 	cursor: pointer;
 }
-.map_href_item:last-child{
+.map_post:last-child{
 	margin-bottom: 70px;
 }
 @media only screen and  (min-width: 768px) {

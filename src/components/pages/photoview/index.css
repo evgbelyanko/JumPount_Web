@@ -1,104 +1,68 @@
 @import url('./desktop.css') (min-width: 768px);
 @import url('./mobile.css') (max-width: 768px);
 
-.window{
+.photoView {
 	background: #FFF;
-	display: flex;
-}
-.pv_picture {
-	z-index: 50;
-}
-.pv_picture_layer{
 	position: relative;
-	background: hsl(0, 0%, 12%);
+	border-radius: 4px;
+}
+
+@media screen and (min-width: 600px) and (max-width: 768px) {
+	.photoView {
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		margin-top: 15px;
+	}
+}
+
+.photoView > .photoView_picture {
 	display: flex;
+	position: relative;
+	align-items: center;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
+	background: hsl(0, 0%, 12%);
 }
-.pv_picture_bottom{
-	position: absolute;
-	bottom: 0;
-	background: hsla(0, 0%, 12%, 0.7);
-	height: 40px;
-	width: 100%;
-	border-radius: 0 0 0 4px;
-	display: flex;
-	color: #fff;
-	z-index: 100;
-	display: flex;
-  	flex-direction: column;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	word-wrap: break-word;
+
+.photoView > .photoView_autor {
+	border-bottom: 1px solid #ccc;
+	background: hsla(0, 0%, 93%, 0.35);
 }
-.pv_picture_bottom_title{
-	position: relative;
-	top: 10px;
-	margin: 0 55px 0 15px;
-	text-overflow: ellipsis;
-	word-wrap: break-word;
+
+.photoView > .photoView_postInfo {
+	border-bottom: 1px solid #ccc;
 }
-.pv_picture_bottom_desc{
-	top: 17px;
-	overflow: hidden;
-	position: relative;
-	float: left;
-	line-height: 1.3;
-	margin: 0 55px 0 15px;
-	text-overflow: ellipsis;
-	word-wrap: break-word;
-	visibility: hidden;
+
+.photoView > .photoView_comments {
+	padding: 0 0 0 5px;
+	overflow-y: scroll;
 }
-.pv_icon_desc, .pv_icon_up, .pv_icon_down, .pv_icon_edit, .pv_icon_check{
-	position: absolute;
-	right: 15px;
-	color: #fff;
-	font-size: 20px;
-	z-index: 101;
-}
-.pv_icon_up{
-	bottom: 5px;
-}
-.pv_icon_down{
-	bottom: 110px;
-}
-.pv_icon_edit, .pv_icon_check{
-	bottom: 20px;
-	visibility: hidden;
-}
-.window_part{
-	background: #fff;
-}
-.pv_msg {
+
+.photoView > .photoView_comments > .photoView_comments_msg {
 	position: relative;
 	padding: 5px 10px 5px 5px;
 }
-.pv_msg img {
-	-moz-border-radius: 50%;
-	-webkit-border-radius: 50%;
-	border-radius: 50%;
+
+.photoView > .photoView_comments > .photoView_comments_msg img {
+	float: left;
 	width: 40px;
 	height: 40px;
-	margin-right: 10px;
-	float: left;
 	cursor: pointer;
+	margin-right: 10px;
+	border-radius: 50%;
 }
-.pv_msg_block {
-	display:  flex;
-	flex-direction: column;
+
+.photoView > .photoView_comments .photoView_comments_msg_block {
 	word-wrap: break-word;
 	overflow: hidden;
 }
-.pv_msg_text {
+
+.photoView > .photoView_comments .photoView_comments_msg_block_text {
 	letter-spacing: -.20px;
 	line-height: 20px;
 }
-.pv_mg_head{
-	display: flex;
-	line-height: 20px;
-}
-.pv_msg_username {
+
+.photoView > .photoView_comments .photoView_comments_msg_block_username {
 	font-weight: bold;
 	margin-right: 10px;
 	white-space: nowrap;
@@ -106,56 +70,25 @@
 	text-overflow: ellipsis;
 	width: calc(100% - 30px);
 }
-.pv_msg_date{
-	font-size: 12px;
-	line-height: 22px;
-	color: #313131;
-}
-.pv_autor {
-	border-bottom: 1px solid #ccc;
-	background: hsla(0, 0%, 93%, 0.35);
-	height: 70px;
-}
-.pv_info {
-	position: relative;
-	display: flex;
-	border-bottom: 1px solid #ccc;
-	padding: 10px;
-	order: 3;
-}
-.pv_desc{
-	height: 40px;
-	word-wrap: break-word;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding: 5px 10px 5px 5px;
-	border-bottom: 1px solid #ccc;
-}
-.pv_input{
-	position: absolute;
-	background: #fff;
-	bottom: 0;
-	right: 0;
+
+
+.photoView > .photoView_input {
 	max-height: 80px;
-	height: 40px;
-	display: flex;
 	border-radius: 0 0 4px 0;
 	border-top: 1px solid #ccc;
 }
-.pv_new_comment{
-	position: absolute;
-	left: 0;
-	bottom: 0;
+
+.photoView > .photoView_input > textarea {
 	height: 40px;
 	max-height: 80px;
-	width: 240px;
 	line-height: 1.45;
 	border-radius: 0;
 	border: 0;
 	resize: none;
 	padding: 0 10px;
 }
-.pv_send_comment{
+
+.photoView > .photoView_input > button {
 	position: absolute;
 	right: 0;
 	bottom: 0;
@@ -163,47 +96,5 @@
 	width: 40px;
 	color: #fff;
 	background-color: #1d2127;
-	border: 0;
 	border-radius: 0 0 4px 0;
-	text-align: center;
-	cursor: pointer;
-}
-.pv_send_comment span{
-	margin: 8px;
-}
-.pv_comment_delete{
-	position:absolute;
-	right: 5px;
-	font-size:15px;
-}
-.pv_like_on:before {
-	content: 'Вы уже оценили';
-}
-.pv_like_off:before {
-	content: 'Мне нравиться';
-}
-.pv_info_counter{
-	position: absolute;
-	bottom: 12px;
-	right: 10px;
-	color: #000000b5;
-	display: flex;
-}
-.pv_info_counter_icon{
-	margin-left: 10px;
-}
-.pv_info_counter_text{
-	margin: 0 5px;
-}
-.pv_comments_loadmore{
-	margin: 10px 20px 5px;
-}
-.pv_comments_empty{
-	text-align: center;
-}
-.pv_comments_empty_icon{
-	font-size: 96px;
-}
-.pv_comments_empty_text{
-	font-style: italic;
 }

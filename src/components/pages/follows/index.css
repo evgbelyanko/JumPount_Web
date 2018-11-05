@@ -1,30 +1,10 @@
 @import url('./desktop.css') (min-width: 768px);
 @import url('./mobile.css') (max-width: 768px);
 
-.follow{
-	background: #f4f0ff;
-	padding: 10px;
-	max-width: 580px;
-	height: 600px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
+.follow {
+	width: 100%;
 }
-.follow_name_block{
-	border: 1px solid #ccc;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-}
-.follow_result{
-	height: 530px;
-	border: 1px solid #ccc;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	margin-top: 15px;
-	overflow-y: scroll;
-}
+
 .follow_name_block{
 	display: flex;
 	width: 100%;
@@ -60,4 +40,11 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+
+@media screen and  (min-width: 600px) {
+	.follow_name_block, .follow_result {
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
 }

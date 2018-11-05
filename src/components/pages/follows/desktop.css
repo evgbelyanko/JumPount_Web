@@ -1,3 +1,11 @@
-.camera_btn{
-	cursor: pointer;
+.follow{
+	background: #f4f0ff;
+	padding: 10px;
+	max-width: 580px;
+	height: 600px;
+}
+.follow_result{
+	height: 530px;
+	margin-top: 15px;
+	overflow-y: scroll;
 }

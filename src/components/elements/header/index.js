@@ -8,12 +8,10 @@ import './index.css'
 class Header extends React.Component {
 
 	render() {
-		if(!this.props.page.active) return false;
-
 		const {
 			name,
 			device
-		} = this.props.page.active;
+		} = this.props.page;
 		const setActiveClassName = 'navigation_active';
 
 		return (
@@ -46,7 +44,7 @@ class Header extends React.Component {
 					</Link>
 				</li>
 				<li>
-					<Link to="/profile" className={name === 'profile' ? setActiveClassName : null}>
+					<Link to={`/user/${localStorage.userId}`} className={name === 'profile' ? setActiveClassName : null}>
 						<span className="fa fa-user navigation_icon" />
 						{ device === 'desktop' ? <span className="navigation_text">Профиль</span> : null }
 					</Link>

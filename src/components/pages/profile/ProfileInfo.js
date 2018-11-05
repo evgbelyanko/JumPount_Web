@@ -26,41 +26,31 @@ export default class ProfileInfo extends React.Component {
 
 		return (
 			<div className="profile_info">
-				<div className="profile_info_head">
-					<img src={avatar_150} className="profile_info_head_avatar picture_shadow" alt="" />
-					<div className="profile_info_head_addons">
-						<div className="profile_info_head_line">
-							<div className="profile_info_head_name">{user_name}</div>
-							{country_name ? this.blockCountry(country_name) : null}
-							{user_website ? this.blockWebsite(user_website) : null}
-							<div className="fa fa-ellipsis-h user_action_post" style={{fontSize: 24}} onClick={() => this.openMenu()}></div>
-						</div>
-						<div className="profile_info_custom">
-							<div id="publications" className="profile_info_custom_btn_publications">
-								Публикации:
-								<div className="profile_info_custom_btn_row">
-									<span className="fa fa-photo"></span>
-									<span className="profile_info_custom_btn_row_counter">{count_posts}</span>
-								</div>
-							</div>
-							<div id="followers" className="profile_info_custom_btn" onClick={() => this.openFollows('followers')}>
-								Подписчики:
-								<div className="profile_info_custom_btn_row">
-									<span className="fa fa-users"></span>
-									<span className="profile_info_custom_btn_row_counter">{user_followers}</span>
-								</div>
-							</div>
-							<div id="following" className="profile_info_custom_btn" onClick={() => this.openFollows('following')}>
-								Подписки:
-								<div className="profile_info_custom_btn_row">
-									<span className="fa fa-users"></span>
-									<span className="profile_info_custom_btn_row_counter">{user_following}</span>
-								</div>
-							</div>
-						</div>
-						{user_desc ? this.blockDesc(user_desc) : null}
-					</div>
+				<img src={avatar_150} className="profile_info_avatar picture_shadow" alt="" />
+				<div className="profile_info_data">
+					<div className="profile_info_data_name">{user_name}</div>
+					{country_name ? this.blockCountry(country_name) : null}
+					{user_website ? this.blockWebsite(user_website) : null}
+					<div className="fa fa-ellipsis-h user_action_post" style={{fontSize: 24}} onClick={() => this.openMenu()}></div>
 				</div>
+				<div className="profile_info_custom">
+					<button>
+						<div>Публикации:</div>
+						<span className="fa fa-photo"></span>
+						<span style={{fontWeight: 'bold'}}> {count_posts}</span>
+					</button>
+					<button style={{cursor: 'pointer'}} onClick={() => this.openFollows('followers')}>
+						<div>Подписчики:</div>
+						<span className="fa fa-users"></span>
+						<span style={{fontWeight: 'bold'}}> {user_followers}</span>
+					</button>
+					<button style={{cursor: 'pointer'}} onClick={() => this.openFollows('following')}>
+						<div>Подписки:</div>
+						<span className="fa fa-users"></span>
+						<span style={{fontWeight: 'bold'}}> {user_following}</span>
+					</button>
+				</div>
+				{user_desc ? this.blockDesc(user_desc) : null}
 				{this.state.pageFollows ? this.createFollows() : null}
 				{this.state.menu ? this.createMenu() : null}
 			</div>
@@ -69,7 +59,7 @@ export default class ProfileInfo extends React.Component {
   
 	blockCountry(country_name) {
 		return (
-			<div className="profile_info_head_home">
+			<div className="profile_info_data_home">
 				<span className="fa fa-home" />
 				<span> {country_name}</span>
 			</div>
@@ -78,7 +68,7 @@ export default class ProfileInfo extends React.Component {
 
 	blockWebsite(user_website) {
 		return (
-			<a href={user_website} target="_blank" className="profile_info_head_website">
+			<a href={user_website} target="_blank" className="profile_info_data_website">
 				<span className="fa fa-internet-explorer" />
 				<span> {user_website}</span>
 			</a>
@@ -87,7 +77,7 @@ export default class ProfileInfo extends React.Component {
 
 	blockDesc(user_desc) {
 		return (
-			<div className="profile_desc">
+			<div className="profile_info_desc">
 				<span className="fa fa-address-card-o" />
 				<span> {user_desc}</span>
 			</div>
@@ -96,21 +86,16 @@ export default class ProfileInfo extends React.Component {
 	createFollows() {
 		return (
 			<Follows
-				onClose={() => this.closeFollows()}
-				userId={this.props.profileInfo.user_id}
-				pageFollows={this.state.pageFollows}
-			/>
+			onClose={() => this.closeFollows()}
+			userId={this.props.profileInfo.user_id}
+			pageFollows={this.state.pageFollows} />
 		);
 	}
 	openFollows(pageFollows) { this.setState({ pageFollows: pageFollows }) }
 	closeFollows() { this.setState({ pageFollows: null }) }
 
 	createMenu() {
-		return (
-			<Menu
-				onClose={() => this.closeMenu()}
-			/>
-		);
+		return <Menu onClose={() => this.closeMenu()} />
 	}
 	openMenu() { this.setState({ menu: true }) }
 	closeMenu() { this.setState({ menu: null }) }

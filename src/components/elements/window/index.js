@@ -6,10 +6,10 @@ export default class Window extends React.Component {
 
 	render() {
 		const {
-			onClose,
 			width,
+			zIndex,
+			onClose,
 			children,
-			zIndex
 		} = this.props;
 		const varZIndex = zIndex ? zIndex : 800;
 

@@ -1,48 +1,39 @@
-.profile{
+.profile {
 	max-width: 900px;
 	width: 100%;
 	margin-top: 15px;
 }
-.profile_info{
+
+.profile > .profile_info {
 	border: 1px solid #ccc;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
+	grid-template-columns: 170px auto;
 }
-.profile_info_head{
-	padding: 10px;
-}
-.profile_info_head_avatar{
+
+.profile > .profile_info > .profile_info_avatar {
 	height: 150px;
 	width: 150px;
 	border-radius: 8px;
 	flex-shrink: 0;
+	grid-row-start: 1;
+	grid-row-end: 3;
 }
-.profile_info_head_addons{
-	width: 100%;
-	margin-left: 15px;
-}
-.profile_info_custom_btn_publications{
-	cursor: crosshair;
-}
-.profile_info_custom_btn{
-	cursor: pointer;
-}
-.profile_gallery_item_image {
-	margin: 10px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	cursor: pointer;
-}
-.profile_content{
+
+.profile_gallery {
 	border: 1px solid #ccc;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 }
-.profile_gallery_item_image img{
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+
+.profile_gallery > .profile_gallery_post {
+	padding: 10px;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+.profile_gallery > .profile_gallery_post img {
 	border-radius: 4px;
 }

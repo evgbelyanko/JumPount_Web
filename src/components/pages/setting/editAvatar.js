@@ -30,17 +30,15 @@ class EditAvatar extends React.Component {
 }
 
 EditAvatar.propTypes = {
-	auth: PropTypes.object.isRequired
+	page: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	auth: state.auth
+	page: state.page,
 })
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		//fetchData: (url) => dispatch(jsonFetchData(url))
-	};
-};
+const mapDispatchToProps = (dispatch) => ({
+
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditAvatar);

@@ -47,6 +47,17 @@ textarea, input {
 	-moz-appearance: none;
 }
 
+button {
+	margin: 0;
+	border: 0;
+	outline: 0;
+	color: #000;
+	cursor: pointer;
+	background: none;
+	line-height: 1.5;
+	font-size: 13.5px;
+}
+
 
 .cursive{
 	font-family: Bradley Hand, cursive;
@@ -92,3 +103,35 @@ textarea:hover::-webkit-scrollbar-thumb {
 	flex-direction: column;
 	align-items: center;
 }
+
+.btn_black {
+	color: #fff;
+	height: 26px;
+	width: 130px;
+	border-radius: 4px;
+	background-color: #1b1e24;
+	border: 1px solid #1b1e24;
+}
+
+.btn_white {
+	color: #000;
+	height: 26px;
+	width: 130px;
+	border-radius: 4px;
+	background-color: #fff;
+	border: 1px solid #1b1e24;
+}
+
+.btn_black:hover {
+	box-shadow: 0 0 0 1.5px #fff inset;
+	border-radius: 6px;
+}
+
+.btn_white:hover {
+	box-shadow: 0 0 0 1px #000 inset;
+	border-radius: 6px;
+}
+
+/*.pv_like_on:active, .pv_like_off:focus {
+	outline: none;
+}*/

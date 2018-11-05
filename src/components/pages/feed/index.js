@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import ImageLoader from 'react-imageloader'
 import PostInfo from '../../elements/postInfo'
 import UserBlock from '../../elements/userBlock'
-import PostBottom from '../../elements/postBottom'
+import PictureBottom from '../../elements/pictureBottom'
 import Menu from '../../elements/menu'
 import { logout } from '../../../actions/auth/logout'
 import { setActivePage } from '../../../actions/feed'
@@ -74,10 +74,9 @@ class Feed extends React.Component {
 					<ImageLoader
 					src={post.photo_600} 
 					preloader={() => (<img src="/img/preload.gif" alt=""/>)} />
-					<PostBottom
-						title={post.photo_title}
-						desc={post.photo_desc}
-					/>
+					<PictureBottom
+					title={post.photo_title}
+					desc={post.photo_desc} />
 				</div>
 
 				<PostInfo
