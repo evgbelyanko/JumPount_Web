@@ -1,13 +1,66 @@
-import { SET_ACTIVE_PAGE } from './types'
+import {
+	OPEN_MENU,
+	CLOSE_MENU,
+	FOLLOWS_OPEN,
+	SET_PAGE_CONF,
+	PHOTOVIEW_OPEN,
+	GET_PAGE_DATA_REQUEST,
+	GET_PAGE_DATA_SUCCESS,
+	GET_PAGE_DATA_FAILURE,
+} from './types'
+import { userLogout } from './auth/logout';
+import { followsGetPageData } from './follows';
 import { setTypeDevice } from './setTypeDevice';
-//import { logout } from './auth/logout';
+import { photoViewGetPageData } from './photoView';
 
-export const setActivePage = () => {
+export const setPageConf = () => {
 	return {
-		type: SET_ACTIVE_PAGE,
+		type: SET_PAGE_CONF,
 		payload: {
 			name: 'profile',
 			device: setTypeDevice()
 		}
 	}
+}
+
+
+export const openMenu = () => ({ type: OPEN_MENU })
+export const closeMenu = () => ({ type: CLOSE_MENU })
+
+
+export const followsOpen = (page, userId) => dispatch => { 
+	dispatch(followsGetPageData(page, userId))
+
+	return { type: FOLLOWS_OPEN }
+}
+
+
+export const photoViewOpen = (postId) => dispatch => {
+	dispatch(photoViewGetPageData(postId))
+	
+	return { type: PHOTOVIEW_OPEN }
+}
+
+
+export const getPageDataSuccess = (data) => ({
+	type: GET_PAGE_DATA_SUCCESS,
+	payload: data
+})
+export const getPageDataRequest = () => ({ type: GET_PAGE_DATA_REQUEST })
+export const getPageDataFailure = () => ({ type: GET_PAGE_DATA_FAILURE })
+export const getPageData = (userId) => dispatch => {
+	dispatch(getPageDataRequest())
+	fetch(`/profile/getInfo?id=${userId}`, {
+		credentials: 'include'
+	})
+	.then(res => res.json())
+	.then(data => {
+		if(data.error === 401) {
+			dispatch(getPageDataFailure())
+			dispatch(userLogout())
+			return false;
+		}
+		dispatch(getPageDataSuccess(data))
+		dispatch(setPageConf())
+	})
 }

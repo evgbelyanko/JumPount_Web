@@ -5,20 +5,21 @@ import { Link } from 'react-router-dom'
 import { compose, withProps, withStateHandlers } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer"
-import { logout } from '../../../actions/auth/logout'
-import { setActivePage } from '../../../actions/map'
 
-import './index.css'
+import { getPageData } from '../../../actions/map'
 
 import Panel from './panel'
 import PhotoView from '../photoview'
+import Preload from '../../elements/preload'
+
+import './index.css'
 
 const MapWithAMarkerClusterer = compose(
 	withProps({
 		googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAeSOHuULn3P2EafsXS4t5163z5ouAML9Y&v=3.exp&libraries=geometry,drawing,places",
-		loadingElement: <div style={{ height: `100%` }} />,
+		loadingElement: <div />,
 		containerElement: <div id="map" />,
-		mapElement: <div style={{ height: `100%` }} />,
+		mapElement: <div style={{ height: `100vh` }} />,
 	}),
 	withStateHandlers(() => ({
 		visiblePanel: false,
@@ -35,12 +36,6 @@ const MapWithAMarkerClusterer = compose(
 		}),
 		closePanel: ({ visiblePanel }) => () => ({
 			visiblePanel: false
-		}),
-		openPhotoView: ({ postPhotoViewId }) => (postPhotoViewId) => ({
-			postPhotoViewId: postPhotoViewId
-		}),
-		closePhotoView: ({ postPhotoViewId }) => () => ({
-			postPhotoViewId: null
 		}),
 	}),
 	withScriptjs,
@@ -77,73 +72,44 @@ const MapWithAMarkerClusterer = compose(
 			<span className="fa fa-camera" />
 		</Link>
 
-		{props.postPhotoViewId ? (
-			<PhotoView 
-			onClose={props.closePhotoView} 
-			postPhotoViewId={props.postPhotoViewId} /> 
-		) : null }
-
-		{props.visiblePanel ? (
-			<Panel 
-			markersIds={props.markersIds} 
-			openPhotoView={props.openPhotoView} 
-			history={props.history} /> 
-		) : null }
+		{props.visiblePanel ? <Panel markersIds={props.markersIds} /> : null }
 
 	</GoogleMap>
 );
 
 class Gmap extends React.PureComponent {
-
-	constructor() {
-		super();
-
-		this.state = {
-			isLoaded: false,
-			markers: []
-		};
-	}
-
-	componentDidMount() {
-		fetch(`/map/clusters`, {
-			credentials: 'include'
-		})
-		.then(res => res.json())
-		.then(data => {
-			if(data.error === 401) {
-				this.props.logout();
-				return false;
-			}
-			this.setState({
-				isLoaded: true,
-				markers: data.listMarkers
-			});
-		})
-
-		this.props.setActivePage();
-	}
+	
+	componentDidMount() { this.props.getPageData(); }
 
 	render() {
-		if(!this.state.isLoaded) return <img src="/img/preload.gif" className="preload_page" alt=""/>;
+		if(!this.props.pageData.listMarkers) return <Preload />;
 
-		return <MapWithAMarkerClusterer markers={this.state.markers} history={this.props.history} />;
+		const {
+			pageData,
+			photoView
+		} = this.props;
+		return (
+			<div>
+				<MapWithAMarkerClusterer markers={pageData.listMarkers} />
+				{photoView.isLoaded ? <PhotoView /> : null}
+			</div>
+		)
 	}
-
 }
 
 Gmap.propTypes = {
-	page: PropTypes.object.isRequired,
-	logout: PropTypes.func.isRequired,
-	setActivePage: PropTypes.func.isRequired,
+	pageData: PropTypes.object.isRequired,
+	getPageData: PropTypes.func.isRequired,
+	photoView: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+	pageData: state.pageData,
+	photoView: state.photoView,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	logout: () => dispatch(logout()),
-	setActivePage: () => dispatch(setActivePage()),
+	getPageData: () => dispatch(getPageData()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Gmap);

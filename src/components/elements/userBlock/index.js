@@ -1,8 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import './index.css';
 
 export default class UserBlock extends React.Component {
+
+	constructor(){
+		super();
+		this.state = {
+			redirect: false
+		}
+	}
+
 
 	ellipsis() {
 		return (
@@ -15,24 +23,20 @@ export default class UserBlock extends React.Component {
 	}
 
 	render() {
-		const { 
+		const {
 			userId,
 			userName,
-			userAvatar,
+			ellipsis,
 			userDesc,
-			ellipsis
+			userAvatar,
 		} = this.props;
 
 		return (
 			<div className="user_block">
 				<div className="user_link">
-					<Link to={{
-							pathname: '/profile',
-							search: '?userid='+userId,
-						}} 
-						className="user_img">
+					<a href={`/user/${userId}`} className="user_img">
 						<img src={userAvatar} alt=""/>
-					</Link>
+					</a>
 					<div className="user_info">
 						<div className="user_nickname">
 							<span>{userName}</span>

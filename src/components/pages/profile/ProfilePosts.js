@@ -1,49 +1,50 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import PhotoView from '../photoview'
+import { photoViewOpen } from '../../../actions/profile'
 
-export default class ProfilePosts extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			postPhotoViewId: null,
-		}
-	}
+class ProfilePosts extends React.Component {
 
 	render() {
 	    return (
 			<div className="profile_gallery">
 				{this.postList()}
-				{this.state.postPhotoViewId ? this.createPhotoView() : null}
 			</div>
-	    );
+	    )
 	}
 
 	postList() {
-		const postList = this.props.profilePosts.map((post, key) => {
+		const { profilePosts } = this.props.pageData.profile;
+		const { photoViewOpen } = this.props;
+
+		const readyList = profilePosts.map((post, key) => {
 			return ( 
 				<div className="profile_gallery_post" key={key}>
 					<img 
 					src={post.photo_250} 
 					className="picture_shadow" 
-					onClick={() => this.openPhotoView(post.photo_id)} 
+					onClick={() => photoViewOpen(post.photo_id)} 
 					alt=""/>
 				</div>
 			)
 		})
 
-		return postList;
+		return readyList;
 	}
-
-	createPhotoView() {
-			return (
-				<PhotoView
-					onClose={() => this.closePhotoView()}
-					postPhotoViewId={this.state.postPhotoViewId}
-				/>
-			);
-	}
-    openPhotoView(postPhotoViewId) { this.setState({ postPhotoViewId: postPhotoViewId }) }
-    closePhotoView() { this.setState({ postPhotoViewId: null }) }
-
 }
+
+ProfilePosts.propTypes = {
+	pageData: PropTypes.object.isRequired,
+	photoViewOpen: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+	pageData: state.pageData,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	photoViewOpen: (postId) => dispatch(photoViewOpen(postId)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePosts);

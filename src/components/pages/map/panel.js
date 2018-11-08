@@ -1,62 +1,43 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { logout } from '../../../actions/auth/logout'
+
+import {
+	photoViewOpen,
+	getPanelPosts
+} from '../../../actions/map'
 
 class Panel extends React.Component {
-	constructor() {
-		super();
 
-		this.state = {
-			isLoaded: false,
-			listPosts: null,
-			postPhotoViewId: null,
-		};
-	}
-
-	getPostsFromServer(markersIds) {
-		fetch('http://localhost:8000/map/posts', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			credentials: 'include',
-			body: JSON.stringify({markerIds: markersIds})
-		})
-		.then(res => res.json())
-		.then(data => {
-			if(data.error === 401) {
-				this.props.logout();
-				return false;
-			}
-			this.setState({
-				isLoaded: true,
-				listPosts: data.listPosts
-			});
-		})
-	}
-
-	componentDidMount() {
-		this.getPostsFromServer(this.props.markersIds)
-	}
+	componentDidMount() { this.props.getPanelPosts(this.props.markersIds) }
 
 	componentWillReceiveProps(nextProps){
-		this.getPostsFromServer(nextProps.markersIds)
+		const {
+			markersIds,
+			getPanelPosts
+		} = this.props;
+
+		if(markersIds !== nextProps.markersIds) getPanelPosts(nextProps.markersIds);
 	}
 
 	render() {
-		if(!this.state.isLoaded) return false;
+		if(!this.props.panelPosts.isLoaded) return false;
 
 		return (
 			<div className="map_panel">
 				{this.loadListPosts()}
     		</div>
-		);
+		)
 	}
 
 	loadListPosts() {
-		const listPosts = this.state.listPosts.map((post, key) =>
-			<div className="map_post" onClick={() => this.onOpenPhotoView(post.photo_id)} key={key}>
+		const {
+			panelPosts,
+			photoViewOpen
+		} = this.props;
+
+		const readyList = panelPosts.listPosts.map((post, key) =>
+			<div className="map_post" onClick={() => photoViewOpen(post.photo_id)} key={key}>
 				<img src={post.photo_250} className="map_post_picture picture_shadow" alt=""/>
 				<div className="map_post_info">
 					<div className="map_post_user">
@@ -74,33 +55,21 @@ class Panel extends React.Component {
 			</div>
 		);
 
-		return listPosts;
+		return readyList;
 	}
-
-	onOpenPhotoView(postPhotoViewId){
-		const {
-			page,
-			history,
-			openPhotoView
-		} = this.props;
-
-		if(page.device === 'desktop') openPhotoView(postPhotoViewId);
-		if(page.device === 'mobile') history.push(`/photoview/${postPhotoViewId}`);
-	}
-
 }
 
 Panel.propTypes = {
-	page: PropTypes.object.isRequired,
-	logout: PropTypes.func.isRequired,
+	getPanelPosts: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+	panelPosts: state.panelPosts,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	logout: () => dispatch(logout())
+	photoViewOpen: (postId) => dispatch(photoViewOpen(postId)),
+	getPanelPosts: (markersIds) => dispatch(getPanelPosts(markersIds)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Panel);

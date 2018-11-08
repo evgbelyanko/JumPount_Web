@@ -11,7 +11,7 @@ class Header extends React.Component {
 		const {
 			name,
 			device
-		} = this.props.page;
+		} = this.props.pageConf;
 		const setActiveClassName = 'navigation_active';
 
 		return (
@@ -55,11 +55,11 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-	page: PropTypes.object.isRequired,
+	pageConf: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+	pageConf: state.pageConf,
 })
 
 

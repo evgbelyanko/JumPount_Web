@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Window from '../../elements/window'
-import { logout } from '../../../actions/auth/logout'
+import { userLogout } from '../../../actions/auth/logout'
 import './index.css';
 
 class Menu extends React.Component {
@@ -14,13 +14,14 @@ class Menu extends React.Component {
 			<Window 
 			width={500} 
 			onClose={() => this.props.onClose()}
-			zIndex={820}>
+			zIndex={820}
+			enable={true}>
 				<div className="wrap_btn_group">
 					<div className="wrap_btn">Отписка</div>
 					<Link to="/setting" className="wrap_btn">Настройки профиля</Link>
 					<div className="wrap_btn">Перейти к записи</div>
 					<div className="wrap_btn">Перейти к профилю пользователя</div>
-					<div className="wrap_btn" onClick={() => this.props.logout()}>Выход</div>
+					<div className="wrap_btn" onClick={() => this.props.userLogout()}>Выход</div>
 					<div className="wrap_btn" onClick={() => this.props.onClose()}>
 						{/*<div className="fa fa-close wrap_action_icon"/>*/} Закрыть окно
 					</div>
@@ -31,15 +32,15 @@ class Menu extends React.Component {
 }
 
 Menu.propTypes = {
-	page: PropTypes.object.isRequired,
+	pageConf: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+	pageConf: state.pageConf,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	logout: () => dispatch(logout())
+	userLogout: () => dispatch(userLogout())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);

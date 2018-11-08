@@ -1,19 +1,17 @@
 import React from 'react'
-import Follows from '../follows'
-import Menu from '../../elements/menu'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-export default class ProfileInfo extends React.Component {
+import {
+	openMenu,
+	followsOpen,
+} from '../../../actions/profile'
 
-	constructor(props) {
-		super(props)
-		this.state = {
-			pageFollows: null,
-			menu: null,
-		}
-	}
+class ProfileInfo extends React.Component {
 
 	render() {
 		const {
+			user_id,
 			user_desc,
 			user_name,
 			avatar_150,
@@ -22,7 +20,9 @@ export default class ProfileInfo extends React.Component {
 			country_name,
 			user_followers,
 			user_following,
-		} = this.props.profileInfo;
+		} = this.props.pageData.profile.profileInfo;
+
+		const { openMenu } = this.props;
 
 		return (
 			<div className="profile_info">
@@ -31,7 +31,7 @@ export default class ProfileInfo extends React.Component {
 					<div className="profile_info_data_name">{user_name}</div>
 					{country_name ? this.blockCountry(country_name) : null}
 					{user_website ? this.blockWebsite(user_website) : null}
-					<div className="fa fa-ellipsis-h user_action_post" style={{fontSize: 24}} onClick={() => this.openMenu()}></div>
+					<div className="fa fa-ellipsis-h user_action_post" style={{fontSize: 24}} onClick={() => openMenu()}></div>
 				</div>
 				<div className="profile_info_custom">
 					<button>
@@ -39,20 +39,18 @@ export default class ProfileInfo extends React.Component {
 						<span className="fa fa-photo"></span>
 						<span style={{fontWeight: 'bold'}}> {count_posts}</span>
 					</button>
-					<button style={{cursor: 'pointer'}} onClick={() => this.openFollows('followers')}>
+					<button style={{cursor: 'pointer'}} onClick={() => this.followsCreate('followers', user_id)}>
 						<div>Подписчики:</div>
 						<span className="fa fa-users"></span>
 						<span style={{fontWeight: 'bold'}}> {user_followers}</span>
 					</button>
-					<button style={{cursor: 'pointer'}} onClick={() => this.openFollows('following')}>
+					<button style={{cursor: 'pointer'}} onClick={() => this.followsCreate('following', user_id)}>
 						<div>Подписки:</div>
 						<span className="fa fa-users"></span>
 						<span style={{fontWeight: 'bold'}}> {user_following}</span>
 					</button>
 				</div>
 				{user_desc ? this.blockDesc(user_desc) : null}
-				{this.state.pageFollows ? this.createFollows() : null}
-				{this.state.menu ? this.createMenu() : null}
 			</div>
 		);
 	}
@@ -83,21 +81,34 @@ export default class ProfileInfo extends React.Component {
 			</div>
 		)
 	}
-	createFollows() {
-		return (
-			<Follows
-			onClose={() => this.closeFollows()}
-			userId={this.props.profileInfo.user_id}
-			pageFollows={this.state.pageFollows} />
-		);
-	}
-	openFollows(pageFollows) { this.setState({ pageFollows: pageFollows }) }
-	closeFollows() { this.setState({ pageFollows: null }) }
 
-	createMenu() {
-		return <Menu onClose={() => this.closeMenu()} />
+	followsCreate(page, userId) {
+		const {
+			history,
+			followsOpen
+		} = this.props;
+		const { device } = this.props.pageConf;
+
+		device === 'desktop' ? followsOpen(page, userId) : history.push(`/${page}/${userId}`);
 	}
-	openMenu() { this.setState({ menu: true }) }
-	closeMenu() { this.setState({ menu: null }) }
 
 }
+
+ProfileInfo.propTypes = {
+	openMenu: PropTypes.func.isRequired,
+	pageConf: PropTypes.object.isRequired,
+	pageData: PropTypes.object.isRequired,
+	followsOpen: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+	pageConf: state.pageConf,
+	pageData: state.pageData,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	openMenu: () => dispatch(openMenu()),
+	followsOpen: (page, userId) => dispatch(followsOpen(page, userId)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileInfo);

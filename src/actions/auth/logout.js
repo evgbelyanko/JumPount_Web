@@ -1,4 +1,4 @@
-export const logout = () => dispatch => {
+export const userLogout = () => dispatch => {
 	fetch(`/auth/logout`, {
 		method: 'post',
 		credentials: 'include',

@@ -1,60 +1,46 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+
+import {
+	openMenu,
+	closeMenu,
+	getPageData,
+	photoViewOpen,
+	getSearchUsers,
+	getSearchUsersFailure,
+} from '../../../actions/search'
+
 import PhotoView from '../photoview'
-import UserBlock from '../../elements/userBlock'
 import Menu from '../../elements/menu'
-import { logout } from '../../../actions/auth/logout'
-import { setActivePage } from '../../../actions/search'
+import Preload from '../../elements/preload'
+import UserBlock from '../../elements/userBlock'
 
 import './index.css';
 
 class Search extends React.Component {
 
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 
 		this.state = {
-			menu: null,
-			isLoaded: false,
-			listPosts: null,
-			listUsers: null,
-			inputField: null,
-			visibleUsers: false,
-			visiblePosts: true,
-			postPhotoViewId: null,
+			inputField: null
 		};
-		
 	}
 
-	componentDidMount() {
-		fetch(`/search/recent`, {
-			credentials: 'include'
-		})
-		.then(res => res.json())
-		.then(data => {
-			if(data.error === 401) {
-				this.props.logout();
-				return false;
-			}
-			this.setState({
-				isLoaded: true,
-				listPosts: data.listPosts
-			});
-		})
-
-		this.props.setActivePage();
-	}
+	componentDidMount() { this.props.getPageData(); }
 
 	render() {
-		if(!this.state.isLoaded) return <img src="/img/preload.gif" className="preload_page" alt=""/>;
+		if(!this.props.pageData.searchPosts) return <Preload />;
 
 		const {
 			menu,
-			visibleUsers,
-			visiblePosts,
-			postPhotoViewId,
-		} = this.state;
+			closeMenu,
+			photoView,
+			searchUsers,
+		} = this.props;
+		
+		const { inputField } = this.state;
 
 		return (
 			<div className="search">
@@ -62,23 +48,32 @@ class Search extends React.Component {
             		<div className="search_row">
                 		<span className="fa fa-search search_icon" />
                 		<input id="search_input" className="search_input" placeholder="Поиск пользователя" onChange={evt => this.updateInputValue(evt)}/>
-                		<div className="search_send" onClick={() => this.getUsersSearch()}>
+                		<div className="search_send" onClick={() => this.props.getSearchUsers(inputField)}>
                 			<span className="fa fa-send"></span>
                 		</div>
             		</div>
         		</div>
-        		{visibleUsers ? this.createListUsers() : null}
-                {visiblePosts ? this.createLastPosts() : null}
-                {postPhotoViewId ? this.createPhotoView() : null}
-                {menu ? this.createMenu() : null}
+        		{searchUsers.isLoaded ? this.createListUsers() : this.createLastPosts()}
+				{photoView.isLoaded ? <PhotoView /> : null}
+                {menu ? <Menu onClose={() => closeMenu()} /> : null}
     		</div>
 		);
 	}
 
+	updateInputValue(evt) {
+		const inputValue = evt.target.value;
+		const { getSearchUsersFailure } = this.props;
+
+	    inputValue.length !== 0 ? this.setState({ inputField: inputValue }) : getSearchUsersFailure();
+	}
+
 	createLastPosts() {
-		const listPosts = this.state.listPosts.map((post, key) =>
+		const { searchPosts } = this.props.pageData;
+		const { photoViewOpen } = this.props;
+
+		const readyList = searchPosts.map((post, key) =>
 			<div className="search_gallery_item picture_shadow" key={key} >
-				<div className="search_gallery_item_link" onClick={() => this.openPhotoView(post.photo_id)}>
+				<div className="search_gallery_item_link" onClick={() => photoViewOpen(post.photo_id)}>
 					<div className="search_gallery_item_image">
 						<img src={post.photo_250} alt=""/>
 					</div>
@@ -86,95 +81,58 @@ class Search extends React.Component {
 			</div>
 		);
 
-		return (
-			<div className="search_gallery">
-				{listPosts}
-			</div>
-		);
-	}
-
-	updateInputValue(evt) {
-		const inputValue = evt.target.value;
-
-	    if(inputValue.length !== 0){
-			this.setState({ inputField: inputValue });
-	    } else {
-			this.setState({ 
-				visiblePosts: true,
-				visibleUsers: false,
-			});
-	    }
-	}
-
-	getUsersSearch() {
-		const { inputField } = this.state;
-
-		fetch(`/search/users?name=${inputField}`)
-		.then(res => res.json())
-		.then(data => {
-			this.setState({
-				visibleUsers: true,
-				visiblePosts: false,
-				listUsers: data.listUsers,
-			});
-		})
-		.catch(err => {
-			
-		});
+		return <div className="search_gallery">{readyList}</div>;
 	}
 
 	createListUsers() {
-		const listUsers = this.state.listUsers.map((user, key) => 
-			<UserBlock 
+		const {
+			openMenu,
+			searchUsers
+		} = this.props;
+
+		const readyList = searchUsers.list.map((user, key) => 
+			<UserBlock
+			ellipsis={true}
 			userId={user.user_id}
 			userName={user.user_name}
 			userAvatar={user.avatar_50}
-			ellipsis="true"
-			ellipsisOpen={() => this.openMenu()}
-			ellipsisClose={() => this.closeMenu()}
+			ellipsisOpen={() => openMenu()}
 			key={key}/>
 		);
 		
-		return (
-			<div className="search_result">
-				{listUsers}
-			</div>
-		);
+		return <div className="search_result">{readyList}</div>;
 	}
-
-	createPhotoView() {
-		return (
-			<PhotoView
-			onClose={() => this.closePhotoView()}
-			postPhotoViewId={this.state.postPhotoViewId} />
-		);
-	}
-    openPhotoView(postPhotoViewId) { this.setState({ postPhotoViewId: postPhotoViewId }) }
-    closePhotoView() { this.setState({ postPhotoViewId: null }) }
-
-	createMenu() {
-		return (
-			<Menu onClose={() => this.closeMenu()} />
-		);
-	}
-	openMenu() { this.setState({ menu: true }) }
-	closeMenu() { this.setState({ menu: null }) }
 
 }
 
 Search.propTypes = {
-	page: PropTypes.object.isRequired,
-	logout: PropTypes.func.isRequired,
-	setActivePage: PropTypes.func.isRequired,
+	menu: PropTypes.bool.isRequired,
+	openMenu: PropTypes.func.isRequired,
+	closeMenu: PropTypes.func.isRequired,
+	pageConf: PropTypes.object.isRequired,
+	pageData: PropTypes.object.isRequired,
+	getPageData: PropTypes.func.isRequired,
+	searchUsers: PropTypes.object.isRequired,
+	photoViewOpen: PropTypes.func.isRequired,
+	getSearchUsers: PropTypes.func.isRequired,
+	getSearchUsersFailure: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+	menu: state.menu,
+	pageConf: state.pageConf,
+	pageData: state.pageData,
+	photoView: state.photoView,
+	searchUsers: state.searchUsers,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	logout: () => dispatch(logout()),
-	setActivePage: () => dispatch(setActivePage()),
+	openMenu: () => dispatch(openMenu()),
+	closeMenu: () => dispatch(closeMenu()),
+	getPageData: () => dispatch(getPageData()),
+	photoViewOpen: (postId) => dispatch(photoViewOpen(postId)),
+	getSearchUsersFailure: () => dispatch(getSearchUsersFailure()),
+	getSearchUsers: (inputField) => dispatch(getSearchUsers(inputField)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

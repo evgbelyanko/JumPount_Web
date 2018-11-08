@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import EditInfo from './editInfo'
 import EditAvatar from './editAvatar'
-import { logout } from '../../../actions/auth/logout'
+import { userLogout } from '../../../actions/auth/logout'
 import { setActivePage } from '../../../actions/setting'
 import './index.css'
 
@@ -25,7 +25,7 @@ class Setting extends React.Component {
 		.then(res => res.json())
 		.then(data => {
 			if(data.error === 401) {
-				this.props.logout();
+				this.props.userLogout();
 				return false;
 			}
 			this.setState({
@@ -53,7 +53,7 @@ class Setting extends React.Component {
 
 Setting.propTypes = {
 	page: PropTypes.object.isRequired,
-	logout: PropTypes.func.isRequired,
+	userLogout: PropTypes.func.isRequired,
 	setActivePage: PropTypes.func.isRequired,
 }
 
@@ -62,7 +62,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	logout: () => dispatch(logout()),
+	userLogout: () => dispatch(userLogout()),
 	setActivePage: () => dispatch(setActivePage()),
 })
 

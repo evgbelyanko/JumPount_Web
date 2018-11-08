@@ -2,74 +2,56 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import ImageLoader from 'react-imageloader'
+
+import {
+	openMenu,
+	closeMenu,
+	getPageData,
+} from '../../../actions/feed'
+
+import Menu from '../../elements/menu'
+import Preload from '../../elements/preload'
 import PostInfo from '../../elements/postInfo'
 import UserBlock from '../../elements/userBlock'
 import PictureBottom from '../../elements/pictureBottom'
-import Menu from '../../elements/menu'
-import { logout } from '../../../actions/auth/logout'
-import { setActivePage } from '../../../actions/feed'
+
 import './index.css'
 
 class Feed extends React.Component {
 
-	constructor() {
-		super();
-
-		this.state = {
-			isLoaded: false,
-			listPosts: null,
-			menu: null,
-		};
-	}
-
-	componentDidMount() {
-		fetch(`/feed/posts`, {
-			credentials: 'include'
-		})
-		.then(res => res.json())
-		.then(data => {
-			if(data.error === 401) {
-				this.props.logout();
-				return false;
-			}
-			this.setState({
-				isLoaded: true,
-				listPosts: data.listPosts 
-			})
-		})
-
-		this.props.setActivePage();
-	}
+	componentDidMount() { this.props.getPageData(); }
 
 	render() {
-		if(!this.state.isLoaded) return <img src="/img/preload.gif" className="preload_page" alt=""/>;
-		
+		if(!this.props.pageData.feedPosts) return <Preload />;
+
 		const {
 			menu,
-			listPosts
-		} = this.state;
+			closeMenu
+		} = this.props;
+		
+		const { feedPosts } = this.props.pageData;
 
 		return (
 			<div className="feed">
-				{listPosts ? this.loadListPosts() : null}
-				{menu ? this.createMenu() : null}
+				{feedPosts ? this.loadFeedPosts() : null}
+				{menu ? <Menu onClose={() => closeMenu()} /> : null}
 			</div>
 		);
 	}
 
-	loadListPosts() {
-		const listPosts = this.state.listPosts.map((post, key) =>
-			<div className="feed_post" key={key}>
+	loadFeedPosts() {
+		const { feedPosts } = this.props.pageData;
 
+		const readyList = feedPosts.map((post, key) =>
+			<div className="feed_post" key={key}>
 				<UserBlock 
 				userId={post.user_id}
 				userName={post.user_name}
 				userAvatar={post.avatar_50}
 				userDesc={post.photo_timestamp}
 				ellipsis="true"
-				ellipsisOpen={() => this.openMenu()}
-				ellipsisClose={() => this.closeMenu()} />
-
+				ellipsisOpen={() => this.props.openMenu()}
+				ellipsisClose={() => this.props.closeMenu()} />
 				<div className="feed_picture">
 					<ImageLoader
 					src={post.photo_600} 
@@ -78,42 +60,36 @@ class Feed extends React.Component {
 					title={post.photo_title}
 					desc={post.photo_desc} />
 				</div>
-
 				<PostInfo
-					photoLikes={post.photo_likes}
-					photoComments={post.photo_comments}
-					likeId={post.like_id}
-				/>
-
+				photoLikes={post.photo_likes}
+				photoComments={post.photo_comments}
+				likeId={post.like_id} />
 			</div>
-		);
+		)
 
-		return listPosts;
+		return readyList;
 	}
-
-	createMenu() {
-		return (
-			<Menu onClose={() => this.closeMenu()}/>
-		);
-	}
-	openMenu() { this.setState({ menu: true }) }
-	closeMenu() { this.setState({ menu: null }) }
-
 }
 
 Feed.propTypes = {
-	page: PropTypes.object.isRequired,
-	logout: PropTypes.func.isRequired,
-	setActivePage: PropTypes.func.isRequired,
+	menu: PropTypes.bool.isRequired,
+	openMenu: PropTypes.func.isRequired,
+	closeMenu: PropTypes.func.isRequired,
+	pageConf: PropTypes.object.isRequired,
+	pageData: PropTypes.object.isRequired,
+	getPageData: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+	menu: state.menu,
+	pageConf: state.pageConf,
+	pageData: state.pageData,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	logout: () => dispatch(logout()),
-	setActivePage: () => dispatch(setActivePage()),
+	openMenu: () => dispatch(openMenu()),
+	closeMenu: () => dispatch(closeMenu()),
+	getPageData: () => dispatch(getPageData()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

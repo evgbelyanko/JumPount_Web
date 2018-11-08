@@ -1,4 +1,4 @@
-import { logout } from './logout';
+import { userLogout } from './logout';
 
 
 export const refreshRequest = () => dispatch => {
@@ -8,7 +8,7 @@ export const refreshRequest = () => dispatch => {
 }
 
 export const refershFailure = () => {
-	logout();
+	userLogout();
 	return {
 		type: 'REFRESH_FAILURE'
 	}

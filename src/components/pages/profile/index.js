@@ -2,26 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { history } from './../../../store'
-import { logout } from '../../../actions/auth/logout'
-import { setActivePage } from '../../../actions/profile'
 
+import { getPageData } from '../../../actions/profile'
+
+import Follows from '../follows'
+import PhotoView from '../photoview'
 import ProfileInfo from './ProfileInfo'
 import ProfilePosts from './ProfilePosts'
+
+import Menu from '../../elements/menu'
+import Preload from '../../elements/preload'
 
 import './index.css'
 
 class Profile extends React.Component {
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			isLoaded: false,
-			profileInfo: null,
-			profilePosts: []
-		};
-		
-	}
 
 	defUserId() {
 		const userIdURL = this.props.match.params.userId;
@@ -31,60 +25,53 @@ class Profile extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch(`/profile/getInfo?id=${this.defUserId()}`, {
-			credentials: 'include'
-		})
-		.then(res => res.json())
-		.then(data => {
-			if(data.error === 401) {
-				this.props.logout();
-				return false;
-			}
-			this.setState({
-				isLoaded: true,
-				profileInfo: data.profileInfo,
-				profilePosts: data.profilePosts
-			})
-		})
-
-		history.replace(`/user/${this.defUserId()}`);
-		this.props.setActivePage();
+		const userId = this.defUserId();
+		
+		this.props.getPageData(userId);
+		history.replace(`/user/${userId}`);
 	}
 
 	render() {
-		if(!this.state.isLoaded) return <img src="/img/preload.gif" className="preload_page" alt=""/>;
+		if(!this.props.pageData.profile) return <Preload />;
 
-		const { 
-			profileInfo,
-			profilePosts,
-		} = this.state;
+		const {
+			menu,
+			history,
+			follows,
+			photoView
+		} = this.props;
 
 		return (
 			<div className="profile">
-				<ProfileInfo
-					profileInfo={profileInfo}
-				/>
-				<ProfilePosts 
-					profilePosts={profilePosts}
-				/>
+				<ProfileInfo 
+				history={this.props.history} />
+				<ProfilePosts
+				history={this.props.history} />
+
+				{menu ? <Menu /> : null}
+				{follows.isLoaded ? <Follows history={history} /> : null }
+				{photoView.isLoaded ? <PhotoView history={history} /> : null}
 			</div>
 		);
 	}
 }
 
 Profile.propTypes = {
-	page: PropTypes.object.isRequired,
-	logout: PropTypes.func.isRequired,
-	setActivePage: PropTypes.func.isRequired,
+	menu: PropTypes.bool.isRequired,
+	follows: PropTypes.object.isRequired,
+	pageData: PropTypes.object.isRequired,
+	getPageData: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+	menu: state.menu,
+	follows: state.follows,
+	pageData: state.pageData,
+	photoView: state.photoView,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	logout: () => dispatch(logout()),
-	setActivePage: () => dispatch(setActivePage()),
+	getPageData: (userId) => dispatch(getPageData(userId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

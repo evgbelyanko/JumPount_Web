@@ -1,11 +1,5 @@
 export const setTypeDevice = () => {
-	let device = null;
-
-	if(document.documentElement.clientWidth <= 768) {
-		device = 'mobile'
-	} else {
-		device = 'desktop'
-	}
+	const device = document.documentElement.clientWidth <= 768 ? 'mobile' : 'desktop';
 
 	return device;
 }

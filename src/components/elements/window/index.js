@@ -7,11 +7,14 @@ export default class Window extends React.Component {
 	render() {
 		const {
 			width,
+			enable,
 			zIndex,
 			onClose,
 			children,
 		} = this.props;
 		const varZIndex = zIndex ? zIndex : 800;
+
+		if(!enable) return children;
 
 		return (
 			<div className="wrap">

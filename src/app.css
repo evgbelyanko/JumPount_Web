@@ -3,16 +3,16 @@ html{
 	overflow-x: hidden;
 }
 body {
+	margin: 0;
+	color: #000;
 	height: 100vh;
 	width: 100vw;
-	background: #f4f0ff;
-	position: absolute;
-	font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
-	overflow-x: hidden;
-	font-size: 13.5px;
 	line-height: 1.5;
-	color: #000;
-	margin: 0;
+	font-size: 13.5px;
+	position: absolute;
+	background: #f4f0ff;
+	overflow-x: hidden;
+	font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
 }
 a {
 	text-decoration: none;
@@ -63,9 +63,19 @@ button {
 	font-family: Bradley Hand, cursive;
 }
 
-@media (max-width: 768px) {
-	a {
-		cursor: none;
+@media (min-width: 768px) {
+	body::-webkit-scrollbar-track {
+		border-radius: 4px;
+	}
+	body::-webkit-scrollbar {
+		width: 6px;
+	}
+	body::-webkit-scrollbar-thumb {
+		border-radius: 2px;
+		background: hsla(0, 0%, 0%, 0.5);
+	}
+	body:hover::-webkit-scrollbar-thumb {
+		background: hsla(0, 0%, 0%, 0.7);
 	}
 }
 

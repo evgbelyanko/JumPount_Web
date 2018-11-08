@@ -1,4 +1,4 @@
-import { SET_ACTIVE_PAGE } from '../actions/types';
+import { SET_PAGE_CONF } from '../actions/types';
 
 const initialState = { 
 	name: null,
@@ -7,8 +7,8 @@ const initialState = {
 
 export default function(state = initialState, action ) {
 	switch(action.type) {
-		case SET_ACTIVE_PAGE:
-			return action.payload
+		case SET_PAGE_CONF:
+			return {...state, ...action.payload}
 
 		default: 
 			return state;

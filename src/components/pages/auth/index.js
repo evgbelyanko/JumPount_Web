@@ -3,15 +3,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { authVkontakte } from '../../../actions/auth/login'
-import { setActivePage } from '../../../actions/auth/index'
+import { setPageConf } from '../../../actions/auth/index'
 import VkAuth from 'react-vk-auth'
 import { Redirect } from 'react-router'
 
 class Auth extends Component {
 
-	componentDidMount() {
-		this.props.setActivePage();
-	}
+	componentDidMount() { this.props.setPageConf(); }
 
 	render() {
 		if(localStorage.token) return <Redirect to='/'/>;
@@ -20,7 +18,7 @@ class Auth extends Component {
 			<div className="auth_back">
 				<div className="auth_block">
 					<div className="auth_icon"></div>
-					<div className="auth_name cursive">GERIDA</div>
+					<div className="auth_name cursive">JUMPOINT</div>
 					<VkAuth className="auth_btn" apiId="6704784" callback={(sessionData) => this.props.authVkontakte(sessionData)}>
 						<span className="auth_vk fa fa-vk"></span>
 						<span className="auth_btn_text">Авторизация через VK</span>
@@ -36,18 +34,18 @@ class Auth extends Component {
 }
 
 Auth.propTypes = {
+	pageConf: PropTypes.object.isRequired,
+	setPageConf: PropTypes.func.isRequired,
 	authVkontakte: PropTypes.func.isRequired,
-	page: PropTypes.object.isRequired,
-	setActivePage: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+	pageConf: state.pageConf,
 })
 
 const mapDispatchToProps = (dispatch) => ({
 	authVkontakte: (sessionData) => dispatch(authVkontakte(sessionData)),
-	setActivePage: () => dispatch(setActivePage()),
+	setPageConf: () => dispatch(setPageConf()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth)

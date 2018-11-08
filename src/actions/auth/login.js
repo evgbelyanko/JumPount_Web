@@ -1,19 +1,3 @@
-import { SET_CURRENT_USER } from '../types'
-
-
-
-export const authRequest = () => dispatch => {
-	return {
-		type: 'LOGIN_REQUEST'
-	}
-}
-
-export const authFailure = () => dispatch => {
-	return {
-		type: 'LOGIN_FAILURE'
-	}
-}
-
 export const authSuccess = (user) => dispatch => {
 	localStorage.setItem('userId', user.id);
 	localStorage.setItem('token', user.token);
@@ -25,17 +9,8 @@ export const authSuccess = (user) => dispatch => {
 	}
 }
 
-export const setCurrentUser = (decoded) => dispatch => {
-	return {
-		type: SET_CURRENT_USER,
-		payload: decoded
-	}
-}
-
 export const authVkontakte = (sessionData) => dispatch => {
 	const userId = sessionData.session.user.id;
-	
-	dispatch(authRequest());
 
 	fetch(`/auth/vkontakte`, {
 		method: 'post', 
@@ -49,7 +24,4 @@ export const authVkontakte = (sessionData) => dispatch => {
 		const { user } = result;
 		dispatch(authSuccess(user));
 	})
-	.catch(err => {
-		dispatch(authFailure());
-	});
 }
