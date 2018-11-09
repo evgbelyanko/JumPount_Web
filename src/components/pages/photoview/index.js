@@ -12,8 +12,7 @@ import UserBlock from '../../elements/userBlock'
 import PictureBottom from '../../elements/pictureBottom'
 
 import {
-	openMenu,
-	closeMenu,
+	menuOpen,
 	photoViewClose,
 	photoViewGetPageData,
 } from '../../../actions/photoView'
@@ -43,12 +42,13 @@ class PhotoView extends React.Component {
 		} = this.state;
 
 		const {
+			pageConf,
 			getPageData,
 			photoViewClose,
 		} = this.props;
 
 		window.onpopstate = () => { photoViewClose(); }
-		if(!autonomous) history.push(`/photoview/${postId}`);
+		if(!autonomous && pageConf.device === 'desktop') history.push(`/photoview/${postId}`);
 		if(autonomous) getPageData(postId);
 	}
 
@@ -71,8 +71,7 @@ class PhotoView extends React.Component {
 		const {
 			menu,
 			pageConf,
-			openMenu,
-			closeMenu,
+			menuOpen,
 		} = this.props;
 
 		return (
@@ -97,9 +96,11 @@ class PhotoView extends React.Component {
 							userName={user_name}
 							userAvatar={avatar_50}
 							userDesc={photo_timestamp}
-							ellipsis="true"
-							ellipsisOpen={() => openMenu()}
-							ellipsisClose={() => closeMenu()} />
+							ellipsis={true}
+							ellipsisOpen={() => menuOpen({
+								userId: user_id,
+								userName: user_name
+							})} />
 						</div>
 						<div className="photoView_postInfo">
 							<PostInfo
@@ -115,7 +116,12 @@ class PhotoView extends React.Component {
 						</div>
 					</div>
 				</Window>
-				{menu ? <Menu onClose={() => closeMenu()} /> : null}
+				{menu.isLoaded ? 
+					<Menu 
+					goToPost={true}
+					followUser={true}
+					goToProfile={true}
+					/> : null}
 			</div>
 		)
 	}
@@ -134,9 +140,8 @@ class PhotoView extends React.Component {
 }
 
 PhotoView.propTypes = {
-	menu: PropTypes.bool.isRequired,
-	openMenu: PropTypes.func.isRequired,
-	closeMenu: PropTypes.func.isRequired,
+	menu: PropTypes.object.isRequired,
+	menuOpen: PropTypes.func.isRequired,
 	pageConf: PropTypes.object.isRequired,
 	getPageData: PropTypes.func.isRequired,
 	photoViewClose: PropTypes.func.isRequired,
@@ -149,8 +154,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	openMenu: () => dispatch(openMenu()),
-	closeMenu: () => dispatch(closeMenu()),
+	menuOpen: (data) => dispatch(menuOpen(data)),
 	photoViewClose: () => dispatch(photoViewClose()),
 	getPageData: (postId) => dispatch(photoViewGetPageData(postId)),
 

@@ -36,7 +36,6 @@ class Profile extends React.Component {
 
 		const {
 			menu,
-			history,
 			follows,
 			photoView
 		} = this.props;
@@ -48,16 +47,21 @@ class Profile extends React.Component {
 				<ProfilePosts
 				history={this.props.history} />
 
-				{menu ? <Menu /> : null}
-				{follows.isLoaded ? <Follows history={history} /> : null }
-				{photoView.isLoaded ? <PhotoView history={history} /> : null}
+				{menu.isLoaded ? 
+					<Menu
+					followUser={true}
+					goToSetting={true}
+					goToUserLogout={true}
+					/> : null}
+				{follows.isLoaded ? <Follows /> : null }
+				{photoView.isLoaded ? <PhotoView /> : null}
 			</div>
 		);
 	}
 }
 
 Profile.propTypes = {
-	menu: PropTypes.bool.isRequired,
+	menu: PropTypes.object.isRequired,
 	follows: PropTypes.object.isRequired,
 	pageData: PropTypes.object.isRequired,
 	getPageData: PropTypes.func.isRequired,

@@ -45,7 +45,7 @@ class App extends React.Component {
 						<Authorized path="/camera" component={Camera} />
 						<Authorized path="/search" component={Search} />
 						<Authorized path="/photoview/:postId" component={PhotoView} />
-						<Authorized path="/user/setting" component={Setting} />
+						<Authorized path="/setting" component={Setting} />
 						<Authorized path="/user/:userId?" component={Profile} />
 						<Authorized path="/following/:userId" component={Follows} />
 						<Authorized path="/followers/:userId" component={Follows} />

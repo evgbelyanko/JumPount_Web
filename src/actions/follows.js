@@ -1,27 +1,32 @@
 import {
-	OPEN_MENU,
-	CLOSE_MENU,
+	MENU_OPEN,
 	SET_PAGE_CONF,
 	FOLLOWS_CLOSE,
 	FOLLOWS_REQUEST,
 	FOLLOWS_SUCCESS,
 	FOLLOWS_FAILURE,
 } from './types'
-import { userLogout } from './auth/logout';
-import { setTypeDevice } from './setTypeDevice';
+import { getMenuData } from './menu'
+import { userLogout } from './auth/logout'
+import { setTypeDevice } from './setTypeDevice'
 
 export const setPageConf = () => {
+	const name = setTypeDevice() === 'mobile' ? { name: 'follows' } : null;
+
 	return {
 		type: SET_PAGE_CONF,
 		payload: {
+			...name,
 			device: setTypeDevice()
 		}
 	}
 }
 
-export const openMenu = () => ({ type: OPEN_MENU })
-export const closeMenu = () => ({ type: CLOSE_MENU })
-
+export const menuOpen = (data) => dispatch => {
+	dispatch(getMenuData(data))
+	
+	return { type: MENU_OPEN }
+}
 
 export const followsSuccess = (data) => ({ 
 	type: FOLLOWS_SUCCESS,

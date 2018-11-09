@@ -72,7 +72,10 @@ const MapWithAMarkerClusterer = compose(
 			<span className="fa fa-camera" />
 		</Link>
 
-		{props.visiblePanel ? <Panel markersIds={props.markersIds} /> : null }
+		{props.visiblePanel ? 
+			<Panel 
+			history={props.history}
+			markersIds={props.markersIds} /> : null }
 
 	</GoogleMap>
 );
@@ -85,12 +88,15 @@ class Gmap extends React.PureComponent {
 		if(!this.props.pageData.listMarkers) return <Preload />;
 
 		const {
+			history,
 			pageData,
 			photoView
 		} = this.props;
 		return (
 			<div>
-				<MapWithAMarkerClusterer markers={pageData.listMarkers} />
+				<MapWithAMarkerClusterer 
+				history={history}
+				markers={pageData.listMarkers} />
 				{photoView.isLoaded ? <PhotoView /> : null}
 			</div>
 		)

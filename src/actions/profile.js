@@ -1,6 +1,5 @@
 import {
-	OPEN_MENU,
-	CLOSE_MENU,
+	MENU_OPEN,
 	FOLLOWS_OPEN,
 	SET_PAGE_CONF,
 	PHOTOVIEW_OPEN,
@@ -8,10 +7,11 @@ import {
 	GET_PAGE_DATA_SUCCESS,
 	GET_PAGE_DATA_FAILURE,
 } from './types'
-import { userLogout } from './auth/logout';
-import { followsGetPageData } from './follows';
-import { setTypeDevice } from './setTypeDevice';
-import { photoViewGetPageData } from './photoView';
+import { getMenuData } from './menu'
+import { userLogout } from './auth/logout'
+import { followsGetPageData } from './follows'
+import { setTypeDevice } from './setTypeDevice'
+import { photoViewGetPageData } from './photoView'
 
 export const setPageConf = () => {
 	return {
@@ -23,10 +23,11 @@ export const setPageConf = () => {
 	}
 }
 
-
-export const openMenu = () => ({ type: OPEN_MENU })
-export const closeMenu = () => ({ type: CLOSE_MENU })
-
+export const menuOpen = (data) => dispatch => {
+	dispatch(getMenuData(data))
+	
+	return { type: MENU_OPEN }
+}
 
 export const followsOpen = (page, userId) => dispatch => { 
 	dispatch(followsGetPageData(page, userId))

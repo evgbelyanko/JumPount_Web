@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 import ImageLoader from 'react-imageloader'
 
 import {
-	openMenu,
-	closeMenu,
+	menuOpen,
 	getPageData,
 } from '../../../actions/feed'
 
@@ -26,32 +25,40 @@ class Feed extends React.Component {
 
 		const {
 			menu,
-			closeMenu
+			pageData
 		} = this.props;
-		
-		const { feedPosts } = this.props.pageData;
 
 		return (
 			<div className="feed">
-				{feedPosts ? this.loadFeedPosts() : null}
-				{menu ? <Menu onClose={() => closeMenu()} /> : null}
+				{pageData.feedPosts ? this.loadFeedPosts() : null}
+				{menu.isLoaded ? 
+					<Menu 
+					goToPost={true}
+					followUser={true}
+					goToProfile={true}
+					/> : null}
 			</div>
 		);
 	}
 
 	loadFeedPosts() {
-		const { feedPosts } = this.props.pageData;
+		const {
+			menuOpen,
+			pageData,
+		} = this.props;
 
-		const readyList = feedPosts.map((post, key) =>
+		const readyList = pageData.feedPosts.map((post, key) =>
 			<div className="feed_post" key={key}>
-				<UserBlock 
+				<UserBlock
+				ellipsis={true}
 				userId={post.user_id}
 				userName={post.user_name}
 				userAvatar={post.avatar_50}
 				userDesc={post.photo_timestamp}
-				ellipsis="true"
-				ellipsisOpen={() => this.props.openMenu()}
-				ellipsisClose={() => this.props.closeMenu()} />
+				ellipsisOpen={() => menuOpen({
+					userId: post.user_id,
+					userName: post.user_name
+				})} />
 				<div className="feed_picture">
 					<ImageLoader
 					src={post.photo_600} 
@@ -72,9 +79,8 @@ class Feed extends React.Component {
 }
 
 Feed.propTypes = {
-	menu: PropTypes.bool.isRequired,
-	openMenu: PropTypes.func.isRequired,
-	closeMenu: PropTypes.func.isRequired,
+	menu: PropTypes.object.isRequired,
+	menuOpen: PropTypes.func.isRequired,
 	pageConf: PropTypes.object.isRequired,
 	pageData: PropTypes.object.isRequired,
 	getPageData: PropTypes.func.isRequired,
@@ -87,9 +93,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	openMenu: () => dispatch(openMenu()),
-	closeMenu: () => dispatch(closeMenu()),
 	getPageData: () => dispatch(getPageData()),
+	menuOpen: (data) => dispatch(menuOpen(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

@@ -1,6 +1,5 @@
 import {
-	OPEN_MENU,
-	CLOSE_MENU,
+	MENU_OPEN,
 	SET_PAGE_CONF,
 	PHOTOVIEW_OPEN,
 	GET_PAGE_DATA_REQUEST,
@@ -10,9 +9,10 @@ import {
 	GET_SEARCH_USERS_SUCCESS,
 	GET_SEARCH_USERS_FAILURE,
 } from './types'
-import { userLogout } from './auth/logout';
-import { setTypeDevice } from './setTypeDevice';
-import { photoViewGetPageData } from './photoView';
+import { getMenuData } from './menu'
+import { userLogout } from './auth/logout'
+import { setTypeDevice } from './setTypeDevice'
+import { photoViewGetPageData } from './photoView'
 
 export const setPageConf = () => ({
 	type: SET_PAGE_CONF,
@@ -22,10 +22,11 @@ export const setPageConf = () => ({
 	}
 })
 
-
-export const openMenu = () => ({ type: OPEN_MENU })
-export const closeMenu = () => ({ type: CLOSE_MENU })
-
+export const menuOpen = (data) => dispatch => {
+	dispatch(getMenuData(data))
+	
+	return { type: MENU_OPEN }
+}
 
 export const photoViewOpen = (postId) => dispatch => {
 	dispatch(photoViewGetPageData(postId))

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import {
-	openMenu,
-	closeMenu,
+	menuOpen,
 	getPageData,
 	photoViewOpen,
 	getSearchUsers,
@@ -44,19 +43,24 @@ class Search extends React.Component {
 
 		return (
 			<div className="search">
-        		<div className="search_block">
-            		<div className="search_row">
-                		<span className="fa fa-search search_icon" />
-                		<input id="search_input" className="search_input" placeholder="Поиск пользователя" onChange={evt => this.updateInputValue(evt)}/>
-                		<div className="search_send" onClick={() => this.props.getSearchUsers(inputField)}>
-                			<span className="fa fa-send"></span>
-                		</div>
-            		</div>
-        		</div>
-        		{searchUsers.isLoaded ? this.createListUsers() : this.createLastPosts()}
+				<div className="search_block">
+					<div className="search_row">
+						<span className="fa fa-search search_icon" />
+						<input id="search_input" className="search_input" placeholder="Поиск пользователя" onChange={evt => this.updateInputValue(evt)}/>
+						<div className="search_send" onClick={() => this.props.getSearchUsers(inputField)}>
+							<span className="fa fa-send"></span>
+						</div>
+					</div>
+				</div>
+				{searchUsers.isLoaded ? this.createListUsers() : this.createLastPosts()}
 				{photoView.isLoaded ? <PhotoView /> : null}
-                {menu ? <Menu onClose={() => closeMenu()} /> : null}
-    		</div>
+				{menu.isLoaded ? 
+					<Menu 
+					goToPost={true}
+					followUser={true}
+					goToProfile={true}
+					/> : null}
+			</div>
 		);
 	}
 
@@ -64,16 +68,15 @@ class Search extends React.Component {
 		const inputValue = evt.target.value;
 		const { getSearchUsersFailure } = this.props;
 
-	    inputValue.length !== 0 ? this.setState({ inputField: inputValue }) : getSearchUsersFailure();
+		inputValue.length !== 0 ? this.setState({ inputField: inputValue }) : getSearchUsersFailure();
 	}
 
 	createLastPosts() {
 		const { searchPosts } = this.props.pageData;
-		const { photoViewOpen } = this.props;
 
 		const readyList = searchPosts.map((post, key) =>
 			<div className="search_gallery_item picture_shadow" key={key} >
-				<div className="search_gallery_item_link" onClick={() => photoViewOpen(post.photo_id)}>
+				<div className="search_gallery_item_link" onClick={() => this.photoViewCreate(post.photo_id)}>
 					<div className="search_gallery_item_image">
 						<img src={post.photo_250} alt=""/>
 					</div>
@@ -86,29 +89,41 @@ class Search extends React.Component {
 
 	createListUsers() {
 		const {
-			openMenu,
+			menuOpen,
 			searchUsers
 		} = this.props;
 
 		const readyList = searchUsers.list.map((user, key) => 
 			<UserBlock
+			key={key}
 			ellipsis={true}
 			userId={user.user_id}
 			userName={user.user_name}
 			userAvatar={user.avatar_50}
-			ellipsisOpen={() => openMenu()}
-			key={key}/>
+			ellipsisOpen={() => menuOpen({
+				userId: user.user_id,
+				userName: user.user_name
+			})} />
 		);
 		
 		return <div className="search_result">{readyList}</div>;
 	}
 
+	photoViewCreate(postId) {
+		const {
+			history,
+			pageConf,
+			photoViewOpen,
+		} = this.props;
+
+		pageConf.device === 'desktop' ? photoViewOpen(postId) : history.push(`/photoview/${postId}`);
+	}
+
 }
 
 Search.propTypes = {
-	menu: PropTypes.bool.isRequired,
-	openMenu: PropTypes.func.isRequired,
-	closeMenu: PropTypes.func.isRequired,
+	menu: PropTypes.object.isRequired,
+	menuOpen: PropTypes.func.isRequired,
 	pageConf: PropTypes.object.isRequired,
 	pageData: PropTypes.object.isRequired,
 	getPageData: PropTypes.func.isRequired,
@@ -127,9 +142,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	openMenu: () => dispatch(openMenu()),
-	closeMenu: () => dispatch(closeMenu()),
 	getPageData: () => dispatch(getPageData()),
+	menuOpen: (data) => dispatch(menuOpen(data)),
 	photoViewOpen: (postId) => dispatch(photoViewOpen(postId)),
 	getSearchUsersFailure: () => dispatch(getSearchUsersFailure()),
 	getSearchUsers: (inputField) => dispatch(getSearchUsers(inputField)),

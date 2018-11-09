@@ -9,8 +9,7 @@ import Preload from '../../elements/preload'
 import UserBlock from '../../elements/userBlock'
 
 import {
-	openMenu,
-	closeMenu,
+	menuOpen,
 	followsClose,
 	followsGetPageData,
 } from '../../../actions/follows'
@@ -80,7 +79,12 @@ class Follows extends React.Component {
 						</div>
 					</div>
 				</Window>
-				{menu ? <Menu onClose={() => closeMenu()} /> : null}
+				{menu.isLoaded ? 
+					<Menu 
+					goToPost={true}
+					followUser={true}
+					goToProfile={true}
+					/> : null}
 			</div>
 		)
 	}
@@ -88,19 +92,20 @@ class Follows extends React.Component {
 	listUsers() {
 		const {
 			follows,
-			openMenu,
-			closeMenu,
+			menuOpen,
 		} = this.props;
 
 		const readyList = follows.listUsers.map((user, key) => 
-			<UserBlock 
+			<UserBlock
+			key={key}
 			userId={user.user_id}
 			userName={user.user_name}
 			userAvatar={user.avatar_50}
 			ellipsis="true"
-			ellipsisOpen={() => openMenu()}
-			ellipsisClose={() => closeMenu()}
-			key={key}/>
+			ellipsisOpen={() => menuOpen({
+				userId: user.user_id,
+				userName: user.user_name
+			})} />
 		);
 
 		return readyList;
@@ -124,9 +129,8 @@ class Follows extends React.Component {
 }
 
 Follows.propTypes = {
-	menu: PropTypes.bool.isRequired,
-	openMenu: PropTypes.func.isRequired,
-	closeMenu: PropTypes.func.isRequired,
+	menu: PropTypes.object.isRequired,
+	menuOpen: PropTypes.func.isRequired,
 	pageConf: PropTypes.object.isRequired,
 	getPageData: PropTypes.func.isRequired,
 	followsClose: PropTypes.func.isRequired,
@@ -139,8 +143,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	openMenu: () => dispatch(openMenu()),
-	closeMenu: () => dispatch(closeMenu()),
+	menuOpen: (data) => dispatch(menuOpen(data)),
 	followsClose: () => dispatch(followsClose()),
 	getPageData: (pageFollows, userId) => dispatch(followsGetPageData(pageFollows, userId)),
 

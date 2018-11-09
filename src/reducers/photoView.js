@@ -4,6 +4,7 @@ import {
 	PHOTOVIEW_REQUEST,
 	PHOTOVIEW_SUCCESS,
 	PHOTOVIEW_FAILURE,
+	GET_PAGE_DATA_REQUEST
 } from '../actions/types';
 
 const initialState = {};
@@ -24,6 +25,8 @@ export default function(state = initialState, action ) {
 			}
 		case PHOTOVIEW_FAILURE:
 			return { isFailed: true }
+		case GET_PAGE_DATA_REQUEST:
+			return { isClose: true }
 		default: 
 			return state;
 	}

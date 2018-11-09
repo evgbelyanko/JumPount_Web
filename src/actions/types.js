@@ -4,9 +4,11 @@ export const GET_PAGE_DATA_REQUEST = 'GET_PAGE_DATA_REQUEST';
 export const GET_PAGE_DATA_SUCCESS = 'GET_PAGE_DATA_SUCCESS';
 export const GET_PAGE_DATA_FAILURE = 'GET_PAGE_DATA_FAILURE';
 
-export const OPEN_MENU = 'OPEN_MENU';
-export const CLOSE_MENU = 'CLOSE_MENU';
-export const CREATE_MENU = 'CREATE_MENU';
+export const MENU_OPEN = 'MENU_OPEN';
+export const MENU_CLOSE = 'MENU_CLOSE';
+export const MENU_REQUEST = 'MENU_REQUEST';
+export const MENU_SUCCESS = 'MENU_SUCCESS';
+export const MENU_FAILURE = 'MENU_FAILURE';
 
 export const FOLLOWS_OPEN = 'FOLLOWS_OPEN';
 export const FOLLOWS_CLOSE = 'FOLLOWS_CLOSE';

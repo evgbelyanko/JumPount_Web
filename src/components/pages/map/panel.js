@@ -31,13 +31,10 @@ class Panel extends React.Component {
 	}
 
 	loadListPosts() {
-		const {
-			panelPosts,
-			photoViewOpen
-		} = this.props;
+		const { panelPosts } = this.props;
 
 		const readyList = panelPosts.listPosts.map((post, key) =>
-			<div className="map_post" onClick={() => photoViewOpen(post.photo_id)} key={key}>
+			<div className="map_post" onClick={() => this.photoViewCreate(post.photo_id)} key={key}>
 				<img src={post.photo_250} className="map_post_picture picture_shadow" alt=""/>
 				<div className="map_post_info">
 					<div className="map_post_user">
@@ -57,13 +54,26 @@ class Panel extends React.Component {
 
 		return readyList;
 	}
+
+	photoViewCreate(postId) {
+		const {
+			history,
+			pageConf,
+			photoViewOpen,
+		} = this.props;
+
+		pageConf.device === 'desktop' ? photoViewOpen(postId) : history.push(`/photoview/${postId}`);
+	}
+
 }
 
 Panel.propTypes = {
+	pageConf: PropTypes.object.isRequired,
 	getPanelPosts: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
+	pageConf: state.pageConf,
 	panelPosts: state.panelPosts,
 })
 

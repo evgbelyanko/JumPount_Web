@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import {
-	openMenu,
+	menuOpen,
 	followsOpen,
 } from '../../../actions/profile'
 
@@ -22,7 +22,7 @@ class ProfileInfo extends React.Component {
 			user_following,
 		} = this.props.pageData.profile.profileInfo;
 
-		const { openMenu } = this.props;
+		const { menuOpen } = this.props;
 
 		return (
 			<div className="profile_info">
@@ -31,7 +31,11 @@ class ProfileInfo extends React.Component {
 					<div className="profile_info_data_name">{user_name}</div>
 					{country_name ? this.blockCountry(country_name) : null}
 					{user_website ? this.blockWebsite(user_website) : null}
-					<div className="fa fa-ellipsis-h user_action_post" style={{fontSize: 24}} onClick={() => openMenu()}></div>
+					<div className="fa fa-ellipsis-h user_action_post" style={{fontSize: 24}} 
+					onClick={() => menuOpen({
+						userId: user_id,
+						userName: user_name
+					})}></div>
 				</div>
 				<div className="profile_info_custom">
 					<button>
@@ -95,7 +99,7 @@ class ProfileInfo extends React.Component {
 }
 
 ProfileInfo.propTypes = {
-	openMenu: PropTypes.func.isRequired,
+	menuOpen: PropTypes.func.isRequired,
 	pageConf: PropTypes.object.isRequired,
 	pageData: PropTypes.object.isRequired,
 	followsOpen: PropTypes.func.isRequired,
@@ -107,7 +111,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	openMenu: () => dispatch(openMenu()),
+	menuOpen: (data) => dispatch(menuOpen(data)),
 	followsOpen: (page, userId) => dispatch(followsOpen(page, userId)),
 })
 

@@ -1,13 +1,13 @@
 import {
-	OPEN_MENU,
-	CLOSE_MENU,
+	MENU_OPEN,
 	SET_PAGE_CONF,
 	GET_PAGE_DATA_REQUEST,
 	GET_PAGE_DATA_SUCCESS,
 	GET_PAGE_DATA_FAILURE,
 } from './types'
-import { userLogout } from './auth/logout';
-import { setTypeDevice } from './setTypeDevice';
+import { getMenuData } from './menu'
+import { userLogout } from './auth/logout'
+import { setTypeDevice } from './setTypeDevice'
 
 export const setPageConf = () => ({
 	type: SET_PAGE_CONF,
@@ -17,9 +17,11 @@ export const setPageConf = () => ({
 	}
 })
 
-export const openMenu = () => ({ type: OPEN_MENU })
-export const closeMenu = () => ({ type: CLOSE_MENU })
-
+export const menuOpen = (data) => dispatch => {
+	dispatch(getMenuData(data))
+	
+	return { type: MENU_OPEN }
+}
 
 export const getPageDataSuccess = (data) => {
 	return { 

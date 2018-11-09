@@ -16,7 +16,6 @@ class ProfilePosts extends React.Component {
 
 	postList() {
 		const { profilePosts } = this.props.pageData.profile;
-		const { photoViewOpen } = this.props;
 
 		const readyList = profilePosts.map((post, key) => {
 			return ( 
@@ -24,7 +23,7 @@ class ProfilePosts extends React.Component {
 					<img 
 					src={post.photo_250} 
 					className="picture_shadow" 
-					onClick={() => photoViewOpen(post.photo_id)} 
+					onClick={() => this.photoViewCreate(post.photo_id)} 
 					alt=""/>
 				</div>
 			)
@@ -32,14 +31,26 @@ class ProfilePosts extends React.Component {
 
 		return readyList;
 	}
+
+	photoViewCreate(postId) {
+		const {
+			history,
+			pageConf,
+			photoViewOpen,
+		} = this.props;
+
+		pageConf.device === 'desktop' ? photoViewOpen(postId) : history.push(`/photoview/${postId}`);
+	}
 }
 
 ProfilePosts.propTypes = {
+	pageConf: PropTypes.object.isRequired,
 	pageData: PropTypes.object.isRequired,
 	photoViewOpen: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
+	pageConf: state.pageConf,
 	pageData: state.pageData,
 })
 

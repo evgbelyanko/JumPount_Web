@@ -1,18 +1,32 @@
 import { 
-	OPEN_MENU,
-	CLOSE_MENU,
-	//CREATE_MENU
+	MENU_OPEN,
+	MENU_CLOSE,
+	MENU_REQUEST,
+	MENU_SUCCESS,
+	MENU_FAILURE,
+	GET_PAGE_DATA_REQUEST
 } from '../actions/types';
 
-const initialState = false;
+const initialState = {};
 
 export default function(state = initialState, action ) {
 
 	switch(action.type) {
-		case OPEN_MENU:
-			return true;
-		case CLOSE_MENU:
-			return false;
+		case MENU_OPEN:
+			return { isOpen: true }
+		case MENU_CLOSE:
+			return { isClose: true }
+		case MENU_REQUEST:
+			return { loading: true }
+		case MENU_SUCCESS:
+			return {
+				isLoaded: true,
+				...action.payload
+			}
+		case MENU_FAILURE:
+			return { isFailed: true }
+		case GET_PAGE_DATA_REQUEST:
+			return { isClose: true }
 		default: 
 			return state;
 	}
