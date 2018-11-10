@@ -17,21 +17,16 @@ import './app.css'
 class App extends React.Component {
 
 	render() {
-		const Authorized = ({ component: Component, ...rest }) => (  
+		const Authorized = ({ component: Component, ...rest }) => (
 			<Route {...rest} render={props => (
-				localStorage.token ? (
+				localStorage.token ?
 					<div>
 						<Header />
 						<div className="content">
 							<Component {...props} />
 						</div>
 					</div>
-				) : (
-					<Redirect to={{
-						pathname: '/auth',
-						state: { from: props.location }
-					}} />
-				)
+				: <Redirect to='/auth' />
 			)}/>
 		)
 

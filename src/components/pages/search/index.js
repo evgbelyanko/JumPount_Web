@@ -34,7 +34,6 @@ class Search extends React.Component {
 
 		const {
 			menu,
-			closeMenu,
 			photoView,
 			searchUsers,
 		} = this.props;

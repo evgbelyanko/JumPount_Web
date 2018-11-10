@@ -117,8 +117,7 @@ class PhotoView extends React.Component {
 					</div>
 				</Window>
 				{menu.isLoaded ? 
-					<Menu 
-					goToPost={true}
+					<Menu
 					followUser={true}
 					goToProfile={true}
 					/> : null}

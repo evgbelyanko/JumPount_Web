@@ -8,6 +8,7 @@ import {
 	getPageData,
 } from '../../../actions/feed'
 
+import PhotoView from '../photoview'
 import Menu from '../../elements/menu'
 import Preload from '../../elements/preload'
 import PostInfo from '../../elements/postInfo'
@@ -25,12 +26,14 @@ class Feed extends React.Component {
 
 		const {
 			menu,
-			pageData
+			pageData,
+			photoView,
 		} = this.props;
 
 		return (
 			<div className="feed">
 				{pageData.feedPosts ? this.loadFeedPosts() : null}
+				{photoView.isLoaded ? <PhotoView /> : null}
 				{menu.isLoaded ? 
 					<Menu 
 					goToPost={true}
@@ -57,7 +60,8 @@ class Feed extends React.Component {
 				userDesc={post.photo_timestamp}
 				ellipsisOpen={() => menuOpen({
 					userId: post.user_id,
-					userName: post.user_name
+					postId: post.photo_id,
+					userName: post.user_name,
 				})} />
 				<div className="feed_picture">
 					<ImageLoader
@@ -90,6 +94,7 @@ const mapStateToProps = (state) => ({
 	menu: state.menu,
 	pageConf: state.pageConf,
 	pageData: state.pageData,
+	photoView: state.photoView,
 })
 
 const mapDispatchToProps = (dispatch) => ({

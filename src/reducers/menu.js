@@ -4,7 +4,8 @@ import {
 	MENU_REQUEST,
 	MENU_SUCCESS,
 	MENU_FAILURE,
-	GET_PAGE_DATA_REQUEST
+	GET_PAGE_DATA_REQUEST,
+	MENU_ACTIONS_FOLLOWING_SUCCESS
 } from '../actions/types';
 
 const initialState = {};
@@ -25,6 +26,11 @@ export default function(state = initialState, action ) {
 			}
 		case MENU_FAILURE:
 			return { isFailed: true }
+		case MENU_ACTIONS_FOLLOWING_SUCCESS:
+			return {
+				...state,
+				...action.payload
+			}
 		case GET_PAGE_DATA_REQUEST:
 			return { isClose: true }
 		default: 

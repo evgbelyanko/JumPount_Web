@@ -58,7 +58,6 @@ class Follows extends React.Component {
 			menu,
 			follows,
 			pageConf,
-			closeMenu,
 		} = this.props;
 
 		return (
