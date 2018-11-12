@@ -104,6 +104,7 @@ class PhotoView extends React.Component {
 						</div>
 						<div className="photoView_postInfo">
 							<PostInfo
+							a={console.log(like_id)}
 							photoLikes={photo_likes}
 							photoComments={photo_comments}
 							likeId={like_id} />

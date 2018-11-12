@@ -3,5 +3,10 @@
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 	border: 1px solid #fff;
-	cursor: pointer;
+}
+
+@media (min-width: 768px) {
+	.wrap_btn_group{
+		cursor: pointer;
+	}
 }

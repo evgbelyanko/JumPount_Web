@@ -104,8 +104,12 @@ class Search extends React.Component {
 				userName: user.user_name
 			})} />
 		);
-		
-		return <div className="search_result">{readyList}</div>;
+
+		return (
+			<div className="search_result">
+				{readyList.length !== 0 ? readyList : this.pageEmpty()}
+			</div>
+		)
 	}
 
 	photoViewCreate(postId) {
@@ -118,6 +122,14 @@ class Search extends React.Component {
 		pageConf.device === 'desktop' ? photoViewOpen(postId) : history.push(`/photoview/${postId}`);
 	}
 
+	pageEmpty() {
+		return (
+			<div className="search_postsEmpty">
+				<span className="fa fa-user-circle" style={{color: '#000', fontSize: 96}} />
+				<span>Ничего не найдено.</span>
+			</div>
+		)
+	}
 }
 
 Search.propTypes = {

@@ -3,8 +3,6 @@
 	padding: 10px;
 	display: flex;
 	align-items: center;
-	-moz-user-select: none;
-	-khtml-user-select: none;
 	user-select: none;
 }
 .user_link{
@@ -13,7 +11,6 @@
 }
 .user_img{
 	margin-right: 10px;
-	cursor: pointer;
 }
 .user_img img{
 	width: 50px;
@@ -41,16 +38,30 @@
 	position: absolute;
 	top: 18px;
 	right: 25px;
-	cursor: pointer;
 }
-.wrap_window .user_action_post{
+
+.wrap_window .user_action_post {
 	right: 15px;
 }
-.search_gallery .user_action_post{
+
+.search_gallery .user_action_post {
 	right: 15px;
 }
+
 @media (min-width: 350px) and (max-width: 768px) {
 	.user_action_post{
+		right: 25px;
+	}
+}
+
+@media (min-width: 768px) {
+	.user_img{
+		cursor: pointer;
+	}
+
+	.user_action_post{
+		position: absolute;
+		top: 18px;
 		right: 25px;
 	}
 }

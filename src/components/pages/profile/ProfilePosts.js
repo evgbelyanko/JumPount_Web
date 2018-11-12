@@ -7,10 +7,12 @@ import { photoViewOpen } from '../../../actions/profile'
 class ProfilePosts extends React.Component {
 
 	render() {
+		const { profilePosts } = this.props.pageData.profile;
+
 	    return (
-			<div className="profile_gallery">
-				{this.postList()}
-			</div>
+				<div className="profile_gallery">
+					{profilePosts.length !== 0 ? this.postList() : this.pageEmpty()}
+				</div>
 	    )
 	}
 
@@ -40,6 +42,15 @@ class ProfilePosts extends React.Component {
 		} = this.props;
 
 		pageConf.device === 'desktop' ? photoViewOpen(postId) : history.push(`/photoview/${postId}`);
+	}
+
+	pageEmpty() {
+		return (
+			<div className="profile_postsEmpty">
+				<span className="fa fa-paste" style={{color: '#000', fontSize: 64}} />
+				<span>Публикации отсутствуют.</span>
+			</div>
+		)
 	}
 }
 

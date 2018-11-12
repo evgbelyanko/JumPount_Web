@@ -1,22 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+
+import { setPageConf } from '../../../actions/camera'
+
 import './index.css'
-import { setActivePage } from '../../../actions/camera'
 
 class Camera extends React.Component {
 
-	componentDidMount() {
-		this.props.setActivePage();
-	}
+	componentDidMount() { this.props.setPageConf(); }
 
 	render() {
 	    return (
 			<div className="content">
-				<div className="camera error">
+				<div className="camera">
 					<div className="fa fa-camera camera_icon" />
 					<div className="camera_text">Поделиться фото</div>
-					<div className="camera_btn btn_black">Скачать приложение</div>
+					<button className="camera_btn btn_black" style={{height: 30, width: 170}}>Скачать приложение</button>
 				</div>
 			</div>
 	    );
@@ -24,16 +24,15 @@ class Camera extends React.Component {
 }
 
 Camera.propTypes = {
-	page: PropTypes.object.isRequired,
-	setActivePage: PropTypes.func.isRequired,
+	setPageConf: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	setActivePage: () => dispatch(setActivePage()),
+	setPageConf: () => dispatch(setPageConf()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Camera);

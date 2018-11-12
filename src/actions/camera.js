@@ -1,13 +1,13 @@
-import { SET_PAGE_CONF } from './types'
-import { setTypeDevice } from './setTypeDevice';
-//import { logout } from './auth/logout';
+import {
+	SET_PAGE_CONF,
+} from './types'
+//import { userLogout } from './auth/logout'
+import { setTypeDevice } from './setTypeDevice'
 
-export const setActivePage = () => {
-	return {
-		type: SET_PAGE_CONF,
-		payload: {
-			name: 'camera',
-			device: setTypeDevice()
-		}
+export const setPageConf = () => ({
+	type: SET_PAGE_CONF,
+	payload: {
+		name: 'camera',
+		device: setTypeDevice()
 	}
-}
+})

@@ -49,12 +49,22 @@ class Menu extends React.Component {
 					{followUser && +localStorage.userId !== menu.userId ? <div className="wrap_btn" onClick={() => menuActionsFollowing(menu.userId)}>{this.checkFollows()}</div> : null}
 					{goToSetting && +localStorage.userId === menu.userId ? <Link to="/setting" className="wrap_btn">Настройки профиля</Link> : null}
 					{goToProfile ? <a href={`/user/${menu.userId}`} className="wrap_btn">Перейти к пользователю</a> : null}
-					{goToPost ? <div className="wrap_btn" onClick={() => photoViewOpen(menu.postId)}>Перейти к записи</div> : null}
+					{goToPost ? <div className="wrap_btn" onClick={() => photoViewCreate(menu.postId)}>Перейти к записи</div> : null}
 					{goToUserLogout && +localStorage.userId === menu.userId ? <div className="wrap_btn" onClick={() => userLogout()}>Выход из профиля</div> : null}
 					<div className="wrap_btn" onClick={() => menuClose()}>Закрыть окно</div>
 				</div>
 			</Window>
-		);
+		)
+	}
+
+	photoViewCreate(postId) {
+		const {
+			history,
+			pageConf,
+			photoViewOpen,
+		} = this.props;
+
+		pageConf.device === 'desktop' ? photoViewOpen(postId) : history.push(`/photoview/${postId}`);
 	}
 }
 

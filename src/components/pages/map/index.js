@@ -14,6 +14,8 @@ import Preload from '../../elements/preload'
 
 import './index.css'
 
+window.scrollTo(0,1);
+
 const MapWithAMarkerClusterer = compose(
 	withProps({
 		googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAeSOHuULn3P2EafsXS4t5163z5ouAML9Y&v=3.exp&libraries=geometry,drawing,places",

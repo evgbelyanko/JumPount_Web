@@ -32,7 +32,7 @@ class Feed extends React.Component {
 
 		return (
 			<div className="feed">
-				{pageData.feedPosts ? this.loadFeedPosts() : null}
+				{pageData.feedPosts.length !== 0 ? this.loadFeedPosts() : this.pageEmpty()}
 				{photoView.isLoaded ? <PhotoView /> : null}
 				{menu.isLoaded ? 
 					<Menu 
@@ -72,6 +72,7 @@ class Feed extends React.Component {
 					desc={post.photo_desc} />
 				</div>
 				<PostInfo
+				a={console.log(post.like_id)}
 				photoLikes={post.photo_likes}
 				photoComments={post.photo_comments}
 				likeId={post.like_id} />
@@ -79,6 +80,15 @@ class Feed extends React.Component {
 		)
 
 		return readyList;
+	}
+
+	pageEmpty() {
+		return (
+			<div className="page_empty">
+				<span className="fa fa-picture-o" style={{color: '#000', fontSize: 96}} />
+				<span>Нет новых записей.</span>
+			</div>
+		)
 	}
 }
 

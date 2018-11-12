@@ -31,6 +31,8 @@
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 .search_result{
+	position: relative;
+	min-height: 300px;
 	margin-top: 15px;
 	background: #FFF;
 	padding: 10px;
@@ -63,4 +65,15 @@
 
 .search_send span{
 	margin: 5px;
+}
+
+.search_postsEmpty {
+	position: absolute;
+	left: 50%;
+	top: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0px 0px 0px -70px;
+	font-size: 15px;
 }
