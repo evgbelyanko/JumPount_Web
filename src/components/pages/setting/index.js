@@ -1,69 +1,42 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+
+import { getPageData } from '../../../actions/setting'
+
 import EditInfo from './editInfo'
 import EditAvatar from './editAvatar'
-import { userLogout } from '../../../actions/auth/logout'
-import { setActivePage } from '../../../actions/setting'
+import Preload from '../../elements/preload'
+
 import './index.css'
 
 class Setting extends React.Component {
 
-	constructor() {
-		super();
-		this.state = {
-			isLoaded: false,
-			settingInfo: null,
-		};
-		
-	}
-
-	componentDidMount() {
-		fetch(`/setting/getInfo`, {
-			credentials: 'include'
-		})
-		.then(res => res.json())
-		.then(data => {
-			if(data.error === 401) {
-				this.props.userLogout();
-				return false;
-			}
-			this.setState({
-				isLoaded: true,
-				settingInfo: data
-			})
-		})
-	}
+	componentDidMount() { this.props.getPageData(); }
 
 	render() {
-		if(!this.state.isLoaded) return <img src="/img/preload.gif" className="preload_page" alt=""/>;
-
-		const { settingInfo } = this.state;
+		if(!this.props.pageData.setting) return <Preload />;
 
 		return (
 			<div className="setting setting_form">
-				<EditAvatar
-				settingInfo={settingInfo}/>
-				<EditInfo
-				settingInfo={settingInfo}/>
+				<EditAvatar />
+				<EditInfo />
 			</div>
-		);
+		)
 	}
 }
 
 Setting.propTypes = {
-	page: PropTypes.object.isRequired,
-	userLogout: PropTypes.func.isRequired,
-	setActivePage: PropTypes.func.isRequired,
+	pageData: PropTypes.object.isRequired,
+	getPageData: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+	pageData: state.pageData,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	userLogout: () => dispatch(userLogout()),
-	setActivePage: () => dispatch(setActivePage()),
+	getPageData: () => dispatch(getPageData()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Setting);

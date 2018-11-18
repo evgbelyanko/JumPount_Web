@@ -70,7 +70,7 @@ class ProfileInfo extends React.Component {
 
 	blockWebsite(user_website) {
 		return (
-			<a href={user_website} target="_blank" className="profile_info_data_website">
+			<a href={user_website} target="_blank" rel="noopener noreferrer" className="profile_info_data_website">
 				<span className="fa fa-internet-explorer" />
 				<span> {user_website}</span>
 			</a>

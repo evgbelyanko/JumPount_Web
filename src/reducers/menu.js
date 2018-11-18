@@ -4,7 +4,10 @@ import {
 	MENU_REQUEST,
 	MENU_SUCCESS,
 	MENU_FAILURE,
+	MENU_REMOVE_OPEN,
+	MENU_REMOVE_CLOSE,
 	GET_PAGE_DATA_REQUEST,
+	MENU_IN_WINDOW_SUCCESS,
 	MENU_ACTIONS_FOLLOWING_SUCCESS
 } from '../actions/types';
 
@@ -26,6 +29,23 @@ export default function(state = initialState, action ) {
 			}
 		case MENU_FAILURE:
 			return { isFailed: true }
+		case MENU_IN_WINDOW_SUCCESS:
+			return {
+				isLoadedInWindow: true,
+				...action.payload
+			}
+		case MENU_REMOVE_OPEN:
+			return {
+				...state,
+				...action.payload,
+				isLoadedMenuRemove: true,
+			}
+		case MENU_REMOVE_CLOSE:
+			return {
+				...state,
+				...action.payload,
+				isLoadedMenuRemove: false,
+			}
 		case MENU_ACTIONS_FOLLOWING_SUCCESS:
 			return {
 				...state,

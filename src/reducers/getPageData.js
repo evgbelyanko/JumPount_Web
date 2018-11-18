@@ -1,7 +1,7 @@
 import { 
 	GET_PAGE_DATA_REQUEST,
 	GET_PAGE_DATA_SUCCESS,
-	GET_PAGE_DATA_FAILURE
+	GET_PAGE_DATA_FAILURE,
 } from '../actions/types';
 
 const initialState = {}

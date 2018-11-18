@@ -28,13 +28,14 @@ class Follows extends React.Component {
 		} = props.follows;
 
 		this.state = {
+			titlePage: false,
 			autonomous: isLoaded ? false : true,
 			userId: isLoaded ? userId : props.match.params.userId,
 			page: isLoaded ? page : props.match.path.match(/\/(.*?)\//)[1],
 		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		const {
 			page,
 			userId,
@@ -49,6 +50,8 @@ class Follows extends React.Component {
 		window.onpopstate = () => { followsClose(); }
 		if(!autonomous) history.push(`/${page}/${userId}`);
 		if(autonomous) getPageData(page, userId);
+
+		this.setState({titlePage: page === 'followers' ? 'Подписчики' : 'Подписки'})
 	}
 
 	render() {
@@ -70,19 +73,19 @@ class Follows extends React.Component {
 						<div className="follow_name_block">
 							<div className="follow_name_block_row">
 								<span className="fa fa-user follow_icon"></span>
-								<div className="follow_page_name">{follows.ownerUserName}</div>
+								<div className="follow_page_name">{this.state.titlePage} {follows.ownerUserName}</div>
 							</div>
 						</div>
-						<div id="follow_output" className="follow_result">
+						<div className="follow_result">
 							{ this.listUsers() }
 						</div>
 					</div>
 				</Window>
-				{menu.isLoaded ? 
+				{menu.isLoadedInWindow ? 
 					<Menu 
-					goToPost={true}
-					followUser={true}
 					goToProfile={true}
+					goToFollowUser={true}
+					history={this.props.history}
 					/> : null}
 			</div>
 		)
@@ -107,7 +110,16 @@ class Follows extends React.Component {
 			})} />
 		);
 
-		return readyList;
+		return readyList.length !== 0 ? readyList : this.pageEmpty();
+	}
+
+	pageEmpty() {
+		return (
+			<div className="follow_postsEmpty">
+				<span className="fa fa-user-circle" style={{color: '#000', fontSize: 96}} />
+				<span>Пользователей не найдено.</span>
+			</div>
+		)
 	}
 
 	windowClose() {

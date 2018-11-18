@@ -1,10 +1,17 @@
 .setting{
 	width: 100%;
 }
+
+.setting_form_avatar {
+	border-bottom: 1px solid #ccc;
+}
+
 .setting_form_group{
 	display: flex;
 	flex-direction: column;
 	margin-top: 15px;
 	background: #FFF;
 	padding: 10px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }

@@ -4,6 +4,10 @@
 	grid-template-rows: 70px 50px 440px 40px;
 }
 
+.photoView > .photoView_autor {
+	background: hsla(0, 0%, 93%, 0.35);
+}
+
 .photoView > .photoView_picture {
 	height: 600px;
 	grid-row-end: 5;
@@ -11,6 +15,10 @@
 }
 
 .photoView > .photoView_input {
+	position: relative;
+	bottom: 0;
+	right: 0;
+	display: flex;
 	max-height: 80px;
 	border-radius: 0 0 4px 0;
 	border-top: 1px solid #ccc;
@@ -18,4 +26,8 @@
 
 .photoView > .photoView_input > textarea {
 	width: 240px;
+}
+
+.photoView > .photoView_input > button {
+	position: relative;
 }

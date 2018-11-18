@@ -43,36 +43,37 @@
 	width: 60px;
 	cursor: pointer;
 }
-#input_upload{
+.setting_form_avatar_upload {
 	position: absolute;
 	top: 15px;
-	height: 30px;
-	width: 142px;
+}
+
+.setting_form_avatar_upload_input{
+	position: absolute;
+	top: 15px;
 	opacity: 0;
 	cursor: pointer;
 }
-#upload_avatar{
-	position: absolute;
-	top: 15px;
-}
-#remove_avatar{
+
+.setting_form_avatar_delete {
 	position: absolute;
 	bottom: 15px;
 }
-#setting_avatar {
+
+.setting_avatar {
 	height: 120px;
 	width: 120px;
 	border-radius: 8px;
 }
 .setting_send{
-	position: relative;
-	margin: 20px 0 10px 50px;
+	margin: 30px 0;
+	grid-column-start: 1;
+	grid-column-end: 3;
 	text-align: center;
 }
-.setting_send_btn{
-	padding: 5px 40px;
-	width: 70px;
-	cursor: pointer;
+.setting_send button {
+	height: 30px;
+	width: 150px;
 }
 .setting_layer_success{
 	position: fixed;
@@ -83,5 +84,5 @@
 	background: #1d2127;
 	text-align: center;
 	color: #fff;
-	padding-top: 15px;
+	padding-top: 25px;
 }

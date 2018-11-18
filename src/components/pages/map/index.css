@@ -37,21 +37,22 @@
 
 #map .map_page_camera span {
 	text-align: center;
-	font-size: 2.5em;
+	font-size: 2.1em;
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	margin: -24px 0 0 -18px;
+	margin: -20px 0 0 -15px;
 	color: #fff;
 }
 
-#map .map_panel {
-	position: fixed;
+.map_panel {
+	position: absolute;
 	background: #fff;
 	bottom: 0;
 	left: 0;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	z-index: 99999;
 }
 
 #map .map_post {

@@ -4,6 +4,9 @@ import {
 	PHOTOVIEW_REQUEST,
 	PHOTOVIEW_SUCCESS,
 	PHOTOVIEW_FAILURE,
+	GET_MORE_COMMENTS,
+	MENU_REMOVE_SUCCESS,
+	GET_COMMENT_SUCCESS,
 	GET_PAGE_DATA_REQUEST
 } from '../actions/types';
 
@@ -25,6 +28,27 @@ export default function(state = initialState, action ) {
 			}
 		case PHOTOVIEW_FAILURE:
 			return { isFailed: true }
+		case GET_COMMENT_SUCCESS: 
+			state.postComments.unshift(action.payload)
+
+			return {
+				...state,
+				counterComments: 1,
+			}
+		case GET_MORE_COMMENTS: 
+			state.postComments = state.postComments.concat(action.payload)
+
+			return {
+				...state,
+				counterComments: 0,
+			}
+		case MENU_REMOVE_SUCCESS:
+			state.postComments.reverse().splice(action.payload.key, 1)
+			state.postComments.reverse()
+			return {
+				...state,
+				counterComments: -1,
+			}
 		case GET_PAGE_DATA_REQUEST:
 			return { isClose: true }
 		default: 

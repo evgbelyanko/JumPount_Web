@@ -2,31 +2,46 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { sendRowsSetting } from '../../../actions/setting'
+
 import './index.css'
 
 class EditInfo extends React.Component {
 
 	constructor(props) {
-		super(props);
-		this.state = {
+		super(props)
 
-		};
-	}
-
-	render() {
 		const {
 			user_name,
 			user_desc,
 			country_id,
 			user_website
-		} = this.props.settingInfo;
+		} = props.pageData.setting;
+
+		this.state = {
+			userName: user_name,
+			userDesc: user_desc,
+			countryId: country_id,
+			userWebsite: user_website,
+			sendDataSuccess: false
+		}
+	}
+
+	render() {
+		const {
+			userName,
+			userDesc,
+			countryId,
+			userWebsite,
+			sendDataSuccess
+		} = this.state;
 
 		return (
 			<div className="setting_form_group">
 				<span>Имя пользователя:</span>
-				<input id="setting_username" className="setting_form_group_in" type="text" name="username" maxLength="30" defaultValue={user_name}/>
+				<input id="setting_username" className="setting_form_group_in" type="text" name="username" maxLength="30" onChange={e => this.setState({userName: e.target.value})} defaultValue={userName}/>
 				<span>Страна:</span>
-				<select id="setting_country" className="setting_form_group_in" type="text" name="country" defaultValue={country_id}>
+				<select id="setting_country" className="setting_form_group_in" type="text" name="country" onChange={e => this.setState({countryId: e.target.value})} defaultValue={countryId}>
 					<option value="0">Не выбрано</option>
 					<option value="4">Австралия</option>
 					<option value="63">Австрия</option>
@@ -136,27 +151,50 @@ class EditInfo extends React.Component {
 					<option value="11060">Япония</option>
 				</select>
 				<span>Веб-сайт:</span>
-				<input id="setting_website" className="setting_form_group_in" type="text" placeholder="http://" name="website" maxLength="150" defaultValue={user_website}/>
+				<input id="setting_website" className="setting_form_group_in" type="text" placeholder="http://" name="website" maxLength="150" onChange={e => this.setState({userWebsite: e.target.value})} defaultValue={userWebsite}/>
 				<span>Описание профиля:</span>
-				<textarea id="setting_desc" className="setting_form_group_in" maxLength="250" rows="3" defaultValue={user_desc}/>
+				<textarea id="setting_desc" className="setting_form_group_in" maxLength="250" rows="3" onChange={e => this.setState({userDesc: e.target.value})} defaultValue={userDesc}/>
 				<div className="setting_send">
-					<div className="btn_black setting_send_btn" type="submit">Отправить</div>
+					<button className="btn_black" type="submit" onClick={() => this.sendRows()}>Отправить</button>
 				</div>
+				{sendDataSuccess ? <div className="setting_layer_success">Данные успешно обновлены!</div> : null}
 			</div>
 		);
+	}
+
+	sendRows() {
+		const {
+			userName,
+			userDesc,
+			countryId,
+			userWebsite
+		} = this.state;
+
+		this.props.sendRowsSetting({
+			userName: userName,
+			userDesc: userDesc,
+			countryId: countryId,
+			userWebsite: userWebsite,
+		})
+
+		this.setState({sendDataSuccess: true})
+
+		setTimeout(() => {
+			this.setState({sendDataSuccess: false})
+		}, 2000);
 	}
 }
 
 EditInfo.propTypes = {
-	page: PropTypes.object.isRequired,
+	pageData: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-	page: state.page,
+	pageData: state.pageData,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-
+	sendRowsSetting: (data) => dispatch(sendRowsSetting(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditInfo);

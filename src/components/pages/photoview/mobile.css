@@ -23,7 +23,7 @@
 
 .photoView > .photoView_comments {
 	order: 4;
-	margin-bottom: 100px;
+	margin-bottom: 80px;
 }
 
 .photoView > .photoView_input {
@@ -32,11 +32,17 @@
 	bottom: 0;
 	width: 100%;
 	height: 40px;
+	max-width: 600px;
 	z-index: 999;
 }
 
 .photoView > .photoView_input > textarea {
+	width: calc(100% - 60px);
 	bottom: 0;
-	width: 100%;
+	position: absolute;
+}
+
+.photoView > .photoView_input > button {
+	right: 0;
 	position: absolute;
 }

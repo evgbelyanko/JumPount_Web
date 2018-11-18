@@ -21,7 +21,7 @@ export default class Window extends React.Component {
 				<div className="wrap_back" style={{zIndex: varZIndex}} onClick={() => onClose()}>
 					<div className="fa fa-close wrap_close" />
 				</div>
-				<div className="wrap_window" style={{width: width, zIndex: varZIndex+10}}>
+				<div className="wrap_window" style={{maxWidth: width, zIndex: varZIndex+10}}>
 					{children}
 				</div>
 			</div>

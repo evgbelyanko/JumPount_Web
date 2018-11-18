@@ -49,9 +49,10 @@ class Profile extends React.Component {
 
 				{menu.isLoaded ? 
 					<Menu
-					followUser={true}
 					goToSetting={true}
+					goToFollowUser={true}
 					goToUserLogout={true}
+					history={this.props.history}
 					/> : null}
 				{follows.isLoaded ? <Follows /> : null }
 				{photoView.isLoaded ? <PhotoView /> : null}

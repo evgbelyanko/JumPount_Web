@@ -23,7 +23,7 @@ export const setPageConf = () => {
 }
 
 export const menuOpen = (data) => dispatch => {
-	dispatch(getMenuData(data))
+	dispatch(getMenuData(data, true))
 	
 	return { type: MENU_OPEN }
 }

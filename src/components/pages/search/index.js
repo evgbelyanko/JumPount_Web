@@ -56,8 +56,9 @@ class Search extends React.Component {
 				{menu.isLoaded ? 
 					<Menu 
 					goToPost={true}
-					followUser={true}
 					goToProfile={true}
+					goToFollowUser={true}
+					history={this.props.history}
 					/> : null}
 			</div>
 		);
@@ -126,7 +127,7 @@ class Search extends React.Component {
 		return (
 			<div className="search_postsEmpty">
 				<span className="fa fa-user-circle" style={{color: '#000', fontSize: 96}} />
-				<span>Ничего не найдено.</span>
+				<span>Пользователей не найдено.</span>
 			</div>
 		)
 	}

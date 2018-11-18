@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import {
 	menuClose,
 	photoViewOpen,
+	menuRemoveOpen,
 	menuActionsFollowing,
 } from '../../../actions/menu'
 import { userLogout } from '../../../actions/auth/logout'
@@ -31,10 +32,11 @@ class Menu extends React.Component {
 			goToPost,
 			menuClose,
 			userLogout,
-			followUser,
 			goToProfile,
 			goToSetting,
-			photoViewOpen,
+			menuRemoveOpen,
+			goToFollowUser,
+			goToRemovePost,
 			goToUserLogout,
 			menuActionsFollowing,
 		} = this.props;
@@ -46,11 +48,12 @@ class Menu extends React.Component {
 			zIndex={820}
 			enable={true}>
 				<div className="wrap_btn_group">
-					{followUser && +localStorage.userId !== menu.userId ? <div className="wrap_btn" onClick={() => menuActionsFollowing(menu.userId)}>{this.checkFollows()}</div> : null}
-					{goToSetting && +localStorage.userId === menu.userId ? <Link to="/setting" className="wrap_btn">Настройки профиля</Link> : null}
+					{goToFollowUser && +localStorage.userId !== +menu.userId ? <div className="wrap_btn" onClick={() => menuActionsFollowing(menu.userId)}>{this.checkFollows()}</div> : null}
+					{goToSetting && +localStorage.userId === +menu.userId ? <Link to="/setting" className="wrap_btn">Настройки профиля</Link> : null}
+					{goToRemovePost && +localStorage.userId === +menu.userId ? <div className="wrap_btn" onClick={() => menuRemoveOpen('post', menu.postId, menu.postId)}>Удалить пост</div> : null}
 					{goToProfile ? <a href={`/user/${menu.userId}`} className="wrap_btn">Перейти к пользователю</a> : null}
-					{goToPost ? <div className="wrap_btn" onClick={() => photoViewCreate(menu.postId)}>Перейти к записи</div> : null}
-					{goToUserLogout && +localStorage.userId === menu.userId ? <div className="wrap_btn" onClick={() => userLogout()}>Выход из профиля</div> : null}
+					{goToPost ? <div className="wrap_btn" onClick={() => this.photoViewCreate(menu.postId)}>Перейти к записи</div> : null}
+					{goToUserLogout && +localStorage.userId === +menu.userId ? <div className="wrap_btn" onClick={() => userLogout()}>Выход из профиля</div> : null}
 					<div className="wrap_btn" onClick={() => menuClose()}>Закрыть окно</div>
 				</div>
 			</Window>
@@ -61,10 +64,16 @@ class Menu extends React.Component {
 		const {
 			history,
 			pageConf,
+			menuClose,
 			photoViewOpen,
 		} = this.props;
 
-		pageConf.device === 'desktop' ? photoViewOpen(postId) : history.push(`/photoview/${postId}`);
+		if(pageConf.device === 'desktop'){
+			photoViewOpen(postId);
+		} else {
+			menuClose();
+			history.push(`/photoview/${postId}`);
+		}
 	}
 }
 
@@ -73,6 +82,7 @@ Menu.propTypes = {
 	pageConf: PropTypes.object.isRequired,
 	userLogout: PropTypes.func.isRequired,
 	photoViewOpen: PropTypes.func.isRequired,
+	menuRemoveOpen: PropTypes.func.isRequired,
 	menuActionsFollowing: PropTypes.func.isRequired,
 }
 
@@ -86,6 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
 	userLogout: () => dispatch(userLogout()),
 	photoViewOpen: (postId) => dispatch(photoViewOpen(postId)),
 	menuActionsFollowing: (userId) => dispatch(menuActionsFollowing(userId)),
+	menuRemoveOpen: (itemType, postId, itemId) => dispatch(menuRemoveOpen(itemType, postId, itemId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);

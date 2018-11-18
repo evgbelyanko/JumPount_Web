@@ -3,9 +3,14 @@
 	padding: 10px;
 	max-width: 580px;
 	height: 600px;
+	border-radius: 4px;
 }
 .follow_result{
 	height: 530px;
 	margin-top: 15px;
 	overflow-y: scroll;
+}
+
+.follow_postsEmpty {
+	margin: 100px 0px 0px -95px;
 }

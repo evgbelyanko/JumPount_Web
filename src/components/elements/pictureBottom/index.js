@@ -1,37 +1,50 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { changeTextBox } from '../../../actions/pictureBottom'
 
 import './index.css'
 
-class PostInfo extends React.Component {
+class PictureBottom extends React.Component {
 
 	constructor(props) {
 		super(props)
+
 		this.state = {
+			postId: props.postId,
+			userId: props.userId,
+			inputValue: props.title,
+			textareaValue: props.desc,
 			bottom: {
 				main: { height: 40 },
-				arrowUp: { visibility: 'visible' },
-				arrowDown: { visibility: 'hidden' },
-				editSwitch: { visibility: 'hidden' },
-				editStatus: { visibility: 'hidden' },
-				checkSwitch: { visibility: 'hidden'}
+				formBox: { display: 'none' },
+				arrowUp: { display: 'block' },
+				arrowDown: { display: 'none' },
+				editSwitch: { display: 'none' },
+				checkSwitch: { display: 'none'},
+				textBox_desc: { display: 'none'},
+				textBox_title: { display: 'block'},
 			}
-		}
+		};
 	}
 
 	render() {
 		const {
+			inputValue,
+			textareaValue,
+		} = this.state;
+
+		const {
 			main,
+			formBox,
 			arrowUp,
 			arrowDown,
 			editSwitch,
-			editStatus,
-			checkSwitch
+			checkSwitch,
+			textBox_desc,
+			textBox_title,
 		} = this.state.bottom;
-
-		const {
-			title,
-			desc
-		} = this.props
 
 		return (
 			<div className="pictureBottom" style={main}>
@@ -39,23 +52,64 @@ class PostInfo extends React.Component {
 				<div className="fa fa-arrow-circle-down pictureBottom_icon_down" style={arrowDown} onClick={() => this.hideBottom()} />
 				<div className="fa fa-pencil pictureBottom_icon_edit" style={editSwitch} onClick={() => this.editBottom()} />
 				<div className="fa fa-check pictureBottom_icon_check" style={checkSwitch} onClick={() => this.checkBottom()} />
-				<div className="pictureBottom_title">{title}</div>
-				<div className="pictureBottom_desc" style={arrowDown}>{desc}</div>
-				<form className="pictureBottom_form" style={editStatus}>
-					<input type="text" placeholder="Название фотографии..." maxLength="40" />
-					<textarea type="text" placeholder="Описание фотографии..." maxLength="250" />
+				<div className="pictureBottom_title" style={textBox_title}>{inputValue}</div>
+				<div className="pictureBottom_desc" style={textBox_desc}>{textareaValue}</div>
+				<form className="pictureBottom_form" style={formBox}>
+					<input 
+					type="text"
+					maxLength="50"
+					defaultValue={inputValue}
+					placeholder="Название фотографии..."
+					onChange={evt => this.updateInputValue(evt)} />
+					<textarea
+					type="text"
+					maxLength="250"
+					defaultValue={textareaValue}
+					placeholder="Описание фотографии..."
+					onChange={evt => this.updateTextareaValue(evt)} />
 				</form>
 			</div>
 		);
+	}
+
+	sendTextBox() {
+		const {
+			postId,
+			inputValue,
+			textareaValue
+		} = this.state;
+
+		this.props.changeTextBox({
+			postId: postId,
+			postTitle: inputValue,
+			postDesc: textareaValue
+		});
+	}
+
+	updateInputValue(evt) {
+		const inputValue = evt.target.value;
+		this.setState({ inputValue: inputValue });
+	}
+
+	updateTextareaValue(evt) {
+		const textareaValue = evt.target.value;
+		this.setState({ textareaValue: textareaValue });
 	}
 
 	showBottom(){
 		this.setState({
 			bottom: {
 				main: { height: 150 },
-				arrowUp: { visibility: 'hidden' },
-				arrowDown: { visibility: 'visible' },
-				editSwitch: { visibility: 'visible' }
+				formBox: { display: 'none' },
+				arrowUp: { display: 'none' },
+				arrowDown: { display: 'block' },
+				checkSwitch: { display: 'none' },
+				editSwitch: { display: +localStorage.userId === +this.state.userId ? 'block' : 'none'},
+				textBox_desc: { display: 'block' },
+				textBox_title: { 
+					display: 'block',
+					fontWeight: 'bold'
+				},
 			}
 		});
 	}
@@ -64,9 +118,13 @@ class PostInfo extends React.Component {
 		this.setState({
 			bottom: {
 				main: { height: 40 },
-				arrowUp: { visibility: 'visible' },
-				arrowDown: { visibility: 'hidden' },
-				editSwitch: { visibility: 'hidden' }
+				formBox: { display: 'none' },
+				arrowUp: { display: 'block' },
+				arrowDown: { display: 'none' },
+				editSwitch: { display: 'none' },
+				checkSwitch: { display: 'none' },
+				textBox_desc: { display: 'none' },
+				textBox_title: { display: 'block' },
 			}
 		});
 	}
@@ -75,19 +133,34 @@ class PostInfo extends React.Component {
 		this.setState({
 			bottom: {
 				main: { height: 150 },
-				arrowUp: { visibility: 'hidden' },
-				arrowDown: { visibility: 'hidden' },
-				editSwitch: { visibility: 'hidden' },
-				editStatus: { visibility: 'visible' },
-				checkSwitch: { visibility: 'visible' }
+				arrowUp: { display: 'none' },
+				formBox: { display: 'block' },
+				arrowDown: { display: 'none' },
+				editSwitch: { display: 'none' },
+				checkSwitch: { display: 'block' },
+				textBox_desc: { display: 'none' },
+				textBox_title: { display: 'none' },
 			}
 		});
 	}
 
 	checkBottom() {
 		this.showBottom();
+		this.sendTextBox();
 	}
 
 }
 
-export default PostInfo;
+PictureBottom.propTypes = {
+	changeTextBox: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+	
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	changeTextBox: (objPostBottom) => dispatch(changeTextBox(objPostBottom)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PictureBottom);

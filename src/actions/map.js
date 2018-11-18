@@ -63,7 +63,7 @@ export const getPanelPostsRequest = () => ({ type: GET_PANEL_POSTS_REQUEST })
 export const getPanelPostsFailure = () => ({ type: GET_PANEL_POSTS_FAILURE })
 export const getPanelPosts = (markersIds) => dispatch => {
 	dispatch(getPanelPostsRequest())
-	fetch('http://localhost:8000/map/posts', {
+	fetch('/map/posts', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

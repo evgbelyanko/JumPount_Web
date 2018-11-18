@@ -26,7 +26,6 @@
 
 .photoView > .photoView_autor {
 	border-bottom: 1px solid #ccc;
-	background: hsla(0, 0%, 93%, 0.35);
 }
 
 .photoView > .photoView_postInfo {
@@ -36,7 +35,19 @@
 .photoView > .photoView_comments {
 	padding: 0 0 0 5px;
 	overflow-y: scroll;
+	overflow-x: hidden;
 }
+
+.photoView > .photoView_comments > .photoView_loadMoreComments {
+	width: 100%;
+	text-align: center;
+}
+
+.photoView > .photoView_comments > .photoView_loadMoreComments button {
+	width: 220px;
+	margin: 10px 5px;
+}
+
 
 .photoView > .photoView_comments > .photoView_comments_msg {
 	position: relative;
@@ -57,9 +68,11 @@
 	overflow: hidden;
 }
 
-.photoView > .photoView_comments .photoView_comments_msg_block_text {
-	letter-spacing: -.20px;
-	line-height: 20px;
+.photoView > .photoView_comments .photoView_comments_msg_block_delete {
+	position: absolute;
+	top: 7px;
+	right: 5px;
+	font-size: 15px;
 }
 
 .photoView > .photoView_comments .photoView_comments_msg_block_username {
@@ -71,8 +84,14 @@
 	width: calc(100% - 30px);
 }
 
+.photoView > .photoView_comments .photoView_comments_msg_block_text {
+	letter-spacing: -.20px;
+	line-height: 20px;
+}
+
 
 .photoView > .photoView_input {
+	min-height: 40px;
 	max-height: 80px;
 	border-radius: 0 0 4px 0;
 	border-top: 1px solid #ccc;
@@ -89,12 +108,11 @@
 }
 
 .photoView > .photoView_input > button {
-	position: absolute;
-	right: 0;
-	bottom: 0;
 	height: 40px;
 	width: 40px;
 	color: #fff;
+	max-height: 80px;
+	min-height: 40px;
 	background-color: #1d2127;
 	border-radius: 0 0 4px 0;
 }

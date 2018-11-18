@@ -3,16 +3,19 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { history } from './../../../store'
 import ImageLoader from 'react-imageloader'
+import TextareaAutosize from 'react-textarea-autosize'
 
 import Menu from '../../elements/menu'
 import PostComments from './PostComments'
 import Window from '../../elements/window'
 import PostInfo from '../../elements/postInfo'
 import UserBlock from '../../elements/userBlock'
+import MenuRemove from '../../elements/menu/menuRemove'
 import PictureBottom from '../../elements/pictureBottom'
 
 import {
 	menuOpen,
+	sendComment,
 	photoViewClose,
 	photoViewGetPageData,
 } from '../../../actions/photoView'
@@ -30,6 +33,8 @@ class PhotoView extends React.Component {
 		} = props.photoView;
 
 		this.state = {
+			inputHeight: 40,
+			textareaValue: '',
 			autonomous: isLoaded ? false : true,
 			postId: isLoaded ? postId : props.match.params.postId,
 		}
@@ -56,7 +61,13 @@ class PhotoView extends React.Component {
 		if(!this.props.photoView.isLoaded) return false;
 
 		const {
+			textareaValue,
+			textareaHeight
+		} = this.state;
+		const {
+			like_id,
 			user_id,
+			photo_id,
 			user_name,
 			avatar_50,
 			photo_600,
@@ -65,9 +76,7 @@ class PhotoView extends React.Component {
 			photo_timestamp,
 			photo_comments,
 			photo_likes,
-			like_id
 		} = this.props.photoView.postInfo;
-		
 		const {
 			menu,
 			pageConf,
@@ -87,6 +96,8 @@ class PhotoView extends React.Component {
 							src={photo_600}
 							preloader={() => (<img src="/img/preload.gif" alt=""/>)} />
 							<PictureBottom
+							userId={user_id}
+							postId={photo_id}
 							title={photo_title}
 							desc={photo_desc} />
 						</div>
@@ -95,35 +106,56 @@ class PhotoView extends React.Component {
 							userId={user_id}
 							userName={user_name}
 							userAvatar={avatar_50}
-							userDesc={photo_timestamp}
+							timeDesc={photo_timestamp}
 							ellipsis={true}
 							ellipsisOpen={() => menuOpen({
 								userId: user_id,
+								postId: photo_id,
 								userName: user_name
 							})} />
 						</div>
 						<div className="photoView_postInfo">
 							<PostInfo
-							a={console.log(like_id)}
+							likeId={like_id}
+							postId={photo_id}
 							photoLikes={photo_likes}
-							photoComments={photo_comments}
-							likeId={like_id} />
+							photoComments={photo_comments} />
 						</div>
-						<PostComments 
-						postComments={this.props.photoView.postComments} />
-						<div className="photoView_input">
-							<textarea placeholder="Напишите сообщение..." />
-							<button className="fa fa-send" />
+						<PostComments />
+						<div className="photoView_input" style={{height: textareaHeight}}>
+							<TextareaAutosize
+							value={textareaValue}
+							maxLength={250}
+							placeholder="Напишите сообщение..."
+							style={{height: textareaHeight, minHeight: 40, maxHeight: 80}}
+							onChange={e => this.setState({textareaValue: e.target.value})} 
+							onHeightChange={(height) => this.setState({textareaHeight: height})} />
+							<button 
+							className="fa fa-send" 
+							style={{height: textareaHeight}} 
+							onClick={() => this.handleSendComment(photo_id, textareaValue)} />
 						</div>
 					</div>
 				</Window>
-				{menu.isLoaded ? 
+
+				{menu.isLoadedInWindow ? 
 					<Menu
-					followUser={true}
 					goToProfile={true}
+					goToRemovePost={true}
+					goToFollowUser={true}
+					history={this.props.history}
 					/> : null}
+				{menu.isLoadedMenuRemove ? <MenuRemove />  : null}
 			</div>
 		)
+	}
+
+	handleSendComment(photo_id, textareaValue) {
+		this.setState({
+			textareaHeight: 40,
+			textareaValue: ''
+		});
+		this.props.sendComment(photo_id, textareaValue);
 	}
 
 	windowClose() {
@@ -143,7 +175,9 @@ PhotoView.propTypes = {
 	menu: PropTypes.object.isRequired,
 	menuOpen: PropTypes.func.isRequired,
 	pageConf: PropTypes.object.isRequired,
+	photoView: PropTypes.object.isRequired,
 	getPageData: PropTypes.func.isRequired,
+	sendComment: PropTypes.func.isRequired,
 	photoViewClose: PropTypes.func.isRequired,
 }
 
@@ -157,6 +191,7 @@ const mapDispatchToProps = (dispatch) => ({
 	menuOpen: (data) => dispatch(menuOpen(data)),
 	photoViewClose: () => dispatch(photoViewClose()),
 	getPageData: (postId) => dispatch(photoViewGetPageData(postId)),
+	sendComment: (postId, commentText) => dispatch(sendComment(postId, commentText)),
 
 })
 

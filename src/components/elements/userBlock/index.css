@@ -34,6 +34,11 @@
 .user_desc{
 	line-height: 20px;
 }
+.user_desc_datetime {
+	color: #00000099;
+	white-space: nowrap;
+	font-size: 13.3px;
+}
 .user_action_post{
 	position: absolute;
 	top: 18px;
@@ -63,5 +68,6 @@
 		position: absolute;
 		top: 18px;
 		right: 25px;
+		cursor: pointer;
 	}
 }

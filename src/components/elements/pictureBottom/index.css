@@ -2,10 +2,7 @@
 	bottom: 0;
 	width: 100%;
 	color: #fff;
-	overflow: hidden;
 	position: absolute;
-	word-wrap: break-word;
-	text-overflow: ellipsis;
 	border-radius: 0 0 0 4px;
 	background: hsla(0, 0%, 12%, 0.7);
 }
@@ -28,31 +25,40 @@
 
 .pictureBottom_icon_edit, .pictureBottom_icon_check {
 	bottom: 20px;
-	visibility: hidden;
 }
 
 .pictureBottom > .pictureBottom_title {
 	position: relative;
 	top: 10px;
 	margin: 0 55px 0 15px;
+	white-space: nowrap;
+	overflow: hidden;
 	text-overflow: ellipsis;
-	word-wrap: break-word;
 }
+
 .pictureBottom > .pictureBottom_desc {
 	top: 17px;
-	overflow: hidden;
+	height: 100px;
+	padding: 0 15px 0 0;
+	word-wrap: break-word;
 	position: relative;
-	float: left;
 	line-height: 1.3;
 	margin: 0 55px 0 15px;
-	text-overflow: ellipsis;
-	word-wrap: break-word;
-	visibility: hidden;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.pictureBottom_desc::-webkit-scrollbar {
+    width: 4px;
+}
+ 
+.pictureBottom_desc::-webkit-scrollbar-thumb {
+	background: hsl(0, 100%, 100%);
+	border-radius: 4px;
 }
 
 .pictureBottom > .pictureBottom_form {
 	position: absolute;
-	visibility: hidden;
 	padding: 10px 40px 0px 15px;
 	width: 85%;
 }

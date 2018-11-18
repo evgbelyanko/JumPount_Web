@@ -14,8 +14,6 @@ import Preload from '../../elements/preload'
 
 import './index.css'
 
-window.scrollTo(0,1);
-
 const MapWithAMarkerClusterer = compose(
 	withProps({
 		googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyAeSOHuULn3P2EafsXS4t5163z5ouAML9Y&v=3.exp&libraries=geometry,drawing,places",
@@ -64,7 +62,7 @@ const MapWithAMarkerClusterer = compose(
 				key={marker.photo_id}
 				title={marker.photo_id.toString()}
 				position={{ lat: marker.photo_latitude, lng: marker.photo_longitude }}
-				onClick={() => props.openPanelMarker(marker.photo_id)} /> //marker.photo_id
+				onClick={() => props.openPanelMarker(marker.photo_id)} />
 			))}
 		</MarkerClusterer>
 
@@ -75,7 +73,7 @@ const MapWithAMarkerClusterer = compose(
 		</Link>
 
 		{props.visiblePanel ? 
-			<Panel 
+			<Panel
 			history={props.history}
 			markersIds={props.markersIds} /> : null }
 

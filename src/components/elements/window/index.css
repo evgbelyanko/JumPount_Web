@@ -12,6 +12,7 @@
 	color: #fff;
 }
 .wrap_window{
+	width: 100%;
 	position: fixed;
 	left: 50%;
 	top: 50%;
@@ -56,19 +57,19 @@
 	line-height: 48px;
 	margin-right: 50px;
 }
-.wrap_btn_follow_on {
-	color: #000;
-	line-height: 48px;
-	text-align: center;
+
+@media (max-width: 350px) {
+	.wrap_btn_left{
+		margin-left: 30px;
+	}
+	.wrap_btn_right{
+		margin-right: 30px;
+	}
 }
-.wrap_btn_follow_on:before {
-	content: 'Отписаться от пользователя';
-}
-.wrap_btn_follow_off {
-	color: #000;
-	line-height: 48px;
-	text-align: center;
-}
-.wrap_btn_follow_off:before {
-	content: 'Подписаться на пользователя';
+
+@media (min-width: 768px) {
+	.wrap_btn_group{
+		border-radius: 4px;
+		cursor: pointer;
+	}
 }

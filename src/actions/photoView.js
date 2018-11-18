@@ -5,6 +5,8 @@ import {
 	PHOTOVIEW_REQUEST,
 	PHOTOVIEW_SUCCESS,
 	PHOTOVIEW_FAILURE,
+	GET_MORE_COMMENTS,
+	GET_COMMENT_SUCCESS
 } from './types'
 import { getMenuData } from './menu'
 import { userLogout } from './auth/logout'
@@ -23,7 +25,7 @@ export const setPageConf = () => {
 }
 
 export const menuOpen = (data) => dispatch => {
-	dispatch(getMenuData(data))
+	dispatch(getMenuData(data, true))
 	
 	return { type: MENU_OPEN }
 }
@@ -52,5 +54,51 @@ export const photoViewGetPageData = (postId) => dispatch => {
 		data.postId = postId;
 		dispatch(photoViewSuccess(data))
 		dispatch(setPageConf())
+	})
+}
+
+export const getCommentSuccess = (data) => ({ 
+	type: GET_COMMENT_SUCCESS,
+	payload: data
+})
+
+export const sendComment = (postId, commentText) => dispatch => {
+	fetch(`/photoview/sendComment`, {
+		method: 'post', 
+		credentials: 'include',
+		headers: {
+			'Content-Type': 'application/json'
+		}, 
+		body: JSON.stringify({
+			postId: postId,
+			commentText: commentText
+		})
+	})
+	.then(res => res.json())
+	.then(data => {
+		if(data.error === 401) {
+			dispatch(userLogout())
+			return false;
+		}
+		dispatch(getCommentSuccess(data))
+	})
+}
+
+export const getMoreComments = (data) => ({ 
+	type: GET_MORE_COMMENTS,
+	payload: data
+})
+
+export const loadMoreComments = (postId, startLimit, countLimit) => dispatch => {
+	fetch(`/photoview/loadMoreComments?postId=${postId}&startLimit=${startLimit}&countLimit=${countLimit}`, {
+		credentials: 'include'
+	})
+	.then(res => res.json())
+	.then(data => {
+		if(data.error === 401) {
+			dispatch(userLogout())
+			return false;
+		}
+		dispatch(getMoreComments(data))
 	})
 }

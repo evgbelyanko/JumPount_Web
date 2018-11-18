@@ -28,6 +28,7 @@
 	line-height: 18px;
 }
 .follow_result{
+	position: relative;
 	background: #fff;
 }
 .follow_error{
@@ -47,4 +48,14 @@
 		border: 1px solid #ccc;
 		border-radius: 4px;
 	}
+}
+
+.follow_postsEmpty {
+	position: absolute;
+	left: 50%;
+	top: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 15px;
 }

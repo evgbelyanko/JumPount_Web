@@ -12,3 +12,7 @@
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 }
+
+.follow_postsEmpty {
+	margin: 0px 0px 0px -95px;
+}

@@ -37,8 +37,9 @@ class Feed extends React.Component {
 				{menu.isLoaded ? 
 					<Menu 
 					goToPost={true}
-					followUser={true}
 					goToProfile={true}
+					goToFollowUser={true}
+					history={this.props.history}
 					/> : null}
 			</div>
 		);
@@ -57,7 +58,7 @@ class Feed extends React.Component {
 				userId={post.user_id}
 				userName={post.user_name}
 				userAvatar={post.avatar_50}
-				userDesc={post.photo_timestamp}
+				timeDesc={post.photo_timestamp}
 				ellipsisOpen={() => menuOpen({
 					userId: post.user_id,
 					postId: post.photo_id,
@@ -68,14 +69,16 @@ class Feed extends React.Component {
 					src={post.photo_600} 
 					preloader={() => (<img src="/img/preload.gif" alt=""/>)} />
 					<PictureBottom
+					userId={null}
+					postId={post.photo_id}
 					title={post.photo_title}
 					desc={post.photo_desc} />
 				</div>
 				<PostInfo
-				a={console.log(post.like_id)}
+				likeId={post.like_id}
+				postId={post.photo_id}
 				photoLikes={post.photo_likes}
-				photoComments={post.photo_comments}
-				likeId={post.like_id} />
+				photoComments={post.photo_comments} />
 			</div>
 		)
 
