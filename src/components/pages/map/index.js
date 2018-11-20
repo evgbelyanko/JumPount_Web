@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { compose, withProps, withStateHandlers } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import { MarkerClusterer } from "react-google-maps/lib/components/addons/MarkerClusterer"
@@ -65,13 +64,7 @@ const MapWithAMarkerClusterer = compose(
 				onClick={() => props.openPanelMarker(marker.photo_id)} />
 			))}
 		</MarkerClusterer>
-
-		<div className="map_logo" />
-
-		<Link to="/camera" className="map_page_camera">
-			<span className="fa fa-camera" />
-		</Link>
-
+		{props.children}
 		{props.visiblePanel ? 
 			<Panel
 			history={props.history}
@@ -92,14 +85,28 @@ class Gmap extends React.PureComponent {
 			pageData,
 			photoView
 		} = this.props;
+
 		return (
 			<div>
 				<MapWithAMarkerClusterer 
 				history={history}
-				markers={pageData.listMarkers} />
+				markers={pageData.listMarkers}>
+					<div className="map_logo" />
+					<div id="camera_launch" className="map_page_camera" onClick={() => this.onLoadCamera()}>
+						<span className="fa fa-camera" />
+					</div>
+				</MapWithAMarkerClusterer>
 				{photoView.isLoaded ? <PhotoView /> : null}
 			</div>
 		)
+	}
+
+	onLoadCamera() {
+		if(localStorage.device === 'mobile' && localStorage.deviceOS === 'android'){
+			window.launchCamera();
+		} else {
+			this.props.history.push('/camera');
+		}
 	}
 }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { history } from './store'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
 import Gmap from './components/pages/map'
@@ -16,10 +17,20 @@ import './app.css'
 
 class App extends React.Component {
 
+	constructor() {
+		super();
+		
+		const arr = /\?set_userId=([0-9]+)/i.exec(window.location.search)
+		if(arr != null) {
+			localStorage.userId = arr[1];
+			history.push('/feed');
+		}
+	}
+
 	render() {
 		const Authorized = ({ component: Component, ...rest }) => (
 			<Route {...rest} render={props => (
-				localStorage.token ?
+				localStorage.userId ?
 					<div>
 						<Header />
 						<div className="content">
@@ -44,7 +55,7 @@ class App extends React.Component {
 						<Authorized path="/user/:userId?" component={Profile} />
 						<Authorized path="/following/:userId" component={Follows} />
 						<Authorized path="/followers/:userId" component={Follows} />
-						<Authorized exact path="/" component={localStorage.token ? Feed : Auth} />
+						<Authorized exact path="/" component={localStorage.userId ? Feed : Auth} />
 					</div>
 				</Router>
 		)

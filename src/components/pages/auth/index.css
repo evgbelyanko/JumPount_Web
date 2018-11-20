@@ -1,3 +1,6 @@
+@import url('./desktop.css') (min-width: 768px);
+@import url('./mobile.css') (max-width: 768px);
+
 .auth_back{
 	position: absolute;
 	top: 0;
@@ -40,7 +43,6 @@
 	font-weight: bold;
 	background-color: #fff;
 	border: 1px solid #fff;
-	cursor: pointer;
 }
 .auth_btn_text{
 	margin-left: 5px;

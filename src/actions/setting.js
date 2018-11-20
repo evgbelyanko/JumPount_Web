@@ -3,6 +3,7 @@ import {
 	GET_PAGE_DATA_REQUEST,
 	GET_PAGE_DATA_SUCCESS,
 	GET_PAGE_DATA_FAILURE,
+	SEND_UPDATE_AVATAR_SUCCESS,
 } from './types'
 import { userLogout } from './auth/logout'
 import { setTypeDevice } from './setTypeDevice'
@@ -41,6 +42,11 @@ export const getPageData = () => dispatch => {
 	})
 }
 
+export const sendUpdateAvatarSuccess = (data) => ({
+	type: SEND_UPDATE_AVATAR_SUCCESS,
+	payload: data
+})
+
 export const sendUpdateAvatar = (file) => dispatch => {
 	const formData = new FormData();
 	formData.append('file', file);
@@ -56,6 +62,22 @@ export const sendUpdateAvatar = (file) => dispatch => {
 			dispatch(userLogout())
 			return false;
 		}
+		dispatch(sendUpdateAvatarSuccess(data))
+	})
+}
+
+export const sendDeleteAvatar = () => dispatch => {
+	fetch(`/setting/deleteAvatar`, {
+		method: 'post', 
+		credentials: 'include',
+	})
+	.then(res => res.json())
+	.then(data => {
+		if(data.error === 401) {
+			dispatch(userLogout())
+			return false;
+		}
+		dispatch(sendUpdateAvatarSuccess(data))
 	})
 }
 

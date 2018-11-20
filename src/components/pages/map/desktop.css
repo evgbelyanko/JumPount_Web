@@ -12,6 +12,9 @@
 .map_post:last-child{
 	margin-bottom: 70px;
 }
+#map .map_page_camera {
+	cursor: pointer;
+}
 @media only screen and  (min-width: 768px) {
 	.map_panel{
 		width: 300px;
