@@ -5,7 +5,8 @@ import {
 	GET_PAGE_DATA_FAILURE,
 	SEND_UPDATE_AVATAR_SUCCESS,
 } from './types'
-import { userLogout } from './auth/logout'
+import config from '../config'
+import { handleError } from './handleError'
 import { setTypeDevice } from './setTypeDevice'
 
 
@@ -27,14 +28,14 @@ export const getPageDataRequest = () => ({ type: GET_PAGE_DATA_REQUEST })
 export const getPageDataFailure = () => ({ type: GET_PAGE_DATA_FAILURE })
 export const getPageData = () => dispatch => {
 	dispatch(getPageDataRequest())
-	fetch(`/setting/getInfo`, {
+	fetch(`${config.serverUrl}/setting/getInfo`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
+		if(data.error) {
 			dispatch(getPageDataFailure())
-			dispatch(userLogout())
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(getPageDataSuccess(data))
@@ -51,15 +52,15 @@ export const sendUpdateAvatar = (file) => dispatch => {
 	const formData = new FormData();
 	formData.append('file', file);
 
-	fetch(`/setting/updateAvatar`, {
+	fetch(`${config.serverUrl}/setting/updateAvatar`, {
 		method: 'post', 
 		credentials: 'include',
 		body: formData
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
-			dispatch(userLogout())
+		if(data.error) {
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(sendUpdateAvatarSuccess(data))
@@ -67,14 +68,14 @@ export const sendUpdateAvatar = (file) => dispatch => {
 }
 
 export const sendDeleteAvatar = () => dispatch => {
-	fetch(`/setting/deleteAvatar`, {
+	fetch(`${config.serverUrl}/setting/deleteAvatar`, {
 		method: 'post', 
 		credentials: 'include',
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
-			dispatch(userLogout())
+		if(data.error) {
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(sendUpdateAvatarSuccess(data))
@@ -82,7 +83,7 @@ export const sendDeleteAvatar = () => dispatch => {
 }
 
 export const sendRowsSetting = (data) => dispatch => {
-	fetch(`/setting/updateProfile`, {
+	fetch(`${config.serverUrl}/setting/updateProfile`, {
 		method: 'post', 
 		credentials: 'include',
 		headers: {
@@ -92,8 +93,8 @@ export const sendRowsSetting = (data) => dispatch => {
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
-			dispatch(userLogout())
+		if(data.error) {
+			dispatch(handleError(data.error))
 			return false;
 		}
 	})

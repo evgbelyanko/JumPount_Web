@@ -1,7 +1,8 @@
 import {
 	SEND_LIKE_SUCCESS,
 } from './types'
-import { userLogout } from './auth/logout'
+import config from '../config'
+import { handleError } from './handleError'
 
 export const menuActionsLikeSuccess = (data) => ({ 
 	type: SEND_LIKE_SUCCESS,
@@ -9,7 +10,7 @@ export const menuActionsLikeSuccess = (data) => ({
 })
 
 export const menuActionsLike = (postId) => dispatch => {
-	fetch(`/menu/sendLike`, {
+	fetch(`${config.serverUrl}/menu/sendLike`, {
 		method: 'post', 
 		credentials: 'include',
 		headers: {
@@ -19,8 +20,8 @@ export const menuActionsLike = (postId) => dispatch => {
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
-			dispatch(userLogout())
+		if(data.error) {
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(menuActionsLikeSuccess(data))

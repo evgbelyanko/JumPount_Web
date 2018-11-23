@@ -89,6 +89,17 @@
 	line-height: 20px;
 }
 
+.photoView > .photoView_comments .photoView_comments_empty {
+	text-align: center;
+}
+
+.photoView > .photoView_comments .photoView_comments_empty_icon {
+	font-size: 96px;
+}
+
+.photoView > .photoView_comments .photoView_comments_empty_text {
+	font-style: italic;
+}
 
 .photoView > .photoView_input {
 	min-height: 40px;

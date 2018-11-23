@@ -1,3 +1,7 @@
+.content_main {
+	margin-top: 15px;
+}
+
 .photoView {
 	display: grid;
 	grid-template-columns: 600px 300px;
@@ -30,4 +34,8 @@
 
 .photoView > .photoView_input > button {
 	position: relative;
+}
+
+.photoView > .photoView_comments .photoView_comments_empty {
+	margin-top: 100px;
 }

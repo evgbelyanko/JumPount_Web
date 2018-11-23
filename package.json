@@ -12,17 +12,15 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.1",
     "react-textarea-autosize": "^7.1.0-1",
-    "react-vk-auth": "0.0.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8000",
   "browserslist": [
     ">0.2%",
     "not dead",

@@ -18,23 +18,35 @@ class PostComments extends React.Component {
 		this.state = {
 			startLimit: 10,
 			countLimit: 10,
+			scrollIsCancelled: false,
+			scrollCommentsToBottom: false,
 			hiddenComments: photo_comments - 10,
 		}
 	}
 
-	componentDidMount() { 
-		if(this.props.pageConf.device !== 'mobile') this.scrollCommentsToBottom(); 
+	componentDidMount() { if(this.props.pageConf.device !== 'mobile') this.scrollCommentsToBottom(); }
+
+	componentDidUpdate(prevProps, prevState) {
+		if(this.state.scrollCommentsToBottom) this.scrollCommentsToBottom();
 	}
 
-	componentDidUpdate(prevProps, prevState) { this.scrollCommentsToBottom(); }
+	componentWillReceiveProps(nextProps) {
+		const { counterComments } = nextProps.photoView;
+		if(counterComments === 1) this.setState({scrollCommentsToBottom: true});
+
+		return true;
+	}
 
 	scrollCommentsToBottom() {
 		const commentsBlock = document.querySelector('.photoView_comments');
 		commentsBlock.scrollTop = commentsBlock.scrollHeight;
+		this.setState({scrollCommentsToBottom: false});
 	}
 
 	render() {
-		const postCommentsList = this.props.photoView.postComments.slice(0).reverse().map((item, key) => {
+		const { postComments } = this.props.photoView;
+
+		const readyList = postComments.slice(0).reverse().map((item, key) => {
 			return (
 				<div className="photoView_comments_msg" key={key}>
 					<img src={item.avatar_50} alt=""/>
@@ -50,9 +62,18 @@ class PostComments extends React.Component {
 	    return (
 			<div className="photoView_comments">
 				{this.state.hiddenComments > 0 ? this.loadMoreCommentsButton() : null}
-				{postCommentsList}
+				{postComments.length === 0 ? this.commentsEmpty() : readyList}
 			</div>
 	    )
+	}
+
+	commentsEmpty() {
+		return (
+			<div className="photoView_comments_empty">
+				<div className="fa fa-commenting photoView_comments_empty_icon"></div>
+				<div className="photoView_comments_empty_text">Оставьте первый комментарий.</div>
+			</div>
+		)
 	}
 
 	loadMoreCommentsButton() {

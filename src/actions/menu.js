@@ -10,7 +10,8 @@ import {
 	MENU_IN_WINDOW_SUCCESS,
 	MENU_ACTIONS_FOLLOWING_SUCCESS
 } from './types'
-import { userLogout } from './auth/logout'
+import config from '../config'
+import { handleError } from './handleError'
 import { photoViewGetPageData } from './photoView'
 
 export const menuSuccess = (data, inWindow) => {
@@ -33,14 +34,14 @@ export const photoViewOpen = (postId) => dispatch => {
 
 export const getMenuData = (userData, inWindow = false) => dispatch => {
 	dispatch(menuRequest())
-	fetch(`/menu/checkFollowing?userId=${userData.userId}`, {
+	fetch(`${config.serverUrl}/menu/checkFollowing?userId=${userData.userId}`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
+		if(data.error) {
 			dispatch(menuFailure())
-			dispatch(userLogout())
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(menuSuccess({...data, ...userData}, inWindow))
@@ -65,7 +66,7 @@ export const menuRemoveSuccess = (key) => ({
 })
 
 export const menuRemovePost = (postId) => dispatch => {
-	fetch(`/photoview/deletePost`, {
+	fetch(`${config.serverUrl}/photoview/deletePost`, {
 		method: 'post', 
 		credentials: 'include',
 		headers: {
@@ -77,8 +78,8 @@ export const menuRemovePost = (postId) => dispatch => {
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
-			dispatch(userLogout())
+		if(data.error) {
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(menuClose())
@@ -88,7 +89,7 @@ export const menuRemovePost = (postId) => dispatch => {
 }
 
 export const menuRemoveComment = (postId, itemId, key) => dispatch => {
-	fetch(`/photoview/deleteComment`, {
+	fetch(`${config.serverUrl}/photoview/deleteComment`, {
 		method: 'post', 
 		credentials: 'include',
 		headers: {
@@ -101,8 +102,8 @@ export const menuRemoveComment = (postId, itemId, key) => dispatch => {
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
-			dispatch(userLogout())
+		if(data.error) {
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(menuRemoveClose())
@@ -116,13 +117,13 @@ export const menuActionsFollowingSuccess = (data) => ({
 })
 
 export const menuActionsFollowing = (userId) => dispatch => {
-	fetch(`/menu/actionsFollowing?userId=${userId}`, {
+	fetch(`${config.serverUrl}/menu/actionsFollowing?userId=${userId}`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
-			dispatch(userLogout())
+		if(data.error) {
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(menuActionsFollowingSuccess(data))

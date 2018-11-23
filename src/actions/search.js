@@ -9,8 +9,9 @@ import {
 	GET_SEARCH_USERS_SUCCESS,
 	GET_SEARCH_USERS_FAILURE,
 } from './types'
+import config from '../config'
 import { getMenuData } from './menu'
-import { userLogout } from './auth/logout'
+import { handleError } from './handleError'
 import { setTypeDevice } from './setTypeDevice'
 import { photoViewGetPageData } from './photoView'
 
@@ -43,14 +44,14 @@ export const getPageDataRequest = () => ({ type: GET_PAGE_DATA_REQUEST })
 export const getPageDataFailure = () => ({ type: GET_PAGE_DATA_FAILURE })
 export const getPageData = () => dispatch => {
 	dispatch(getPageDataRequest())
-	fetch(`/search/recent`, {
+	fetch(`${config.serverUrl}/search/recent`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
+		if(data.error) {
 			dispatch(getPageDataFailure())
-			dispatch(userLogout())
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(getPageDataSuccess(data))
@@ -67,14 +68,14 @@ export const getSearchUsersRequest = () => ({ type: GET_SEARCH_USERS_REQUEST })
 export const getSearchUsersFailure = () => ({ type: GET_SEARCH_USERS_FAILURE })
 export const getSearchUsers = (inputField) => dispatch => {
 	dispatch(getSearchUsersRequest())
-	fetch(`/search/users?name=${inputField}`, {
+	fetch(`${config.serverUrl}/search/users?name=${inputField}`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
+		if(data.error) {
 			dispatch(getSearchUsersFailure())
-			dispatch(userLogout())
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(getSearchUsersSuccess(data))

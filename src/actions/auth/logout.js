@@ -1,5 +1,7 @@
+import config from '../../config'
+
 export const userLogout = () => dispatch => {
-	fetch(`/auth/logout`, {
+	fetch(`${config.serverUrl}/auth/logout`, {
 		method: 'post',
 		credentials: 'include',
 		headers: {

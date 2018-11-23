@@ -1,7 +1,8 @@
-import { userLogout } from './auth/logout'
+import config from '../config'
+import { handleError } from './handleError'
 
 export const changeTextBox = (objPostBottom) => dispatch => {
-	fetch(`/photoview/changeTextBox`, {
+	fetch(`${config.serverUrl}/photoview/changeTextBox`, {
 		method: 'post', 
 		credentials: 'include',
 		headers: {
@@ -11,8 +12,8 @@ export const changeTextBox = (objPostBottom) => dispatch => {
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
-			dispatch(userLogout())
+		if(data.error) {
+			dispatch(handleError(data.error))
 			return false;
 		}
 	})

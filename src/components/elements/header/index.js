@@ -31,12 +31,6 @@ class Header extends React.Component {
 						{ device === 'desktop' ? <span className="navigation_text">Карта</span> : null }
 					</Link>
 				</li>
-	{/*			<li>
-					<Link to="/camera" className={name === 'camera' ? setActiveClassName : null}>
-						<span className="fa fa-camera-retro navigation_icon" />
-						{ device === 'desktop' ? <span className="navigation_text">Камера</span> : null }
-					</Link>
-				</li>*/}
 				<li>
 					<Link to="/search" className={name === 'search' ? setActiveClassName : null}>
 						<span className="fa fa-search navigation_icon" />

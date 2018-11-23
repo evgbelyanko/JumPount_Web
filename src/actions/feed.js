@@ -5,8 +5,9 @@ import {
 	GET_PAGE_DATA_SUCCESS,
 	GET_PAGE_DATA_FAILURE,
 } from './types'
+import config from '../config'
 import { getMenuData } from './menu'
-import { userLogout } from './auth/logout'
+import { handleError } from './handleError'
 import { setTypeDevice } from './setTypeDevice'
 
 export const setPageConf = () => ({
@@ -34,14 +35,14 @@ export const getPageDataFailure = () => ({ type: GET_PAGE_DATA_FAILURE })
 
 export const getPageData = () => dispatch => {
 	dispatch(getPageDataRequest())
-	fetch(`/feed/posts`, {
+	fetch(`${config.serverUrl}/feed/posts`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
+		if(data.error) {
 			dispatch(getPageDataFailure())
-			dispatch(userLogout());
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(getPageDataSuccess(data))

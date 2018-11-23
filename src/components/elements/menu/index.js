@@ -51,7 +51,7 @@ class Menu extends React.Component {
 					{goToFollowUser && +localStorage.userId !== +menu.userId ? <div className="wrap_btn" onClick={() => menuActionsFollowing(menu.userId)}>{this.checkFollows()}</div> : null}
 					{goToSetting && +localStorage.userId === +menu.userId ? <Link to="/setting" className="wrap_btn">Настройки профиля</Link> : null}
 					{goToRemovePost && +localStorage.userId === +menu.userId ? <div className="wrap_btn" onClick={() => menuRemoveOpen('post', menu.postId, menu.postId)}>Удалить пост</div> : null}
-					{goToProfile ? <a href={`/user/${menu.userId}`} className="wrap_btn">Перейти к пользователю</a> : null}
+					{goToProfile ? <Link to={`/user/${menu.userId}`} className="wrap_btn">Перейти к пользователю</Link> : null}
 					{goToPost ? <div className="wrap_btn" onClick={() => this.photoViewCreate(menu.postId)}>Перейти к записи</div> : null}
 					{goToUserLogout && +localStorage.userId === +menu.userId ? <div className="wrap_btn" onClick={() => userLogout()}>Выход из профиля</div> : null}
 					<div className="wrap_btn" onClick={() => menuClose()}>Закрыть окно</div>

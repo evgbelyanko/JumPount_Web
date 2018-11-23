@@ -7,8 +7,9 @@ import {
 	GET_PAGE_DATA_SUCCESS,
 	GET_PAGE_DATA_FAILURE,
 } from './types'
+import config from '../config'
 import { getMenuData } from './menu'
-import { userLogout } from './auth/logout'
+import { handleError } from './handleError'
 import { followsGetPageData } from './follows'
 import { setTypeDevice } from './setTypeDevice'
 import { photoViewGetPageData } from './photoView'
@@ -51,14 +52,14 @@ export const getPageDataRequest = () => ({ type: GET_PAGE_DATA_REQUEST })
 export const getPageDataFailure = () => ({ type: GET_PAGE_DATA_FAILURE })
 export const getPageData = (userId) => dispatch => {
 	dispatch(getPageDataRequest())
-	fetch(`/profile/getInfo?id=${userId}`, {
+	fetch(`${config.serverUrl}/profile/getInfo?id=${userId}`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
+		if(data.error) {
 			dispatch(getPageDataFailure())
-			dispatch(userLogout())
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(getPageDataSuccess(data))

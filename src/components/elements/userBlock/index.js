@@ -1,5 +1,6 @@
 import React from 'react';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import './index.css';
 
 export default class UserBlock extends React.Component {
@@ -38,9 +39,9 @@ export default class UserBlock extends React.Component {
 		return (
 			<div className="user_block">
 				<div className="user_link">
-					<a href={`/user/${userId}`} className="user_img">
+					<Link to={`/user/${userId}`} className="user_img">
 						<img src={userAvatar} alt=""/>
-					</a>
+					</Link>
 					<div className="user_info">
 						<div className="user_nickname">
 							<span>{userName}</span>

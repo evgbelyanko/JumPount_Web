@@ -8,7 +8,8 @@ import {
 	GET_PANEL_POSTS_SUCCESS,
 	GET_PANEL_POSTS_FAILURE,
 } from './types'
-import { userLogout } from './auth/logout';
+import config from '../config'
+import { handleError } from './handleError'
 import { setTypeDevice } from './setTypeDevice';
 import { photoViewGetPageData } from './photoView';
 
@@ -39,14 +40,14 @@ export const getPageDataFailure = () => ({ type: GET_PAGE_DATA_FAILURE })
 
 export const getPageData = () => dispatch => {
 	dispatch(getPageDataRequest())
-	fetch(`/map/clusters`, {
+	fetch(`${config.serverUrl}/map/clusters`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
+		if(data.error) {
 			dispatch(getPageDataFailure())
-			dispatch(userLogout());
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(getPageDataSuccess(data))
@@ -63,7 +64,7 @@ export const getPanelPostsRequest = () => ({ type: GET_PANEL_POSTS_REQUEST })
 export const getPanelPostsFailure = () => ({ type: GET_PANEL_POSTS_FAILURE })
 export const getPanelPosts = (markersIds) => dispatch => {
 	dispatch(getPanelPostsRequest())
-	fetch('/map/posts', {
+	fetch(`${config.serverUrl}/map/posts`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -73,9 +74,9 @@ export const getPanelPosts = (markersIds) => dispatch => {
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
+		if(data.error) {
 			dispatch(getPanelPostsFailure())
-			dispatch(userLogout())
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(getPanelPostsSuccess(data))

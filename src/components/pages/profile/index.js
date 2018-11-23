@@ -17,16 +17,31 @@ import './index.css'
 
 class Profile extends React.Component {
 
-	defUserId() {
-		const userIdURL = this.props.match.params.userId;
-		const userId = userIdURL ? userIdURL : localStorage.userId;
+	constructor(props) {
+		super(props);
 
-		return userId;
+		const { userId } = props.match.params;
+
+		this.state = {
+			userId: userId ? userId : localStorage.userId
+		};
+	}
+
+	componentWillReceiveProps(nextProps) {
+		const { userId } = nextProps.match.params;
+		
+		this.setState({userId: userId});
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		const { userId } = this.state;
+
+		if(userId !== prevState.userId) { this.props.getPageData(userId); }
 	}
 
 	componentDidMount() {
-		const userId = this.defUserId();
-		
+		const { userId } = this.state;
+
 		this.props.getPageData(userId);
 		history.replace(`/user/${userId}`);
 	}

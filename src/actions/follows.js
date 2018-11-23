@@ -6,8 +6,9 @@ import {
 	FOLLOWS_SUCCESS,
 	FOLLOWS_FAILURE,
 } from './types'
+import config from '../config'
 import { getMenuData } from './menu'
-import { userLogout } from './auth/logout'
+import { handleError } from './handleError'
 import { setTypeDevice } from './setTypeDevice'
 
 export const setPageConf = () => {
@@ -39,14 +40,14 @@ export const followsFailure = () => ({ type: FOLLOWS_FAILURE })
 
 export const followsGetPageData = (page, userId) => dispatch => {
 	dispatch(followsRequest())
-	fetch(`/follows/users?page=${page}&userid=${userId}`, {
+	fetch(`${config.serverUrl}/follows/users?page=${page}&userid=${userId}`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
+		if(data.error) {
 			dispatch(followsFailure())
-			dispatch(userLogout())
+			dispatch(handleError(data.error))
 			return false;
 		}
 		data.page = page;

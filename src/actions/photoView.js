@@ -8,8 +8,9 @@ import {
 	GET_MORE_COMMENTS,
 	GET_COMMENT_SUCCESS
 } from './types'
+import config from '../config'
 import { getMenuData } from './menu'
-import { userLogout } from './auth/logout'
+import { handleError } from './handleError'
 import { setTypeDevice } from './setTypeDevice'
 
 export const setPageConf = () => {
@@ -41,14 +42,14 @@ export const photoViewFailure = () => ({ type: PHOTOVIEW_FAILURE })
 
 export const photoViewGetPageData = (postId) => dispatch => {
 	dispatch(photoViewRequest())
-	fetch(`/photoview/post?id=${postId}`, {
+	fetch(`${config.serverUrl}/photoview/post?id=${postId}`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
+		if(data.error) {
 			dispatch(photoViewFailure())
-			dispatch(userLogout())
+			dispatch(handleError(data.error))
 			return false;
 		}
 		data.postId = postId;
@@ -63,7 +64,7 @@ export const getCommentSuccess = (data) => ({
 })
 
 export const sendComment = (postId, commentText) => dispatch => {
-	fetch(`/photoview/sendComment`, {
+	fetch(`${config.serverUrl}/photoview/sendComment`, {
 		method: 'post', 
 		credentials: 'include',
 		headers: {
@@ -76,8 +77,8 @@ export const sendComment = (postId, commentText) => dispatch => {
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
-			dispatch(userLogout())
+		if(data.error) {
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(getCommentSuccess(data))
@@ -90,13 +91,13 @@ export const getMoreComments = (data) => ({
 })
 
 export const loadMoreComments = (postId, startLimit, countLimit) => dispatch => {
-	fetch(`/photoview/loadMoreComments?postId=${postId}&startLimit=${startLimit}&countLimit=${countLimit}`, {
+	fetch(`${config.serverUrl}/photoview/loadMoreComments?postId=${postId}&startLimit=${startLimit}&countLimit=${countLimit}`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
 	.then(data => {
-		if(data.error === 401) {
-			dispatch(userLogout())
+		if(data.error) {
+			dispatch(handleError(data.error))
 			return false;
 		}
 		dispatch(getMoreComments(data))

@@ -12,7 +12,7 @@ export default class preload extends React.Component {
 				height: '100vh', 
 				width: '100%'
 			}}>
-				<img src="/img/preload.gif" className="preload_page" alt=""/>
+				<img src="/img/preload_page.gif" className="preload_page" alt=""/>
 			</div>
 		);
 	}

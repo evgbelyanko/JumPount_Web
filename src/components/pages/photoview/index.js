@@ -8,6 +8,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import Menu from '../../elements/menu'
 import PostComments from './PostComments'
 import Window from '../../elements/window'
+import Preload from '../../elements/preload'
 import PostInfo from '../../elements/postInfo'
 import UserBlock from '../../elements/userBlock'
 import MenuRemove from '../../elements/menu/menuRemove'
@@ -58,7 +59,7 @@ class PhotoView extends React.Component {
 	}
 
 	render() {
-		if(!this.props.photoView.isLoaded) return false;
+		if(!this.props.photoView.isLoaded) return <Preload />;
 
 		const {
 			textareaValue,
@@ -84,7 +85,7 @@ class PhotoView extends React.Component {
 		} = this.props;
 
 		return (
-			<div className="photoView">
+			<div className="content_main">
 				<Window 
 				width={900} 
 				onClose={() => this.windowClose()}
