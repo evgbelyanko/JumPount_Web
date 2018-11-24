@@ -1,6 +1,6 @@
 {
-  "name": "JumPoint",
-  "version": "0.1.0",
+  "name": "JumPoint_Web",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "connected-react-router": "^4.5.0",

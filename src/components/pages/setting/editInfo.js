@@ -23,7 +23,8 @@ class EditInfo extends React.Component {
 			userDesc: user_desc,
 			countryId: country_id,
 			userWebsite: user_website,
-			sendDataSuccess: false
+			sendDataError: false,
+			sendDataSuccess: false,
 		}
 	}
 
@@ -33,13 +34,14 @@ class EditInfo extends React.Component {
 			userDesc,
 			countryId,
 			userWebsite,
-			sendDataSuccess
+			sendDataError,
+			sendDataSuccess,
 		} = this.state;
 
 		return (
 			<div className="setting_form_group">
 				<span>Имя пользователя:</span>
-				<input id="setting_username" className="setting_form_group_in" type="text" name="username" maxLength="30" onChange={e => this.setState({userName: e.target.value})} defaultValue={userName}/>
+				<input id="setting_username" className="setting_form_group_in" type="text" name="username" minLength="3" maxLength="30" onChange={e => this.setState({userName: e.target.value})} defaultValue={userName}/>
 				<span>Страна:</span>
 				<select id="setting_country" className="setting_form_group_in" type="text" name="country" onChange={e => this.setState({countryId: e.target.value})} defaultValue={countryId}>
 					<option value="0">Не выбрано</option>
@@ -151,15 +153,32 @@ class EditInfo extends React.Component {
 					<option value="11060">Япония</option>
 				</select>
 				<span>Веб-сайт:</span>
-				<input id="setting_website" className="setting_form_group_in" type="text" placeholder="http://" name="website" maxLength="150" onChange={e => this.setState({userWebsite: e.target.value})} defaultValue={userWebsite}/>
+				<input 
+				id="setting_website" 
+				className="setting_form_group_in" 
+				type="text" 
+				placeholder="http://" 
+				name="website" 
+				maxLength="150"
+				style={sendDataError ? {border: '1px solid red'} : null}
+				onChange={e => this.setState({userWebsite: e.target.value})} defaultValue={userWebsite} />
 				<span>Описание профиля:</span>
 				<textarea id="setting_desc" className="setting_form_group_in" maxLength="250" rows="3" onChange={e => this.setState({userDesc: e.target.value})} defaultValue={userDesc}/>
 				<div className="setting_send">
 					<button className="btn_black" type="submit" onClick={() => this.sendRows()}>Отправить</button>
 				</div>
-				{sendDataSuccess ? <div className="setting_layer_success">Данные успешно обновлены!</div> : null}
+				{sendDataSuccess ? this.showSuccess() : null}
+				{sendDataError ? this.showError() : null}
 			</div>
 		);
+	}
+
+	showError() {
+		return <div className="setting_layer_success">Ошибка! Неверный веб-сайт.</div>;
+	}
+
+	showSuccess() {
+		return <div className="setting_layer_success">Данные успешно обновлены!</div>;
 	}
 
 	sendRows() {
@@ -170,18 +189,26 @@ class EditInfo extends React.Component {
 			userWebsite
 		} = this.state;
 
-		this.props.sendRowsSetting({
-			userName: userName,
-			userDesc: userDesc,
-			countryId: countryId,
-			userWebsite: userWebsite,
-		})
+		const checkUserWebsite = /^(http|https):\/\/[^ "]+$/.test(userWebsite);
 
-		this.setState({sendDataSuccess: true})
+		if(checkUserWebsite) {
+			this.setState({sendDataSuccess: true})
+			setTimeout(() => {
+				this.setState({sendDataSuccess: false})
+			}, 2000);
 
-		setTimeout(() => {
-			this.setState({sendDataSuccess: false})
-		}, 2000);
+			this.props.sendRowsSetting({
+				userName: userName,
+				userDesc: userDesc,
+				countryId: countryId,
+				userWebsite: userWebsite,
+			})
+		} else {
+			this.setState({sendDataError: true})
+			setTimeout(() => {
+				this.setState({sendDataError: false})
+			}, 2000);
+		}
 	}
 }
 

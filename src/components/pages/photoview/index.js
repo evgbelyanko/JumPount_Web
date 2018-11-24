@@ -152,11 +152,15 @@ class PhotoView extends React.Component {
 	}
 
 	handleSendComment(photo_id, textareaValue) {
-		this.setState({
-			textareaHeight: 40,
-			textareaValue: ''
-		});
-		this.props.sendComment(photo_id, textareaValue);
+		textareaValue = textareaValue.replace(/\s+/g, ' ').trim();
+
+		if(textareaValue.length) {
+			this.setState({
+				textareaHeight: 40,
+				textareaValue: ''
+			});
+			this.props.sendComment(photo_id, textareaValue);
+		}
 	}
 
 	windowClose() {

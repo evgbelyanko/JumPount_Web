@@ -2,7 +2,9 @@ import {
 	GET_PAGE_DATA_REQUEST,
 	GET_PAGE_DATA_SUCCESS,
 	GET_PAGE_DATA_FAILURE,
-	SEND_UPDATE_AVATAR_SUCCESS
+	GET_SEARCH_USERS_SUCCESS,
+	GET_SEARCH_USERS_FAILURE,
+	SEND_UPDATE_AVATAR_SUCCESS,
 } from '../actions/types';
 
 const initialState = {}
@@ -32,6 +34,14 @@ export default function(state = initialState, action ) {
 				...state,
 				setting: newSetting
 			}
+		case GET_SEARCH_USERS_SUCCESS:
+			return {
+				...state,
+				...action.payload
+			}
+		case GET_SEARCH_USERS_FAILURE:
+			state.searchUsers = null;
+			return state;
 		default: 
 			return state;
 	}

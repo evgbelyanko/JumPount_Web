@@ -63,7 +63,7 @@ class ProfileInfo extends React.Component {
 		return (
 			<div className="profile_info_data_home">
 				<span className="fa fa-home" />
-				<span> {country_name}</span>
+				<span>{country_name}</span>
 			</div>
 		)
 	}
@@ -72,7 +72,7 @@ class ProfileInfo extends React.Component {
 		return (
 			<a href={user_website} target="_blank" rel="noopener noreferrer" className="profile_info_data_website">
 				<span className="fa fa-internet-explorer" />
-				<span> {user_website}</span>
+				<span>{user_website}</span>
 			</a>
 		)
 	}
@@ -81,7 +81,7 @@ class ProfileInfo extends React.Component {
 		return (
 			<div className="profile_info_desc">
 				<span className="fa fa-address-card-o" />
-				<span> {user_desc}</span>
+				<span>{user_desc}</span>
 			</div>
 		)
 	}

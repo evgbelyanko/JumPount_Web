@@ -35,7 +35,7 @@
 	min-height: 300px;
 	margin-top: 15px;
 	background: #FFF;
-	padding: 10px;
+	width: 100%;
 }
 .search_gallery {
 	display: grid;

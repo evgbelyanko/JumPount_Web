@@ -35,9 +35,8 @@ class Search extends React.Component {
 		const {
 			menu,
 			photoView,
-			searchUsers,
 		} = this.props;
-		
+		const { searchUsers } = this.props.pageData;
 		const { inputField } = this.state;
 
 		return (
@@ -46,12 +45,12 @@ class Search extends React.Component {
 					<div className="search_row">
 						<span className="fa fa-search search_icon" />
 						<input id="search_input" className="search_input" placeholder="Поиск пользователя" onChange={evt => this.updateInputValue(evt)}/>
-						<div className="search_send" onClick={() => this.props.getSearchUsers(inputField)}>
+						<div className="search_send" onClick={() => this.handleGetSearchUsers(inputField)}>
 							<span className="fa fa-send"></span>
 						</div>
 					</div>
 				</div>
-				{searchUsers.isLoaded ? this.createListUsers() : this.createLastPosts()}
+				{searchUsers ? this.createListUsers() : this.createLastPosts()}
 				{photoView.isLoaded ? <PhotoView /> : null}
 				{menu.isLoaded ? 
 					<Menu 
@@ -66,9 +65,19 @@ class Search extends React.Component {
 
 	updateInputValue(evt) {
 		const inputValue = evt.target.value;
-		const { getSearchUsersFailure } = this.props;
 
-		inputValue.length !== 0 ? this.setState({ inputField: inputValue }) : getSearchUsersFailure();
+		if(inputValue.length !== 0) {
+			this.setState({ inputField: inputValue });
+		} else {
+			this.setState({ inputField: null });
+			this.props.getSearchUsersFailure();
+		}
+	}
+
+	handleGetSearchUsers(inputField) {
+		inputField = inputField ? inputField.replace(/\s+/g, ' ').trim() : '';
+
+		if(inputField.length) this.props.getSearchUsers(inputField);
 	}
 
 	createLastPosts() {
@@ -88,12 +97,10 @@ class Search extends React.Component {
 	}
 
 	createListUsers() {
-		const {
-			menuOpen,
-			searchUsers
-		} = this.props;
+		const { menuOpen } = this.props;
+		const { searchUsers } = this.props.pageData;
 
-		const readyList = searchUsers.list.map((user, key) => 
+		const readyList = searchUsers.map((user, key) => 
 			<UserBlock
 			key={key}
 			ellipsis={true}
@@ -139,7 +146,6 @@ Search.propTypes = {
 	pageConf: PropTypes.object.isRequired,
 	pageData: PropTypes.object.isRequired,
 	getPageData: PropTypes.func.isRequired,
-	searchUsers: PropTypes.object.isRequired,
 	photoViewOpen: PropTypes.func.isRequired,
 	getSearchUsers: PropTypes.func.isRequired,
 	getSearchUsersFailure: PropTypes.func.isRequired,
@@ -150,7 +156,6 @@ const mapStateToProps = (state) => ({
 	pageConf: state.pageConf,
 	pageData: state.pageData,
 	photoView: state.photoView,
-	searchUsers: state.searchUsers,
 })
 
 const mapDispatchToProps = (dispatch) => ({

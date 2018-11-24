@@ -3,7 +3,7 @@
 }
 .profile > .profile_info {
 	border-bottom: 1px solid #ccc;
-	grid-template-columns: 100px auto;
+	grid-template-columns: 100px calc(100% - 100px);
 }
 
 .profile > .profile_info > .profile_info_avatar {
