@@ -1,9 +1,10 @@
 .user_block{
 	position: relative;
 	padding: 10px;
-	display: flex;
 	align-items: center;
 	user-select: none;
+	display: grid;
+	grid-template-columns: 60px calc(100% - 60px);
 }
 .user_link{
 	display: flex;
@@ -21,7 +22,7 @@
 	flex-shrink: 0;
 }
 .user_info{
-	width: 250px;
+
 }
 .user_nickname{
 	font-weight: 600;
@@ -29,7 +30,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	width: calc(100% - 30px);
+	width: calc(100% - 40px);
 }
 .user_desc{
 	line-height: 20px;

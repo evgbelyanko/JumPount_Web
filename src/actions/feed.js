@@ -1,6 +1,7 @@
 import {
 	MENU_OPEN,
 	SET_PAGE_CONF,
+	GET_FEED_MORE_POSTS,
 	GET_PAGE_DATA_REQUEST,
 	GET_PAGE_DATA_SUCCESS,
 	GET_PAGE_DATA_FAILURE,
@@ -35,7 +36,7 @@ export const getPageDataFailure = () => ({ type: GET_PAGE_DATA_FAILURE })
 
 export const getPageData = () => dispatch => {
 	dispatch(getPageDataRequest())
-	fetch(`${config.serverUrl}/feed/posts`, {
+	fetch(`${config.serverUrl}/feed/posts?startLimit=0&countLimit=10`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
@@ -49,4 +50,23 @@ export const getPageData = () => dispatch => {
 	})
 
 	dispatch(setPageConf())
+}
+
+export const getFeedMorePosts = (data) => ({ 
+	type: GET_FEED_MORE_POSTS,
+	payload: data
+})
+
+export const loadFeedMorePosts = (startLimit, countLimit) => dispatch => {
+	fetch(`${config.serverUrl}/feed/posts?startLimit=${startLimit}&countLimit=${countLimit}`, {
+		credentials: 'include'
+	})
+	.then(res => res.json())
+	.then(data => {
+		if(data.error) {
+			dispatch(handleError(data.error))
+			return false;
+		}
+		dispatch(getFeedMorePosts(data.feedPosts))
+	})
 }

@@ -47,19 +47,21 @@ class Profile extends React.Component {
 	}
 
 	render() {
-		if(!this.props.pageData.profile) return <Preload />;
+		if(!this.props.pageData.profileInfo) return <Preload />;
 
 		const {
 			menu,
 			follows,
 			photoView
 		} = this.props;
+		const { userId } = this.state;
 
 		return (
 			<div className="profile">
 				<ProfileInfo 
 				history={this.props.history} />
 				<ProfilePosts
+				userId={userId}
 				history={this.props.history} />
 
 				{menu.isLoaded ? 

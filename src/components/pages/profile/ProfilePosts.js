@@ -4,20 +4,25 @@ import { connect } from 'react-redux'
 
 import { photoViewOpen } from '../../../actions/profile'
 
+import LoadMore from '../../elements/loadMore'
+
 class ProfilePosts extends React.Component {
 
 	render() {
-		const { profilePosts } = this.props.pageData.profile;
+		const { profilePosts } = this.props.pageData;
 
 	    return (
 				<div className="profile_gallery">
 					{profilePosts.length !== 0 ? this.postList() : this.pageEmpty()}
+					<div className="profile_loadMore">
+						<LoadMore userId={this.props.userId} />
+					</div>
 				</div>
 	    )
 	}
 
 	postList() {
-		const { profilePosts } = this.props.pageData.profile;
+		const { profilePosts } = this.props.pageData;
 
 		const readyList = profilePosts.map((post, key) => {
 			return ( 

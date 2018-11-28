@@ -11,6 +11,7 @@ import {
 import PhotoView from '../photoview'
 import Menu from '../../elements/menu'
 import Preload from '../../elements/preload'
+import LoadMore from '../../elements/loadMore'
 import PostInfo from '../../elements/postInfo'
 import UserBlock from '../../elements/userBlock'
 import PictureBottom from '../../elements/pictureBottom'
@@ -33,6 +34,7 @@ class Feed extends React.Component {
 		return (
 			<div className="feed">
 				{pageData.feedPosts.length !== 0 ? this.loadFeedPosts() : this.pageEmpty()}
+				<LoadMore />
 				{photoView.isLoaded ? <PhotoView /> : null}
 				{menu.isLoaded ? 
 					<Menu 
@@ -67,7 +69,7 @@ class Feed extends React.Component {
 				<div className="feed_picture">
 					<ImageLoader
 					src={post.photo_600} 
-					preloader={() => (<img src="/img/preload.gif" alt=""/>)} />
+					preloader={() => (false)} />
 					<PictureBottom
 					userId={null}
 					postId={post.photo_id}

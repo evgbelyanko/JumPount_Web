@@ -38,17 +38,15 @@ export default class UserBlock extends React.Component {
 
 		return (
 			<div className="user_block">
-				<div className="user_link">
-					<Link to={`/user/${userId}`} className="user_img">
-						<img src={userAvatar} alt=""/>
-					</Link>
-					<div className="user_info">
-						<div className="user_nickname">
-							<span>{userName}</span>
-						</div>
-						<div className="user_desc">
-							<span className={classBlockDesc}>{blockDesc}</span>
-						</div>
+				<Link to={`/user/${userId}`} className="user_img">
+					<img src={userAvatar} alt=""/>
+				</Link>
+				<div className="user_info">
+					<div className="user_nickname">
+						<span>{userName}</span>
+					</div>
+					<div className="user_desc">
+						<span className={classBlockDesc}>{blockDesc}</span>
 					</div>
 				</div>
 				{ellipsis ? this.ellipsis() : null}

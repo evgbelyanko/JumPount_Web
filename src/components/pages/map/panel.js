@@ -41,7 +41,7 @@ class Panel extends React.Component {
 						<img src={post.avatar_50} className="map_post_user_avatar" alt=""/>
 						<div className="map_post_user_name">{post.user_name}</div>
 					</div>
-					<div className="map_post_photo_title">{post.photo_title}</div>
+					<div className="map_post_photo_title">{this.handleTitle(post.photo_title)}</div>
 					<div className="map_post_counter">
 						<span className="fa fa-heart map_post_counter_icon" />
 						<span className="map_post_counter_text">{post.photo_likes}</span>
@@ -53,6 +53,13 @@ class Panel extends React.Component {
 		);
 
 		return readyList;
+	}
+
+	handleTitle(title) {
+		const titleSize = 30;
+		title = title.length > 40 ?	title.slice(0, titleSize-3) + '...' : title;
+
+		return title;
 	}
 
 	photoViewCreate(postId) {

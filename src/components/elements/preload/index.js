@@ -6,13 +6,8 @@ export default class preload extends React.Component {
 
 	render() {
 		return ( 
-			<div style={{
-				position: 'fixed', 
-				//background: '#1d2127', 
-				height: '100vh', 
-				width: '100%'
-			}}>
-				<img src="/img/preload_page.gif" className="preload_page" alt=""/>
+			<div className="preload_back_page">
+				<div className="fa fa-refresh preload_spin" style={this.props.color ? {color: this.props.color} : null}/>
 			</div>
 		);
 	}

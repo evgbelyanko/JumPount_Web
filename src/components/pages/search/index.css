@@ -77,3 +77,8 @@
 	margin: 0px 0px 0px -95px;
 	font-size: 15px;
 }
+
+.search_loadMore {
+	grid-column-start: 1;
+	grid-column-end: 4;
+}

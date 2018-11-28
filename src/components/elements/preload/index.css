@@ -1,0 +1,13 @@
+.preload_back_page {
+	position: fixed;
+	height: calc(100% - 50px);
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.preload_spin {
+	font-size: 32px;
+	animation: fa-spin 1s infinite linear;
+}

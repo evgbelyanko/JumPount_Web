@@ -16,6 +16,8 @@
 	flex-direction: column;
 	justify-content: center;
 	background: hsl(0, 0%, 12%);
+	min-width: 320px;
+	min-height: 320px;
 }
 
 .feed_post > .feed_picture img {

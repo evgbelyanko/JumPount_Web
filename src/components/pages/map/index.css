@@ -79,6 +79,7 @@
 
 
 .map_post_photo_title {
+	height: 50px;
 	margin-top: 10px;
 	font-size: 16px;
 	overflow: hidden;

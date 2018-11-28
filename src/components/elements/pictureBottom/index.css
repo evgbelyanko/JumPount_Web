@@ -31,9 +31,17 @@
 	position: relative;
 	top: 10px;
 	margin: 0 55px 0 15px;
+}
+
+.pictureBottom_title_min {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.pictureBottom_title_full {
+	font-weight: bold;
+	word-wrap: break-word;
 }
 
 .pictureBottom > .pictureBottom_desc {
@@ -60,7 +68,7 @@
 .pictureBottom > .pictureBottom_form {
 	position: absolute;
 	padding: 10px 40px 0px 15px;
-	width: 85%;
+	width: 80%;
 }
 
 .pictureBottom > .pictureBottom_form input {

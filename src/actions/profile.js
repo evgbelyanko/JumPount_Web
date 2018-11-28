@@ -6,6 +6,7 @@ import {
 	GET_PAGE_DATA_REQUEST,
 	GET_PAGE_DATA_SUCCESS,
 	GET_PAGE_DATA_FAILURE,
+	GET_PROFILE_MORE_POSTS,
 } from './types'
 import config from '../config'
 import { getMenuData } from './menu'
@@ -64,5 +65,24 @@ export const getPageData = (userId) => dispatch => {
 		}
 		dispatch(getPageDataSuccess(data))
 		dispatch(setPageConf())
+	})
+}
+
+export const getProfileMorePosts = (data) => ({ 
+	type: GET_PROFILE_MORE_POSTS,
+	payload: data
+})
+
+export const loadProfileMorePosts = (userId, startLimit, countLimit) => dispatch => {
+	fetch(`${config.serverUrl}/profile/loadMorePosts?id=${userId}&startLimit=${startLimit}&countLimit=${countLimit}`, {
+		credentials: 'include'
+	})
+	.then(res => res.json())
+	.then(data => {
+		if(data.error) {
+			dispatch(handleError(data.error))
+			return false;
+		}
+		dispatch(getProfileMorePosts(data.profilePosts))
 	})
 }

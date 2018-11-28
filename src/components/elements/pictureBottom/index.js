@@ -52,7 +52,7 @@ class PictureBottom extends React.Component {
 				<div className="fa fa-arrow-circle-down pictureBottom_icon_down" style={arrowDown} onClick={() => this.hideBottom()} />
 				<div className="fa fa-pencil pictureBottom_icon_edit" style={editSwitch} onClick={() => this.editBottom()} />
 				<div className="fa fa-check pictureBottom_icon_check" style={checkSwitch} onClick={() => this.checkBottom()} />
-				<div className="pictureBottom_title" style={textBox_title}>{inputValue}</div>
+				<div className={`pictureBottom_title ${arrowDown.display === 'block' ? 'pictureBottom_title_full' : 'pictureBottom_title_min'}`} style={textBox_title}>{inputValue}</div>
 				<div className="pictureBottom_desc" style={textBox_desc}>{textareaValue}</div>
 				<form className="pictureBottom_form" style={formBox}>
 					<input 
@@ -106,10 +106,7 @@ class PictureBottom extends React.Component {
 				checkSwitch: { display: 'none' },
 				editSwitch: { display: +localStorage.userId === +this.state.userId ? 'block' : 'none'},
 				textBox_desc: { display: 'block' },
-				textBox_title: { 
-					display: 'block',
-					fontWeight: 'bold'
-				},
+				textBox_title: { display: 'block' },
 			}
 		});
 	}

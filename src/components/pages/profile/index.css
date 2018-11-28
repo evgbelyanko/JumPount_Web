@@ -19,6 +19,18 @@
 	margin-right: 5px;
 }
 
+.profile_info .profile_info_data_home {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.profile_info .profile_info_data_website {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .profile_info > .profile_info_data > .profile_info_data_name {
 	font-size: 19px;
 	margin-right: 10px;
@@ -80,4 +92,9 @@
 	align-items: center;
 	margin: 0px 0px 0px -70px;
 	font-size: 15px;
+}
+
+.profile_loadMore {
+	grid-column-start: 1;
+	grid-column-end: 4;
 }

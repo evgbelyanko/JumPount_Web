@@ -22,7 +22,7 @@ class PostInfo extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		const { counterComments } = nextProps.photoView;
-		this.setState({ photoComments: this.state.photoComments + counterComments });
+		if(counterComments) this.setState({ photoComments: this.state.photoComments + counterComments });
 	}
 
 	render() {

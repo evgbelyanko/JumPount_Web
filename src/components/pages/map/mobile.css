@@ -5,3 +5,7 @@
 .map_post_info{
 	overflow: hidden;
 }
+
+#map .cluster {
+	cursor: none;
+}

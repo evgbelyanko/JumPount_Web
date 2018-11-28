@@ -20,7 +20,7 @@ class ProfileInfo extends React.Component {
 			country_name,
 			user_followers,
 			user_following,
-		} = this.props.pageData.profile.profileInfo;
+		} = this.props.pageData.profileInfo;
 
 		const { menuOpen } = this.props;
 

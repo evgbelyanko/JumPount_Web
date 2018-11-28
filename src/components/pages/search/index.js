@@ -13,6 +13,7 @@ import {
 import PhotoView from '../photoview'
 import Menu from '../../elements/menu'
 import Preload from '../../elements/preload'
+import LoadMore from '../../elements/loadMore'
 import UserBlock from '../../elements/userBlock'
 
 import './index.css';
@@ -45,9 +46,7 @@ class Search extends React.Component {
 					<div className="search_row">
 						<span className="fa fa-search search_icon" />
 						<input id="search_input" className="search_input" placeholder="Поиск пользователя" onChange={evt => this.updateInputValue(evt)}/>
-						<div className="search_send" onClick={() => this.handleGetSearchUsers(inputField)}>
-							<span className="fa fa-send"></span>
-						</div>
+						<button className="fa fa-send search_send" onClick={() => this.handleGetSearchUsers(inputField)} />
 					</div>
 				</div>
 				{searchUsers ? this.createListUsers() : this.createLastPosts()}
@@ -93,7 +92,14 @@ class Search extends React.Component {
 			</div>
 		);
 
-		return <div className="search_gallery">{readyList}</div>;
+		return (
+			<div className="search_gallery">
+				{readyList}
+				<div className="search_loadMore">
+					<LoadMore />
+				</div>
+			</div>
+		)
 	}
 
 	createListUsers() {
@@ -116,6 +122,7 @@ class Search extends React.Component {
 		return (
 			<div className="search_result">
 				{readyList.length !== 0 ? readyList : this.pageEmpty()}
+				<LoadMore />
 			</div>
 		)
 	}

@@ -1,0 +1,52 @@
+.wrap_btn_group{
+	background: #fff;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+.wrap_btn {
+	line-height: 48px;
+	text-align: center;
+	border-bottom: 1px solid #ccc;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 20px;
+}
+.wrap_btn:last-child{
+	border: 0;
+}
+.wrap_action_icon{
+	position: relative;
+	top: 2.5px;
+	font-size: 24px;
+	font-weight: bold;
+}
+.wrap_btn_left{
+	float: left;
+	line-height: 48px;
+	margin-left: 50px;
+}
+.wrap_btn_right{
+	float: right;
+	line-height: 48px;
+	margin-right: 50px;
+}
+
+@media (max-width: 350px) {
+	.wrap_btn_left{
+		margin-left: 30px;
+	}
+	.wrap_btn_right{
+		margin-right: 30px;
+	}
+}
+
+@media (min-width: 768px) {
+	.wrap_btn_group{
+		border-radius: 4px;
+		cursor: pointer;
+	}
+}

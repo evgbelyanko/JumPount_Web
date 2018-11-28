@@ -2,6 +2,7 @@ import {
 	MENU_OPEN,
 	SET_PAGE_CONF,
 	PHOTOVIEW_OPEN,
+	GET_SEARCH_MORE_POSTS,
 	GET_PAGE_DATA_REQUEST,
 	GET_PAGE_DATA_SUCCESS,
 	GET_PAGE_DATA_FAILURE,
@@ -44,7 +45,7 @@ export const getPageDataRequest = () => ({ type: GET_PAGE_DATA_REQUEST })
 export const getPageDataFailure = () => ({ type: GET_PAGE_DATA_FAILURE })
 export const getPageData = () => dispatch => {
 	dispatch(getPageDataRequest())
-	fetch(`${config.serverUrl}/search/recent`, {
+	fetch(`${config.serverUrl}/search/recent?startLimit=0&countLimit=10`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())
@@ -79,5 +80,24 @@ export const getSearchUsers = (inputField) => dispatch => {
 			return false;
 		}
 		dispatch(getSearchUsersSuccess(data))
+	})
+}
+
+export const getSearchMorePosts = (data) => ({ 
+	type: GET_SEARCH_MORE_POSTS,
+	payload: data
+})
+
+export const loadSearchMorePosts = (startLimit, countLimit) => dispatch => {
+	fetch(`${config.serverUrl}/search/recent?startLimit=${startLimit}&countLimit=${countLimit}`, {
+		credentials: 'include'
+	})
+	.then(res => res.json())
+	.then(data => {
+		if(data.error) {
+			dispatch(handleError(data.error))
+			return false;
+		}
+		dispatch(getSearchMorePosts(data.searchPosts))
 	})
 }

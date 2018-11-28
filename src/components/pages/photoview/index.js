@@ -95,7 +95,9 @@ class PhotoView extends React.Component {
 						<div className="photoView_picture">
 							<ImageLoader
 							src={photo_600}
-							preloader={() => (<img src="/img/preload.gif" alt=""/>)} />
+							preloader={() => (false)}>
+								<Preload color="#fff"/>
+							</ImageLoader>
 							<PictureBottom
 							userId={user_id}
 							postId={photo_id}

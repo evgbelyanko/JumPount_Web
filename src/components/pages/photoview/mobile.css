@@ -1,7 +1,7 @@
 .photoView {
 	display: flex;
 	flex-direction: column;
-	width: 100%;
+	width: 100vw;
 	max-width: 600px;
 }
 
@@ -33,7 +33,7 @@
 	width: 100%;
 	height: 40px;
 	max-width: 600px;
-	min-width: 325px;
+	min-width: 320px;
 	z-index: 999;
 }
 
