@@ -1,4 +1,4 @@
-const prod = false;
+const prod = process.env.NODE_ENV === 'production';
 const protocol = prod ? 'https' : 'http';
 
 module.exports = {

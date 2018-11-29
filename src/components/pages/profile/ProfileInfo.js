@@ -29,7 +29,7 @@ class ProfileInfo extends React.Component {
 				<img src={avatar_150} className="profile_info_avatar picture_shadow" alt="" />
 				<div className="profile_info_data">
 					<div className="profile_info_data_name">{user_name}</div>
-					{country_name ? this.blockCountry(country_name) : null}
+					{country_name ? this.blockCountry(country_name) : <div style={{height: 22}} />}
 					{user_website ? this.blockWebsite(user_website) : null}
 					<div className="fa fa-ellipsis-h user_action_post" style={{fontSize: 24}} 
 					onClick={() => menuOpen({

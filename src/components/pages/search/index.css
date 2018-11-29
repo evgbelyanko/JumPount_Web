@@ -69,12 +69,12 @@
 
 .search_postsEmpty {
 	position: absolute;
-	left: 50%;
-	top: 50px;
+	height: calc(100% - 20px);
+	width: 100%;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
-	margin: 0px 0px 0px -95px;
+	justify-content: center;
+	flex-direction: column;
 	font-size: 15px;
 }
 

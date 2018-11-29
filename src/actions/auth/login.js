@@ -32,7 +32,7 @@ export const authVkontakte = () => dispatch => {
 		display: 'popup'
 	}
 
-	document.location.assign('http://oauth.vk.com/authorize?' + params(VKAPI));
+	document.location.assign('https://oauth.vk.com/authorize?' + params(VKAPI));
 }
 
 export const authFacebook = () => dispatch => {
@@ -42,15 +42,15 @@ export const authFacebook = () => dispatch => {
 		response_type: 'code'
 	}
 
-	document.location.assign('https://www.facebook.com/dialog/oauth?' + params(FacebookAPI));
+	document.location.assign('https://facebook.com/dialog/oauth?' + params(FacebookAPI));
 }
 
 export const authGoogle = () => dispatch => {
 	const GoogleAPI = {
 		client_id: '37283406293-hv292ahaibvul14a8qfljk5bj6v6pad4.apps.googleusercontent.com', 
-		redirect_uri: `https://api.jumpoint.art/auth/google`,
+		redirect_uri: `${config.serverUrl}/auth/google`,
 		response_type: 'code',
-		scope: 'https://www.googleapis.com/auth/userinfo.profile'
+		scope: 'profile'
 	}
 
 	document.location.assign('https://accounts.google.com/o/oauth2/auth?' + params(GoogleAPI));

@@ -14,8 +14,8 @@ class LoadMore extends React.Component {
 		super(props)
 
 		this.state = {
-			startLimit: 10,
-			countLimit: 10,
+			startLimit: 15,
+			countLimit: 15,
 			hiddenPosts: props.pageData.hidden_posts,
 		}
 	}
@@ -42,22 +42,21 @@ class LoadMore extends React.Component {
 		} = this.props;
 		const {
 			startLimit,
-			countLimit,
 			hiddenPosts
 		} = this.state;
 		let handleCount = 0;
 
 		switch(pageConf.name) {
 			case 'feed':
-				handleCount = 10;
+				handleCount = 15;
 				loadFeedMorePosts(handleCount, handleCount);
 				break;
 			case 'search':
-				handleCount = 12;
+				handleCount = 30;
 				loadSearchMorePosts(handleCount, handleCount);
 				break;
 			case 'profile':
-				handleCount = 12;
+				handleCount = 30;
 				loadProfileMorePosts(userId, handleCount, handleCount);
 				break;
 			default:

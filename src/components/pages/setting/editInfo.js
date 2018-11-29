@@ -191,7 +191,7 @@ class EditInfo extends React.Component {
 
 		const checkUserWebsite = /^(http|https):\/\/[^ "]+$/.test(userWebsite);
 
-		if(checkUserWebsite) {
+		if(checkUserWebsite || userWebsite.length === 0) {
 			this.setState({sendDataSuccess: true})
 			setTimeout(() => {
 				this.setState({sendDataSuccess: false})

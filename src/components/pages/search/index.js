@@ -52,8 +52,7 @@ class Search extends React.Component {
 				{searchUsers ? this.createListUsers() : this.createLastPosts()}
 				{photoView.isLoaded ? <PhotoView /> : null}
 				{menu.isLoaded ? 
-					<Menu 
-					goToPost={true}
+					<Menu
 					goToProfile={true}
 					goToFollowUser={true}
 					history={this.props.history}
@@ -122,7 +121,7 @@ class Search extends React.Component {
 		return (
 			<div className="search_result">
 				{readyList.length !== 0 ? readyList : this.pageEmpty()}
-				<LoadMore />
+				{/*<LoadMore />*/}
 			</div>
 		)
 	}
