@@ -148,7 +148,7 @@ class PhotoView extends React.Component {
 					goToFollowUser={true}
 					history={this.props.history}
 					/> : null}
-				{menu.isLoadedMenuRemove ? <MenuRemove />  : null}
+				{menu.isLoadedMenuRemove ? <MenuRemove history={this.props.history} />  : null}
 			</div>
 		)
 	}

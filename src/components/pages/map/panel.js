@@ -42,12 +42,12 @@ class Panel extends React.Component {
 						<div className="map_post_user_name">{post.user_name}</div>
 					</div>
 					<div className="map_post_photo_title">{this.handleTitle(post.photo_title)}</div>
-					<div className="map_post_counter">
+{/*					<div className="map_post_counter">
 						<span className="fa fa-heart map_post_counter_icon" />
 						<span className="map_post_counter_text">{post.photo_likes}</span>
 						<span className="fa fa-comment map_post_counter_icon" />
 						<span className="map_post_counter_text">{post.photo_comments}</span>
-					</div>
+					</div>*/}
 				</div>
 			</div>
 		);

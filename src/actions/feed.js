@@ -36,7 +36,7 @@ export const getPageDataFailure = () => ({ type: GET_PAGE_DATA_FAILURE })
 
 export const getPageData = () => dispatch => {
 	dispatch(getPageDataRequest())
-	fetch(`${config.serverUrl}/feed/posts?startLimit=0&countLimit=10`, {
+	fetch(`${config.serverUrl}/feed/posts?startLimit=0&countLimit=15`, {
 		credentials: 'include'
 	})
 	.then(res => res.json())

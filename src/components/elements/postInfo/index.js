@@ -16,7 +16,7 @@ class PostInfo extends React.Component {
 			photoLikes: props.photoLikes,
 			photoComments: props.photoComments,
 			buttonClass: props.likeId ? 'btn_black' : 'btn_white',
-			buttonText: props.likeId ? 'Вы уже оценили' : 'Мне нравиться'
+			buttonText: props.likeId ? 'Вы уже оценили' : 'Мне нравится'
 		};
 	}
 
@@ -59,7 +59,7 @@ class PostInfo extends React.Component {
 		this.setState({
 			buttonClass: buttonClass === 'btn_white' ? 'btn_black' : 'btn_white',
 			photoLikes: buttonClass === 'btn_white' ? photoLikes + 1 : photoLikes - 1,
-			buttonText: buttonClass === 'btn_white' ? 'Вы уже оценили' : 'Мне нравиться'
+			buttonText: buttonClass === 'btn_white' ? 'Вы уже оценили' : 'Мне нравится'
 		})
 
 		menuActionsLike(postId)

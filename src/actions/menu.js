@@ -84,7 +84,7 @@ export const menuRemovePost = (postId) => dispatch => {
 		}
 		dispatch(menuClose())
 		dispatch(menuRemoveClose())
-		window.location.replace('/user')
+		document.location.replace('/user/' + localStorage.userId)
 	})
 }
 

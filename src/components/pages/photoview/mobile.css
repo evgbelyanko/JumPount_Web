@@ -34,7 +34,6 @@
 	height: 40px;
 	max-width: 600px;
 	min-width: 320px;
-	z-index: 999;
 }
 
 .photoView > .photoView_input > textarea {

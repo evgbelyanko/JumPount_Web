@@ -46,7 +46,11 @@ class MenuRemove extends React.Component {
 			menuRemoveComment
 		} = this.props;
 
-		menu.itemType === 'post' ? menuRemovePost(menu.postId) : menuRemoveComment(menu.postId, menu.itemId, menu.key);
+		if(menu.itemType === 'post') {
+			menuRemovePost(menu.postId);
+		} else {
+			menuRemoveComment(menu.postId, menu.itemId, menu.key);
+		}
 	}
 }
 

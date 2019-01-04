@@ -7,6 +7,7 @@ import Auth from './components/pages/auth'
 import Feed from './components/pages/feed'
 import Search from './components/pages/search'
 import Camera from './components/pages/camera'
+/*import Privacy from './components/pages/privacy'*/
 import Profile from './components/pages/profile'
 import Setting from './components/pages/setting'
 import Follows from './components/pages/follows'
@@ -46,6 +47,7 @@ class App extends React.Component {
 				<Router>
 					<Switch>
 						<Route path="/auth" component={Auth} />
+						{/*<Route path="/privacy" component={Privacy} />*/}
 						<Authorized path="/map" component={Gmap} />
 						<Authorized path="/feed" component={Feed} />
 						<Authorized path="/camera" component={Camera} />
